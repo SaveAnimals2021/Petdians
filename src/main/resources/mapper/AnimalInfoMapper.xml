@@ -38,6 +38,9 @@
 				#{originURL}, #{missingDate}, #{missingLocation}, #{rescueDate},
 				#{rescueLocation}, #{phoneNumber}, #{guardianName}, #{bno}, #{rescueStatus})
 		]]>
+		<selectKey resultType="int" keyProperty="animalNumber" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
 	</insert>
 
 	<!-- MODIFY -->
@@ -49,10 +52,14 @@
 	</update>
 
 	<!-- List -->
-	<select id="getAllList" resultType="org.petdians.animal.domain.MissingAnimalVO">
+	<select id="getPagedList" resultType="org.petdians.animal.domain.MissingAnimalVO">
 		select * from tbl_animal
 		<include refid="search"></include>
 		order by bno desc limit #{skip},#{perSheet}
+	</select>
+
+	<select id="getAllList" resultType="org.sa.animal.domain.MissingAnimalVO">
+		select * from tbl_animal
 	</select>
 
 	<!-- ToTal -->

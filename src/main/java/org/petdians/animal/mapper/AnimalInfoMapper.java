@@ -11,7 +11,9 @@ public interface AnimalInfoMapper {
 
     void setIsAdopted(MissingAnimalVO vo);
 
-    List<MissingAnimalVO> getAllList(@Param("skip") Integer skip,
+    List<MissingAnimalVO> getAllList();
+
+    List<MissingAnimalVO> getPagedList(@Param("skip") Integer skip,
                                      @Param("perSheet") Integer perSheet,
                                      @Param("arr") String[] arr,
                                      @Param("keyword") String keyword);

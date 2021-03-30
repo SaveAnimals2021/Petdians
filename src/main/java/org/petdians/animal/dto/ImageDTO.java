@@ -1,17 +1,15 @@
-package org.petdians.animal.domain;
+package org.petdians.animal.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ImageVO {
+public class ImageDTO {
     private Integer ino;
     private String url;
     private Integer animalNumber;
@@ -20,6 +18,9 @@ public class ImageVO {
     private String fileName;
     private String type;
 
-    private Date regDate;
-    private Date updateDate;
+    private String regDate;
+    private String updateDate;
+
+
+
 }

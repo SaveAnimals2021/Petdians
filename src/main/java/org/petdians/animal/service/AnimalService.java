@@ -19,7 +19,9 @@ public interface AnimalService {
 
     void setIsAdopted(MissingAnimalDTO dto);
 
-    List<MissingAnimalDTO> getAllList(PageDTO pageDTO);
+    List<MissingAnimalDTO> getPagedList(PageDTO pageDTO);
+    List<MissingAnimalDTO> getAllList();
+
 
     default MissingAnimalVO toDomain(MissingAnimalDTO dto) throws Exception{
         Date missingDate = SimpleDateFormatter.fromStringToDate(dto.getMissingDate());
