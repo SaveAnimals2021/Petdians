@@ -6,19 +6,38 @@
 
 <mapper namespace="org.sa.animal.mapper.AnimalInfoMapper">
 
+	<!-- Search Where -->
+	<sql id="search">
+		<where>
+			<if test="arr != null">
+				<foreach collection="arr" index="key" item="val" separator="OR" open="(" close=")">
+					<if test="val == 't'.toString">
+						title like concat('%', #{keyword}, '%')
+					</if>
+					<if test="val == 'c'.toString">
+						content like concat('%', #{keyword}, '%')
+					</if>
+					<if test="val == 'w'.toString">
+						writer like concat('%', #{keyword}, '%')
+					</if>
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
 	<!-- INSERT -->
 	<insert id="register" >
 		<![CDATA[
-            insert into tbl_animal (animalCode, serviceName, type, name, species,
-                                    sex, age, special, color, situation,
-                                    originURL, missingDate, missingLocation, rescueDate,
-                                    rescueLocation, phoneNumber, guardianName, bno, rescueStatus)
+		insert into tbl_animal (animalCode, serviceName, type, name, species,
+								sex, age, special, color, situation,
+								originURL, missingDate, missingLocation, rescueDate,
+								rescueLocation, phoneNumber, guardianName, bno, rescueStatus)
 
-            values (#{animalCode}, #{serviceName}, #{type}, #{name}, #{species},
-                    #{sex}, #{age}, #{special}, #{color}, #{situation},
-                    #{originURL}, #{missingDate}, #{missingLocation}, #{rescueDate},
-                    #{rescueLocation}, #{phoneNumber}, #{guardianName}, #{bno}, #{rescueStatus})
-        ]]>
+		values (#{animalCode}, #{serviceName}, #{type}, #{name}, #{species},
+				#{sex}, #{age}, #{special}, #{color}, #{situation},
+				#{originURL}, #{missingDate}, #{missingLocation}, #{rescueDate},
+				#{rescueLocation}, #{phoneNumber}, #{guardianName}, #{bno}, #{rescueStatus})
+		]]>
 	</insert>
 
 	<!-- MODIFY -->
@@ -29,10 +48,17 @@
 		]]>
 	</update>
 
-	<select id="getAllList" resultType="org.sa.animal.domain.AnimalInfoVO">
+	<!-- List -->
+	<select id="getAllList" resultType="org.petdians.animal.domain.MissingAnimalVO">
 		select * from tbl_animal
+		<include refid="search"></include>
+		order by bno desc limit #{skip},#{perSheet}
 	</select>
 
-
+	<!-- ToTal -->
+	<select id="getTotalCount" resultType="Integer">
+		select count(bno) from tbl_animal
+		<include refid="search"></include>
+	</select>
 
 </mapper>

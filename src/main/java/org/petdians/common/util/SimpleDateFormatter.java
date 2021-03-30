@@ -1,4 +1,4 @@
-package org.sa.common.util;
+package org.petdians.common.util;
 
 import lombok.extern.log4j.Log4j;
 
@@ -16,7 +16,7 @@ public class SimpleDateFormatter {
 
         String resultStr = "";
         Date now = new Date();
-        java.util.Date utilDate = new java.util.Date(date.getTime() - 9 * 1000 * 60 * 60);
+        Date utilDate = new Date(date.getTime() - 9 * 1000 * 60 * 60);
         Long result = now.getTime() - utilDate.getTime();
 
         // 분 확인 => 방금
@@ -52,7 +52,7 @@ public class SimpleDateFormatter {
     }
 
     public static String fromDateToString(Date date) {
-        return  formatter.format(new java.util.Date(date.getTime() - 9 * 1000 * 60 * 60));
+        return  formatter.format(new Date(date.getTime() - 9 * 1000 * 60 * 60));
     }
 
 
@@ -66,7 +66,7 @@ public class SimpleDateFormatter {
         // 현재 시간
         Date now = new Date();
         // 등록 시간
-        java.util.Date utilDate = new java.util.Date(date.getTime() - 9 * 1000 * 60 * 60);
+        Date utilDate = new Date(date.getTime() - 9 * 1000 * 60 * 60);
         // 시간 차이
         Long result = now.getTime() - utilDate.getTime();
 

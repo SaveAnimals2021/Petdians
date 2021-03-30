@@ -1,4 +1,4 @@
-package org.tufcookie.common.dto;
+package org.petdians.common.dto;
 
 import lombok.Getter;
 import lombok.ToString;

@@ -1,22 +1,22 @@
-package org.sa.common.crawling;
+package org.petdians.common.crawling;
 
 import lombok.extern.log4j.Log4j;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sa.animal.config.AnimalInfoConfig;
-import org.sa.animal.dto.MissingAnimalDTO;
-import org.sa.animal.service.AnimalService;
-import org.sa.common.config.CommonConfig;
-import org.sa.common.crawling.service.*;
-import org.sa.common.dao.AnimalInfoDAO;
+import org.petdians.animal.config.AnimalConfig;
+import org.petdians.animal.dto.MissingAnimalDTO;
+import org.petdians.animal.service.AnimalService;
+import org.petdians.common.config.CommonConfig;
+import org.petdians.common.crawling.service.*;
+import org.petdians.common.dao.AnimalInfoDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {CommonConfig.class, AnimalInfoConfig.class})
+@ContextConfiguration(classes = {CommonConfig.class, AnimalConfig.class})
 public class CrawlServiceTests {
 
     KaraCrawlService karaservice;

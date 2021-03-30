@@ -1,24 +1,24 @@
-package org.sa.common.crawling;
+package org.petdians.common.crawling;
 
 import lombok.extern.log4j.Log4j;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sa.animal.config.AnimalInfoConfig;
-import org.sa.animal.mapper.AnimalInfoMapper;
-import org.sa.animal.service.AnimalService;
-import org.sa.common.config.CommonConfig;
-import org.sa.common.crawling.service.IJoaCrawlService;
-import org.sa.common.crawling.service.KaraCrawlService;
-import org.sa.common.crawling.service.KarmaCrawlService;
-import org.sa.common.crawling.service.SaacCrawlService;
+import org.petdians.animal.config.AnimalConfig;
+import org.petdians.animal.mapper.AnimalInfoMapper;
+import org.petdians.animal.service.AnimalService;
+import org.petdians.common.config.CommonConfig;
+import org.petdians.common.crawling.service.IJoaCrawlService;
+import org.petdians.common.crawling.service.KaraCrawlService;
+import org.petdians.common.crawling.service.KarmaCrawlService;
+import org.petdians.common.crawling.service.SaacCrawlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={CommonConfig.class, AnimalInfoConfig.class})
+@ContextConfiguration(classes={CommonConfig.class, AnimalConfig.class})
 public class CompareTests {
 
     KaraCrawlService karaservice;

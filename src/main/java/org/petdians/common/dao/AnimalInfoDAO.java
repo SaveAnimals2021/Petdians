@@ -1,6 +1,6 @@
-package org.sa.common.dao;
+package org.petdians.common.dao;
 
-import org.sa.animal.dto.AnimalInfoDTO;
+import org.petdians.animal.dto.AnimalInfoDTO;
 
 import java.util.ArrayList;
 import java.util.List;

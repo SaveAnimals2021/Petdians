@@ -31,7 +31,7 @@
         - singleton: 배치 job이 생성될 때 하나의 고유한 빈을 만든다.
     -->
 	<bean id="helloWorldTasklet"
-		  class="org.sa.batch.step.AnimalCrawlTasklet" scope="step"/>
+		  class="org.petdians.batch.step.AnimalCrawlTasklet" scope="step"/>
 
 
 	<!-- Misc Beans -->

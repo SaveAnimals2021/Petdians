@@ -1,8 +1,8 @@
-package org.petdians.common.service;
+package org.petdians.common.crawling.service;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.sa.animal.dto.MissingAnimalDTO;
+import org.petdians.animal.dto.MissingAnimalDTO;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;

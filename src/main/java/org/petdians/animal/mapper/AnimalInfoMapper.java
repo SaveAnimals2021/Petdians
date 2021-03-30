@@ -1,6 +1,7 @@
-package org.sa.animal.mapper;
+package org.petdians.animal.mapper;
 
-import org.sa.animal.domain.MissingAnimalVO;
+import org.apache.ibatis.annotations.Param;
+import org.petdians.animal.domain.MissingAnimalVO;
 
 import java.util.List;
 
@@ -10,5 +11,11 @@ public interface AnimalInfoMapper {
 
     void setIsAdopted(MissingAnimalVO vo);
 
-    List<MissingAnimalVO> getAllList();
+    List<MissingAnimalVO> getAllList(@Param("skip") Integer skip,
+                                     @Param("perSheet") Integer perSheet,
+                                     @Param("arr") String[] arr,
+                                     @Param("keyword") String keyword);
+
+    Integer getTotalCount(@Param("arr") String[] arr,
+                          @Param("keyword") String keyword);
 }

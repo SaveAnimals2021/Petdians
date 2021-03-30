@@ -1,4 +1,4 @@
-package org.sa.animal.domain;
+package org.petdians.animal.domain;
 
 
 import lombok.AllArgsConstructor;

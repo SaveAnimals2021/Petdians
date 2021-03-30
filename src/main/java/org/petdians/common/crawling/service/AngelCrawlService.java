@@ -1,12 +1,12 @@
-package org.petdians.common.service;
+package org.petdians.common.crawling.service;
 
 import lombok.extern.log4j.Log4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.sa.animal.dto.MissingAnimalDTO;
-import org.sa.common.util.DateFormatter;
-import org.sa.common.util.SimpleDateFormatter;
+import org.petdians.animal.dto.MissingAnimalDTO;
+import org.petdians.common.util.DateFormatter;
+import org.petdians.common.util.SimpleDateFormatter;
 
 import java.util.ArrayList;
 import java.util.Date;

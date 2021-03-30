@@ -1,11 +1,11 @@
-package org.sa.batch;
+package org.petdians.batch;
 
 
 import lombok.extern.log4j.Log4j;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sa.common.config.CommonConfig;
+import org.petdians.common.config.CommonConfig;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.test.JobLauncherTestUtils;

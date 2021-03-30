@@ -1,8 +1,8 @@
-package org.sa.batch.config;
+package org.petdians.batch.config;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
-import org.sa.batch.step.AnimalCrawlTasklet;
+import org.petdians.batch.step.AnimalCrawlTasklet;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Log4j
 @Configuration
-@ComponentScan(basePackages = {"org.sa.batch.step"})
+@ComponentScan(basePackages = {"org.petdians.batch.step"})
 @EnableBatchProcessing
 @RequiredArgsConstructor
 public class AnimalJobConfig {

@@ -1,7 +1,8 @@
-package org.sa.animal.service;
+package org.petdians.animal.service;
 
-import org.sa.animal.dto.MissingAnimalDTO;
-import org.sa.animal.mapper.AnimalInfoMapper;
+import org.petdians.animal.dto.MissingAnimalDTO;
+import org.petdians.animal.mapper.AnimalInfoMapper;
+import org.petdians.common.dto.PageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,7 @@ public class AnimalServiceImpl implements AnimalService{
     }
 
     @Override
-    public List<MissingAnimalDTO> getAllList() {
-        return toDTOList(mapper.getAllList());
+    public List<MissingAnimalDTO> getAllList(PageDTO pageDTO) {
+        return toDTOList(mapper.getAllList(pageDTO.getSkip(), pageDTO.getPerSheet(), pageDTO.getArr(), pageDTO.getType()));
     }
 }

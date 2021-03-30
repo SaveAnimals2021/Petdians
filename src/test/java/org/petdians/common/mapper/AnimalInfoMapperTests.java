@@ -1,12 +1,12 @@
-package org.sa.common.mapper;
+package org.petdians.common.mapper;
 
 
 import lombok.extern.log4j.Log4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sa.animal.config.AnimalInfoConfig;
-import org.sa.animal.mapper.AnimalInfoMapper;
-import org.sa.common.config.CommonConfig;
+import org.petdians.animal.config.AnimalConfig;
+import org.petdians.animal.mapper.AnimalInfoMapper;
+import org.petdians.common.config.CommonConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={CommonConfig.class, AnimalInfoConfig.class})
+@ContextConfiguration(classes={CommonConfig.class, AnimalConfig.class})
 public class AnimalInfoMapperTests {
 
     @Autowired

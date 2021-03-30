@@ -1,11 +1,11 @@
-package org.petdians.common.service;
+package org.petdians.common.crawling.service;
 
 
 import lombok.extern.log4j.Log4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.sa.animal.dto.AnimalInfoDTO;
+import org.petdians.animal.dto.AnimalInfoDTO;
 
 import java.util.ArrayList;
 import java.util.List;

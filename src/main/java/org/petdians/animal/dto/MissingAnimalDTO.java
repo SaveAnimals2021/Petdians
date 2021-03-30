@@ -1,4 +1,4 @@
-package org.sa.animal.dto;
+package org.petdians.animal.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

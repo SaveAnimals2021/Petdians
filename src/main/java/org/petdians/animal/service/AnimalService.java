@@ -1,10 +1,12 @@
-package org.sa.animal.service;
+package org.petdians.animal.service;
 
 
-import org.sa.animal.domain.MissingAnimalVO;
-import org.sa.animal.dto.MissingAnimalDTO;
-import org.sa.common.util.DateFormatter;
-import org.sa.common.util.SimpleDateFormatter;
+import org.petdians.animal.domain.MissingAnimalVO;
+import org.petdians.animal.dto.MissingAnimalDTO;
+import org.petdians.common.dto.PageDTO;
+import org.petdians.common.util.DateFormatter;
+import org.petdians.common.util.SimpleDateFormatter;
+
 
 import java.util.Date;
 import java.util.List;
@@ -17,7 +19,7 @@ public interface AnimalService {
 
     void setIsAdopted(MissingAnimalDTO dto);
 
-    List<MissingAnimalDTO> getAllList();
+    List<MissingAnimalDTO> getAllList(PageDTO pageDTO);
 
     default MissingAnimalVO toDomain(MissingAnimalDTO dto) throws Exception{
         Date missingDate = SimpleDateFormatter.fromStringToDate(dto.getMissingDate());

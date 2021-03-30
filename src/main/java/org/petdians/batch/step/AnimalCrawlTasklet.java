@@ -1,4 +1,4 @@
-package org.sa.batch.step;
+package org.petdians.batch.step;
 
 import lombok.extern.log4j.Log4j;
 import org.springframework.batch.core.StepContribution;

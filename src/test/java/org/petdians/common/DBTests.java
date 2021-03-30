@@ -1,4 +1,4 @@
-package org.sa.common;
+package org.petdians.common;
 
 
 import lombok.extern.log4j.Log4j;
@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sa.common.config.CommonConfig;
+import org.petdians.common.config.CommonConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;

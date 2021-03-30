@@ -1,4 +1,4 @@
-package org.petdians.common.service;
+package org.petdians.common.crawling.service;
 
 import lombok.extern.log4j.Log4j;
 import org.jsoup.Jsoup;
