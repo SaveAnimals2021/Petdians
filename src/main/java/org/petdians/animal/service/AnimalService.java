@@ -77,4 +77,6 @@ public interface AnimalService {
             return toDTO(a);
         }).collect(Collectors.toList());
     }
+
+
 }

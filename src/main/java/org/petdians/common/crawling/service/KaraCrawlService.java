@@ -5,13 +5,15 @@ import lombok.extern.log4j.Log4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.petdians.animal.dto.AnimalInfoDTO;
+import org.petdians.animal.dto.MissingAnimalDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Log4j
-public class KaraCrawlService extends CrawlService{
+@Service
+public class KaraCrawlService extends CrawlService {
 
     private static String baseUrl = "https://www.ekara.org";
     private static String url = "https://www.ekara.org/kams/adopt?species=&sex=&weight=&birth=&activity=&page=";
@@ -102,22 +104,15 @@ public class KaraCrawlService extends CrawlService{
             String weight =  eles.get(3).html();
             String color = eles.get(4).html();
 
-            AnimalInfoDTO info = AnimalInfoDTO.builder().age(age).type(type).species(species)
-                    .sex(sex).isNeutralized(isNeu).weight(weight).color(color).date(date)
+            MissingAnimalDTO info = MissingAnimalDTO.builder().age(age).type(type).species(species)
+                    .sex(sex).color(color).regDate(date).rescueStatus(3).originURL(baseUrl)
                     .name(name).imageUrlList(imageList).imageType("jpg").serviceName(serviceName)
                     .build();
 
-            // setAnimalCode(info);
+            setAnimalCode(info);
 
-            // animalList.add(info);
+            animalList.add(info);
         }
-
-
-
-
-        // code : 403 에러가 뜬다. 보안으로 막힌 경우이다.
-        // 보안 뚫기 = userAgent
-
     }
 
 }

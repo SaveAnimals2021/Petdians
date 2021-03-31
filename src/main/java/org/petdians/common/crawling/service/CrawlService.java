@@ -15,7 +15,7 @@ public abstract class CrawlService {
     public final static String agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36";
 
 
-    abstract void doCrawl() throws Exception;
+    protected abstract void doCrawl() throws Exception;
 
     protected List<MissingAnimalDTO> animalList;
 
@@ -95,7 +95,7 @@ public abstract class CrawlService {
     }
 
     protected static void setAnimalCode(MissingAnimalDTO info){
-        String code = info.getName() + info.getSex() + info.getSpecies() + info.getMissingDate();
+        String code = info.getName() + info.getSex() + info.getSpecies() + info.getAge() + info.getMissingDate();
         info.setAnimalCode(code);
     }
 

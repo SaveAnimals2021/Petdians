@@ -2,13 +2,16 @@ package org.petdians.common.config;
 
 import org.petdians.animal.config.AnimalConfig;
 import org.petdians.batch.config.AnimalJobConfig;
+import org.petdians.common.crawling.config.CrawlConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{CommonConfig.class, AnimalConfig.class, AnimalJobConfig.class};
+        return new Class[]{
+                CommonConfig.class, AnimalConfig.class, AnimalJobConfig.class, CrawlConfig.class
+        };
     }
 
     @Override

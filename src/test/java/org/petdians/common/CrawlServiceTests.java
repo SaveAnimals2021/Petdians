@@ -1,4 +1,4 @@
-package org.petdians.common.crawling;
+package org.petdians.common;
 
 import lombok.extern.log4j.Log4j;
 import org.junit.Before;
@@ -10,6 +10,7 @@ import org.petdians.animal.dto.MissingAnimalDTO;
 import org.petdians.animal.service.AnimalService;
 import org.petdians.animal.service.ImageService;
 import org.petdians.common.config.CommonConfig;
+import org.petdians.common.crawling.config.CrawlConfig;
 import org.petdians.common.crawling.service.*;
 import org.petdians.common.dao.AnimalInfoDAO;
 import org.petdians.common.util.ImageManager;
@@ -21,7 +22,7 @@ import java.util.List;
 
 @Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {CommonConfig.class, AnimalConfig.class})
+@ContextConfiguration(classes = {CommonConfig.class, AnimalConfig.class, CrawlConfig.class})
 public class CrawlServiceTests {
     @Autowired
     KaraCrawlService karaservice;
@@ -170,9 +171,6 @@ public class CrawlServiceTests {
                 e.printStackTrace();
             }
         });
-
-
-
     }
 
     @Test
@@ -183,6 +181,11 @@ public class CrawlServiceTests {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void testAllList(){
+        service.getAllList();
     }
 
 }

@@ -5,13 +5,15 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.petdians.animal.dto.AnimalInfoDTO;
+import org.petdians.animal.dto.MissingAnimalDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Log4j
+@Service
 // 서울유기동물 입양센터
 public class KarmaCrawlService extends CrawlService{
 
@@ -122,20 +124,21 @@ public class KarmaCrawlService extends CrawlService{
         // ========== 이미지
 
         List<String> imgList = new ArrayList<>();
-        imgList.add(baseUrl + ele.select("img").attr("src"));
+        imgList.add(ele.select("img").attr("src"));
+
         String imageType = "jpg";
 
         // ========== 리스트에 추가하기
 
-        AnimalInfoDTO info = AnimalInfoDTO.builder()
-                .age(age).sex(sex).species(species).isNeutralized(isNeu).color(color).date(date)
-                .special(special).imageType(imageType).imageUrlList(imgList).weight(weight).type(type)
-                .serviceName(serviceName)
+        MissingAnimalDTO info = MissingAnimalDTO.builder()
+                .age(age).sex(sex).species(species).color(color).regDate(date).originURL(baseUrl)
+                .special(special).imageType(imageType).imageUrlList(imgList).type(type)
+                .serviceName(serviceName).rescueStatus(3)
                 .build();
 
-        // setAnimalCode(info);
+        setAnimalCode(info);
 
-        // animalList.add(info);
+        animalList.add(info);
 
     }
 

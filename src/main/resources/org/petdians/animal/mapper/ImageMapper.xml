@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="org.petdians.animal.mapper.ImageMapper">
+
+	<!-- INSERT -->
+	<insert id="register" >
+		<![CDATA[
+		insert into tbl_image (url, animalNumber, regDate, updateDate, uuid,
+		                       uploadPath, fileName, type)
+            values (#{url}, #{animalNumber}, #{regDate}, #{uuid},
+					#{uploadPath}, #{fileName}, #{type})
+        ]]>
+
+
+	</insert>
+
+
+
+	<select id="getImageByAno" resultType="org.petdians.animal.domain.ImageVO">
+		select * from tbl_image where animalNumber = #{ano}
+	</select>
+
+
+
+</mapper>

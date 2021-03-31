@@ -5,18 +5,21 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.petdians.animal.dto.AnimalInfoDTO;
+import org.petdians.animal.dto.MissingAnimalDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Log4j
+@Service
 public class IJoaCrawlService extends CrawlService{
 
     private static String baseUrl = "https://www.ijoa.co.kr";
+    private static String imageBaseUrl = "https://cdn.imweb.me/upload/";
     private static String url = "https://www.ijoa.co.kr/42?page=";
     private static String serviceName = "아이조아요양보호소";
-
+    private static int urlsize = imageBaseUrl.length();
     public void doCrawl() throws Exception {
 
         int type = 0;
@@ -75,7 +78,7 @@ public class IJoaCrawlService extends CrawlService{
 
         for(int i = 0; i < size; ++i) {
 
-            AnimalInfoDTO animalInfoDTO = new AnimalInfoDTO();
+            MissingAnimalDTO animalInfoDTO = new MissingAnimalDTO();
             List<String> textList = new ArrayList<>();
             List<String> imgUrl = new ArrayList<>();
 
@@ -115,13 +118,11 @@ public class IJoaCrawlService extends CrawlService{
                 animalInfoDTO.setServiceName(serviceName);
 
                 animalInfoDTO.setType(animalType);
-                animalInfoDTO.setDate(date);
+                animalInfoDTO.setRegDate(date);
                 animalInfoDTO.setSpecies(textList.get(1));
                 animalInfoDTO.setSex(textList.get(2));
                 animalInfoDTO.setName(textList.get(3));
-                animalInfoDTO.setIsVaccinated(textList.get(4));
                 animalInfoDTO.setAge(textList.get(5));
-                animalInfoDTO.setIsNeutralized(textList.get(6));
 
                 String src = "";
                 String imgType = "";
@@ -138,15 +139,16 @@ public class IJoaCrawlService extends CrawlService{
 
                     //AnimalInfo에 값 추가
                     animalInfoDTO.setImageType(imgType);
-
+                    src = src.substring(src.lastIndexOf(imageBaseUrl) + urlsize);
+                    log.info("src : " + src);
                     imgUrl.add(src);
                 }//end foreach
-
+                animalInfoDTO.setOriginURL(imageBaseUrl);
                 //AnimalInfo에 값 추가
                 animalInfoDTO.setImageUrlList(imgUrl);
 
-                // setAnimalCode(animalInfoDTO);
-                 // animalList.add(animalInfoDTO);
+                setAnimalCode(animalInfoDTO);
+                animalList.add(animalInfoDTO);
 
             }//end if
 

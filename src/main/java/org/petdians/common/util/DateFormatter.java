@@ -52,6 +52,9 @@ public class DateFormatter {
     }
 
     public static String fromDateToString(Date date) {
+        if(null == date){
+            return "미기재";
+        }
         return  formatter.format(new Date(date.getTime() - 9 * 1000 * 60 * 60));
     }
 
