@@ -80,11 +80,17 @@ public class SimpleDateFormatter {
 
 
     public static String makeDateFormat(String str){
+        if(str.isEmpty()){
+            return "";
+        }
+
         String[] arr = str.split("/");
 
         if(arr.length == 1){
             char[] charArr = str.toCharArray();
-            String result = charArr[0] + charArr[1] + charArr[2] + charArr[3] + "/" + charArr[4] + charArr[5] + "/" + charArr[6] + charArr[7];
+            String result = "" + charArr[0] + charArr[1] + charArr[2] + charArr[3];
+            result += "/" + charArr[4] + charArr[5];
+            result += "/" + charArr[6] + charArr[7];
             return result;
         } else {
             if (arr[1].length() < 2) {
@@ -97,5 +103,4 @@ public class SimpleDateFormatter {
             return arr[0]+"/"+arr[1]+"/"+arr[2];
         }
     }
-
 }

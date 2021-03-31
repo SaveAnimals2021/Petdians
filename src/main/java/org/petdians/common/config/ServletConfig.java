@@ -16,9 +16,6 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableAspectJAutoProxy
 public class ServletConfig implements WebMvcConfigurer {
 
-    public ServletConfig() {
-    }
-
     public void configureViewResolvers(ViewResolverRegistry registry) {
         InternalResourceViewResolver bean = new InternalResourceViewResolver();
         bean.setViewClass(JstlView.class);
@@ -28,7 +25,7 @@ public class ServletConfig implements WebMvcConfigurer {
     }
 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler(new String[]{"/resources/**"}).addResourceLocations(new String[]{"/resources/"});
+        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
 }

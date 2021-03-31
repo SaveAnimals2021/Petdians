@@ -1,5 +1,6 @@
 package org.petdians.common.util;
 
+import lombok.extern.log4j.Log4j;
 import org.petdians.animal.dto.ImageDTO;
 import org.petdians.animal.dto.MissingAnimalDTO;
 import org.petdians.common.crawling.service.CrawlService;
@@ -15,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-
+@Log4j
 public class ImageManager {
 
     private static final String uploadFolder = "C:\\upload";
@@ -31,7 +32,7 @@ public class ImageManager {
         List<ImageDTO> resultImages = new ArrayList<ImageDTO>();
 
         for (int i = 0; i < size; ++i) {
-            String url = urlList.get(i);
+            String url = dto.getOriginURL() + urlList.get(i);
             URL urlObj = new URL(url);
 
             HttpURLConnection urlCon = (HttpURLConnection) urlObj.openConnection();
@@ -59,11 +60,16 @@ public class ImageManager {
 
             // 2. 파일 만들기
             // 실제 저장할 파일 이름
-
-
             // 이미지를 파일로 저장하기 위해
             // 경로 + 파일이름 + 확장자
-            String last = uploadPath + File.separator + fileFullName.substring(0, fileFullName.lastIndexOf(".")) + "." + dto.getImageType();
+            int lastindex = fileFullName.lastIndexOf(".");
+            String last = "";
+            // .이 없다 = 확장자가 있다.
+            if(-1 == lastindex){
+                last = uploadPath + File.separator + fileFullName + "." + dto.getImageType();
+            } else {
+                last = uploadPath + File.separator + fileFullName.substring(0, lastindex) + "." + dto.getImageType();
+            }
             FileOutputStream fos = new FileOutputStream(last);
 
             byte[] buffer = new byte[1024 * 8];

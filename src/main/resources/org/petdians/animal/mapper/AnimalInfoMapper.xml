@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
 <mapper namespace="org.petdians.animal.mapper.AnimalInfoMapper">
@@ -28,16 +28,16 @@
 	<!-- INSERT -->
 	<insert id="register" >
 		<![CDATA[
-		insert into tbl_animal (animalCode, serviceName, type, name, species,
-								sex, age, special, color, situation,
-								originURL, missingDate, missingLocation, rescueDate,
-								rescueLocation, phoneNumber, guardianName, bno, rescueStatus)
+      insert into tbl_animal (animalCode, serviceName, type, name, species,
+                        sex, age, special, color, situation,
+                        originURL, missingDate, missingLocation, rescueDate,
+                        rescueLocation, phoneNumber, guardianName, bno, rescueStatus)
 
-		values (#{animalCode}, #{serviceName}, #{type}, #{name}, #{species},
-				#{sex}, #{age}, #{special}, #{color}, #{situation},
-				#{originURL}, #{missingDate}, #{missingLocation}, #{rescueDate},
-				#{rescueLocation}, #{phoneNumber}, #{guardianName}, #{bno}, #{rescueStatus})
-		]]>
+      values (#{animalCode}, #{serviceName}, #{type}, #{name}, #{species},
+            #{sex}, #{age}, #{special}, #{color}, #{situation},
+            #{originURL}, #{missingDate}, #{missingLocation}, #{rescueDate},
+            #{rescueLocation}, #{phoneNumber}, #{guardianName}, #{bno}, #{rescueStatus})
+      ]]>
 		<selectKey resultType="int" keyProperty="animalNumber" order="AFTER">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
@@ -45,11 +45,11 @@
 
 	<!-- MODIFY -->
 	<update id="setIsAdopted">
-		<![CDATA[
+      <![CDATA[
 		update tbl_animal set updatedate = now(), isAdopted = #{isAdopted}
 		where animalNumber = #{animalNumber}
 		]]>
-	</update>
+   </update>
 
 	<!-- List -->
 	<select id="getPagedList" resultType="org.petdians.animal.domain.MissingAnimalVO">

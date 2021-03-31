@@ -2,8 +2,8 @@ package org.petdians.common.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import lombok.extern.log4j.Log4j;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.petdians.batch.config.AnimalJobConfig;
 import org.springframework.batch.core.launch.JobLauncher;
@@ -23,15 +23,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
+@Log4j
 @Configuration
 @EnableTransactionManagement
 @Import(AnimalJobConfig.class)
 public class CommonConfig {
-
-    private static final Logger log = Logger.getLogger(CommonConfig.class);
-
-    public CommonConfig() {
-    }
 
     @Bean
     public DataSource dataSource() {
@@ -48,6 +44,8 @@ public class CommonConfig {
     public SqlSessionFactory sqlSessionFactory() throws Exception {
         SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
         sqlSessionFactory.setDataSource(this.dataSource());
+
+
         return sqlSessionFactory.getObject();
     }
 

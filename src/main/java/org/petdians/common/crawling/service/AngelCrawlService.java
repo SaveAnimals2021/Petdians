@@ -7,6 +7,7 @@ import org.jsoup.select.Elements;
 import org.petdians.animal.dto.MissingAnimalDTO;
 import org.petdians.common.util.DateFormatter;
 import org.petdians.common.util.SimpleDateFormatter;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,6 +15,7 @@ import java.util.List;
 
 
 @Log4j
+@Service
 public class AngelCrawlService extends CrawlService {
 
 

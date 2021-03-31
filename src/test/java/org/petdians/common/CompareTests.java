@@ -1,4 +1,4 @@
-package org.petdians.common.crawling;
+package org.petdians.common;
 
 import lombok.extern.log4j.Log4j;
 import org.junit.Before;

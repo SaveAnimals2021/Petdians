@@ -4,20 +4,22 @@ import lombok.extern.log4j.Log4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.petdians.animal.dto.AnimalInfoDTO;
+import org.petdians.animal.dto.MissingAnimalDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Log4j
+@Service
 // 서울유기동물 입양센터
 public class SaacCrawlService extends CrawlService{
     private static String baseUrl = "http://saac.kr";
     private static String url = "http://saac.kr/?act=board&bbs_code=sub2_1&page=";
     private static String serviceName = "서울유기동물 입양센터";
     private static int minYear = 2020;
-
+    private static int urlSize= baseUrl.length();
 
     public void doCrawl() throws Exception {
         log.info(serviceName + "가 시작됩니다...");
@@ -60,7 +62,7 @@ public class SaacCrawlService extends CrawlService{
 
             if(title.contains("입양") || title.contains("완료")
                     || title.contains("품으로") || title.contains("치와와 와와") || title.contains("상주") ||  title.contains("동영상")){
-               // log.info("입양 완료되었습니다......................");
+                // log.info("입양 완료되었습니다......................");
                 continue;
             }
 
@@ -73,10 +75,10 @@ public class SaacCrawlService extends CrawlService{
                 return;
             }
 
-            AnimalInfoDTO info = new AnimalInfoDTO();
+            MissingAnimalDTO info = new MissingAnimalDTO();
 
             date = date.substring(0, date.lastIndexOf(" ")).replace(".", "/");
-            info.setDate(date);
+            info.setRegDate(date);
 
 
             doc.select(".board-content").forEach(e -> {
@@ -89,12 +91,14 @@ public class SaacCrawlService extends CrawlService{
 
                 for(int j = 0; j < imageSize; ++j){
                     String imageString  = images.get(j).attr("src");
+
                     type = imageString.substring(imageString.lastIndexOf("."));
 
                     if(imageString.contains("facebook") || imageString.contains("twitter") || imageString.contains(".gif") ){
                         continue;
                     }
-
+                    imageString = imageString.substring(imageString.lastIndexOf(baseUrl) + urlSize);
+                    // log.info("imageString : " + imageString);
                     imageList.add(imageString);
                 }
 
@@ -106,7 +110,6 @@ public class SaacCrawlService extends CrawlService{
                 // ========== 기타 정보
                 Elements divs = e.select("div");
                 int divsize = divs.size();
-
 
                 for(int j = 2; j < divsize; ++j){
                     String temp = divs.get(j).html();
@@ -137,13 +140,12 @@ public class SaacCrawlService extends CrawlService{
                         }
 
                         info.setSpecial(temp);
-
+                        info.setRescueStatus(3);
                     }
                 }
-
-               //  setAnimalCode(info);
-
-                // animalList.add(info);
+                info.setOriginURL(baseUrl);
+                setAnimalCode(info);
+                animalList.add(info);
             });
 
         }
