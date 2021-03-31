@@ -1,7 +1,6 @@
 package org.petdians.common.config;
 
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
@@ -13,7 +12,6 @@ import org.springframework.web.servlet.view.JstlView;
 @ComponentScan(
         basePackages = {"org.petdians.common.controller", "org.petdians.animal.controller"}
 )
-@EnableAspectJAutoProxy
 public class ServletConfig implements WebMvcConfigurer {
 
     public void configureViewResolvers(ViewResolverRegistry registry) {

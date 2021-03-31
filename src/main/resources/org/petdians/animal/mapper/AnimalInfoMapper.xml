@@ -46,7 +46,7 @@
 	<!-- MODIFY -->
 	<update id="setIsAdopted">
       <![CDATA[
-		update tbl_animal set updatedate = now(), isAdopted = #{isAdopted}
+		update tbl_animal set updatedate = now(), isCompleted = 1
 		where animalNumber = #{animalNumber}
 		]]>
    </update>
@@ -60,6 +60,10 @@
 
 	<select id="getAllList" resultType="org.petdians.animal.domain.MissingAnimalVO">
 		select * from tbl_animal
+	</select>
+
+	<select id="getUncompletedList" resultType="org.petdians.animal.domain.MissingAnimalVO">
+		select * from tbl_animal where isCompleted = 0
 	</select>
 
 	<!-- ToTal -->

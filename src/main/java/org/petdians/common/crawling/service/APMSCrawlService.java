@@ -5,14 +5,13 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.petdians.animal.dto.MissingAnimalDTO;
+import org.petdians.common.dao.AnimalInfoDAO;
 import org.petdians.common.util.SimpleDateFormatter;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Log4j
-@Service
 public class APMSCrawlService extends CrawlService {
 
 
@@ -21,7 +20,8 @@ public class APMSCrawlService extends CrawlService {
     private static String serviceName = "동물보호관리시스템";
 
     @Override
-    public void doCrawl() throws Exception {
+    public void doCrawl(Integer period) throws Exception {
+        this.period = period;
 
         log.info(serviceName + "가 시작됩니다...");
 
@@ -71,6 +71,7 @@ public class APMSCrawlService extends CrawlService {
         int size = aURL.size();
         String newURL = url.replace("lossList","lossDtl");
         main:for (int i = 1; i < size; ++i) {
+            ++crawlNumber;
             Document doc = getDocument(newURL + "&seqNo=" + aURL.get(i));
 
             Elements eles = doc.select("tbody td");
@@ -79,6 +80,7 @@ public class APMSCrawlService extends CrawlService {
             String guardianName = eles.get(1).html();
             String species = eles.get(2).html();
             String phoneNumber = eles.select("a").html();
+            String date = eles.get(5).html().replace("-", "/");
             String missingDate = eles.get(5).html().replace("-", "/") + " 00:00";
             String sex = eles.get(6).html();
             String age = eles.get(7).html();
@@ -87,6 +89,11 @@ public class APMSCrawlService extends CrawlService {
             String situation = eles.get(11).html();
             String special = eles.get(10).html(); // 경위
             special.replace("&amp;", " ");
+
+            if(false == checkPeriod(missingDate)){
+                --crawlNumber;
+                continue;
+            }
 
             // 이미지
             String href = doc.select(".photo a").attr("href");
@@ -101,6 +108,9 @@ public class APMSCrawlService extends CrawlService {
 
             log.info("regDate : " + regDate);
             regDate = SimpleDateFormatter.makeDateFormat(regDate);
+
+            // 기간 체크
+
 
             log.info("regDate : " + regDate);
             log.info("missingDate : " + missingDate);
@@ -127,6 +137,7 @@ public class APMSCrawlService extends CrawlService {
             }
 
             animalList.add(info);
+            AnimalInfoDAO.add(info);
         }
 
 

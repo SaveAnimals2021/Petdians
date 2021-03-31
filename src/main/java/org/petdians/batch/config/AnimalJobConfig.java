@@ -26,7 +26,6 @@ public class AnimalJobConfig {
 
     @Bean
     public Job animalCrawlJob() {
-        log.info("=================== animalCrawlJob ===================");
 //        return jobBuilderFactory.get("animalCrawlJob") // batch job 생성
 //                .start(animalCrawlStep())
 //                .build();
@@ -40,7 +39,6 @@ public class AnimalJobConfig {
 
     @Bean
     public Step animalCrawlStep() {
-        log.info("=================== animalCrawlStep ===================");
 //        return stepBuilderFactory.get("animalCrawlStep") // batch step 생성
 //                .tasklet((contribution, chunkContext) -> {
 //                    // step에서 수행될 기능을 설정

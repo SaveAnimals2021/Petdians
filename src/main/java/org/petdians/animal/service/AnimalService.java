@@ -21,7 +21,7 @@ public interface AnimalService {
 
     List<MissingAnimalDTO> getPagedList(PageDTO pageDTO);
     List<MissingAnimalDTO> getAllList();
-
+    List<MissingAnimalDTO> getUncompletedList();
 
     default MissingAnimalVO toDomain(MissingAnimalDTO dto) throws Exception{
         Date missingDate = SimpleDateFormatter.fromStringToDate(dto.getMissingDate());

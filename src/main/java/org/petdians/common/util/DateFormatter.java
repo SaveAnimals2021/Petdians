@@ -51,15 +51,26 @@ public class DateFormatter {
         return resultStr;
     }
 
+    public static String calcTimeDiff(Date early, Date late){
+        Long dif =  late.getTime() - early.getTime();
+        Date difDate = new Date(dif);
+        SimpleDateFormat minuteFormatter = new SimpleDateFormat("mm분 ss초");
+        return minuteFormatter.format(dif);
+    }
+
     public static String fromDateToString(Date date) {
         if(null == date){
-            return "미기재";
+            return null;
         }
         return  formatter.format(new Date(date.getTime() - 9 * 1000 * 60 * 60));
     }
 
 
     public static Date fromStringToDate(String str) throws Exception {
+        if("unknown" == str){
+            return null;
+        }
+
         return null == str || str.length() == 0 ? null : formatter.parse(str);
     }
 
@@ -75,6 +86,24 @@ public class DateFormatter {
 
         // 90일 차이 확인
         if (1 > (result / 1000 / 60 / 60 / 24 / 90)){
+            isInThree = true;
+        }
+
+        return isInThree;
+    }
+
+    public static Boolean checkInThreeMonths(Date date, Integer period){
+
+        Boolean isInThree = false;
+        // 현재 시간
+        Date now = new Date();
+        // 등록 시간
+        Date utilDate = new Date(date.getTime() - 9 * 1000 * 60 * 60);
+        // 시간 차이
+        Long result = now.getTime() - utilDate.getTime();
+
+        // 90일 차이 확인
+        if (1 > (result / 1000 / 60 / 60 / 24 / period)){
             isInThree = true;
         }
 

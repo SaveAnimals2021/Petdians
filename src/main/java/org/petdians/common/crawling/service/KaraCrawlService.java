@@ -6,13 +6,12 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.petdians.animal.dto.MissingAnimalDTO;
-import org.springframework.stereotype.Service;
+import org.petdians.common.dao.AnimalInfoDAO;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Log4j
-@Service
 public class KaraCrawlService extends CrawlService {
 
     private static String baseUrl = "https://www.ekara.org";
@@ -20,7 +19,8 @@ public class KaraCrawlService extends CrawlService {
     private static String serviceName = "동물권행동 카라";
 
     @Override
-    public void doCrawl() throws Exception {
+    public void doCrawl(Integer period) throws Exception {
+        this.period = period;
 
         log.info(serviceName + "가 시작됩니다...");
 
@@ -55,6 +55,7 @@ public class KaraCrawlService extends CrawlService {
         int size = aURL.size();
 
         for (int i = 0; i < size; ++i) {
+            ++crawlNumber;
             Document doc = getDocument(baseUrl + aURL.get(i));
 
             // ========== 날짜
@@ -69,6 +70,11 @@ public class KaraCrawlService extends CrawlService {
             String date = doc.select(".media-body").get(5).select(" .pull-right").html();
             date = date.replace(".", "/");
             date = date.substring(0, date.lastIndexOf("/"));
+
+            if (false == checkPeriod(date)) {
+                --crawlNumber;
+                continue;
+            }
 
             // ========== 이름
             String name = doc.select(".h3.g-color-primary.font-weight-bold.mt-4").html();
@@ -112,6 +118,7 @@ public class KaraCrawlService extends CrawlService {
             setAnimalCode(info);
 
             animalList.add(info);
+            AnimalInfoDAO.add(info);
         }
     }
 

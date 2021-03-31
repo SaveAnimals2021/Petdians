@@ -3,19 +3,27 @@ package org.petdians.common.crawling.service;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.petdians.animal.dto.MissingAnimalDTO;
+import org.petdians.common.util.DateFormatter;
+import org.petdians.common.util.SimpleDateFormatter;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public abstract class CrawlService {
     public final static String agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36";
 
+    protected Integer crawlNumber = 0; // 시도 회수
 
-    protected abstract void doCrawl() throws Exception;
+    protected Integer period = 0;
+
+    public Integer getCrawlNumber(){return crawlNumber;}
+
+    protected abstract void doCrawl(Integer period) throws Exception;
 
     protected List<MissingAnimalDTO> animalList;
 
@@ -27,6 +35,16 @@ public abstract class CrawlService {
         return animalList;
     }
 
+    protected Boolean checkPeriod(String date){
+        try {
+            Date newDate = SimpleDateFormatter.fromStringToDate(date);
+            return DateFormatter.checkInThreeMonths(newDate, period);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 
 
     protected int getLastPage(String className, Document doc){

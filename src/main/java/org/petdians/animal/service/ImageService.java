@@ -15,6 +15,11 @@ public interface ImageService {
 
     List<ImageDTO> getImageByAno(Integer ano) throws Exception;
 
+    List<ImageDTO> getAllImages() throws Exception;
+
+
+    void downloadAll() throws Exception;
+
     default ImageVO toDomain(ImageDTO dto) throws Exception{
         Date regDate = SimpleDateFormatter.fromStringToDate(dto.getRegDate());
         Date updateDate = SimpleDateFormatter.fromStringToDate(dto.getUpdateDate());

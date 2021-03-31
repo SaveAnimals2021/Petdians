@@ -6,27 +6,28 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.petdians.animal.dto.MissingAnimalDTO;
-import org.springframework.stereotype.Service;
+import org.petdians.common.dao.AnimalInfoDAO;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Log4j
-@Service
-public class IJoaCrawlService extends CrawlService{
+public class IJoaCrawlService extends CrawlService {
 
     private static String baseUrl = "https://www.ijoa.co.kr";
     private static String imageBaseUrl = "https://cdn.imweb.me/upload/";
     private static String url = "https://www.ijoa.co.kr/42?page=";
     private static String serviceName = "아이조아요양보호소";
     private static int urlsize = imageBaseUrl.length();
-    public void doCrawl() throws Exception {
+
+    public void doCrawl(Integer period) throws Exception {
+        this.period = period;
 
         int type = 0;
         log.info(serviceName + "가 시작됩니다...");
 
-        for(int i = 1; ; i++) {
-            String listurl = url+ i;
+        for (int i = 1; ; i++) {
+            String listurl = url + i;
 
             //url 검색조건 설정
             String[] keyword = {"강아지", "고양이"};
@@ -48,11 +49,11 @@ public class IJoaCrawlService extends CrawlService{
             crawlView(urlList, baseUrl, type, "20210101");
 
             //마지막 페이지와 i가 같으면 종료
-            if(type == 1 && lastPageItem.equals("" + i + "")) {
-                log.info(serviceName+" 마지막 페이지입니다. -> " + i);
+            if (type == 1 && lastPageItem.equals("" + i + "")) {
+                log.info(serviceName + " 마지막 페이지입니다. -> " + i);
                 return;
 
-            } else if(lastPageItem.equals(""+i+"")){
+            } else if (lastPageItem.equals("" + i + "")) {
 
                 type = 1;
                 i = 0;
@@ -67,16 +68,17 @@ public class IJoaCrawlService extends CrawlService{
 
         String animalType = "";
 
-        if(type == 0){
+        if (type == 0) {
             animalType = "개";
-        }else {
+        } else {
             animalType = "고양이";
-        };
+        }
+        ;
 
         int size = aURL.size();
 
-
-        for(int i = 0; i < size; ++i) {
+        for (int i = 0; i < size; ++i) {
+            ++crawlNumber;
 
             MissingAnimalDTO animalInfoDTO = new MissingAnimalDTO();
             List<String> textList = new ArrayList<>();
@@ -90,67 +92,73 @@ public class IJoaCrawlService extends CrawlService{
             //Head - meta Tag에 있는 등록 시간 가져오기
             String date = doc.select("meta[property='article:published_time']").attr("content");
 
-            if(date.startsWith("2021")) {
 
-                date = date.substring(0, 10);
-                //log.info(date);
-                // "-" -> "/" 로 변경
-                date = date.replace("-", "/"); //가공된 등록날짜
-                //log.info("Date: " + date);
-                textList.add(date);
+            date = date.substring(0, 10);
+            //log.info(date);
+            // "-" -> "/" 로 변경
+            date = date.replace("-", "/"); //가공된 등록날짜
 
-                // img 태그에서 src 추출하기
-                // class="margin-top-xxl" 아래에 있는 img 태그들을 긁어오자
-                Elements imageEles = doc.select(".margin-top-xxl img");
-                Elements textEles = doc.select(".tableHover div"); //text div
+            if (false == checkPeriod(date)) {
+                --crawlNumber;
+                continue;
+            }
 
-                //log.info("textEles : " + textEles);
+            //log.info("Date: " + date);
+            textList.add(date);
 
-                //항목 값 list에 추가
-                textEles.forEach(a -> {
-                    if(a.select("span").isEmpty()) {
-                        textList.add(a.html());
-                    }
+            // img 태그에서 src 추출하기
+            // class="margin-top-xxl" 아래에 있는 img 태그들을 긁어오자
+            Elements imageEles = doc.select(".margin-top-xxl img");
+            Elements textEles = doc.select(".tableHover div"); //text div
 
-                });//end foreach
+            //log.info("textEles : " + textEles);
+
+            //항목 값 list에 추가
+            textEles.forEach(a -> {
+                if (a.select("span").isEmpty()) {
+                    textList.add(a.html());
+                }
+
+            });//end foreach
+
+            //AnimalInfo에 값 추가
+            animalInfoDTO.setServiceName(serviceName);
+
+            animalInfoDTO.setType(animalType);
+            animalInfoDTO.setRegDate(date);
+            animalInfoDTO.setSpecies(textList.get(1));
+            animalInfoDTO.setSex(textList.get(2));
+            animalInfoDTO.setName(textList.get(3));
+            animalInfoDTO.setAge(textList.get(5));
+
+
+
+            String src = "";
+            String imgType = "";
+            String imgName = "";
+
+            //이미지 url 추가
+            for (Element imageEle : imageEles) {
+
+                src = imageEle.attr("src");
+                int idxType = src.lastIndexOf(".");
+                imgName = src.substring(0, idxType);
+
+                imgType = src.substring(idxType + 1);
 
                 //AnimalInfo에 값 추가
-                animalInfoDTO.setServiceName(serviceName);
+                animalInfoDTO.setImageType(imgType);
+                src = src.substring(src.lastIndexOf(imageBaseUrl) + urlsize);
+                imgUrl.add(src);
+                animalInfoDTO.setRescueStatus(3);
+            }//end foreach
+            animalInfoDTO.setOriginURL(imageBaseUrl);
+            //AnimalInfo에 값 추가
+            animalInfoDTO.setImageUrlList(imgUrl);
 
-                animalInfoDTO.setType(animalType);
-                animalInfoDTO.setRegDate(date);
-                animalInfoDTO.setSpecies(textList.get(1));
-                animalInfoDTO.setSex(textList.get(2));
-                animalInfoDTO.setName(textList.get(3));
-                animalInfoDTO.setAge(textList.get(5));
-
-                String src = "";
-                String imgType = "";
-                String imgName = "";
-
-                //이미지 url 추가
-                for (Element imageEle:imageEles) {
-
-                    src = imageEle.attr("src");
-                    int idxType = src.lastIndexOf(".");
-                    imgName = src.substring(0, idxType);
-
-                    imgType = src.substring(idxType + 1);
-
-                    //AnimalInfo에 값 추가
-                    animalInfoDTO.setImageType(imgType);
-                    src = src.substring(src.lastIndexOf(imageBaseUrl) + urlsize);
-                    log.info("src : " + src);
-                    imgUrl.add(src);
-                }//end foreach
-                animalInfoDTO.setOriginURL(imageBaseUrl);
-                //AnimalInfo에 값 추가
-                animalInfoDTO.setImageUrlList(imgUrl);
-
-                setAnimalCode(animalInfoDTO);
-                animalList.add(animalInfoDTO);
-
-            }//end if
+            setAnimalCode(animalInfoDTO);
+            animalList.add(animalInfoDTO);
+            AnimalInfoDAO.add(animalInfoDTO);
 
         }//end for
 

@@ -5,14 +5,13 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.petdians.animal.dto.MissingAnimalDTO;
-import org.springframework.stereotype.Service;
+import org.petdians.common.dao.AnimalInfoDAO;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Log4j
-@Service
 // 서울유기동물 입양센터
 public class SaacCrawlService extends CrawlService{
     private static String baseUrl = "http://saac.kr";
@@ -21,7 +20,9 @@ public class SaacCrawlService extends CrawlService{
     private static int minYear = 2020;
     private static int urlSize= baseUrl.length();
 
-    public void doCrawl() throws Exception {
+    public void doCrawl(Integer period) throws Exception {
+        this.period = period;
+
         log.info(serviceName + "가 시작됩니다...");
 
         int prevPage = 0;
@@ -54,6 +55,7 @@ public class SaacCrawlService extends CrawlService{
         int size = aURL.size();
 
         for(int i = 0; i < size; ++i) {
+            ++crawlNumber;
             Document doc = getDocument( baseUrl + aURL.get(i));
 
             // 입양 완료 체크
@@ -69,6 +71,8 @@ public class SaacCrawlService extends CrawlService{
             // ========== 날짜 추가
             String date = doc.select(".board-info span:nth-last-child(3)").html();
 
+
+
             int year = Integer.parseInt(date.substring(0, 4));
 
             if(minYear >= year){
@@ -79,7 +83,11 @@ public class SaacCrawlService extends CrawlService{
 
             date = date.substring(0, date.lastIndexOf(" ")).replace(".", "/");
             info.setRegDate(date);
-
+            log.info(date);
+            if (false == checkPeriod(date)) {
+                --crawlNumber;
+                continue;
+            }
 
             doc.select(".board-content").forEach(e -> {
 
@@ -146,6 +154,7 @@ public class SaacCrawlService extends CrawlService{
                 info.setOriginURL(baseUrl);
                 setAnimalCode(info);
                 animalList.add(info);
+                AnimalInfoDAO.add(info);
             });
 
         }

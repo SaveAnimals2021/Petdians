@@ -43,10 +43,12 @@ public class AnimalServiceTests {
     @Autowired
     ImageService imageService;
 
+    int time = 90;
+
     // dto 모두 크롤링해서 image 모두 저장
     @Test
     public void testAnimalService() throws Exception {
-        angelCrawlService.doCrawl();
+        angelCrawlService.doCrawl(time);
         angelCrawlService.getAnimalList().forEach(info -> {
             log.info(info);
             try {
@@ -59,7 +61,7 @@ public class AnimalServiceTests {
             }
         });
         log.info("========================= INSERT DONE : angelCrawlService ===============================");
-        apmsCrawlService.doCrawl();
+        apmsCrawlService.doCrawl(time);
         apmsCrawlService.getAnimalList().forEach(info -> {
             try {
                 service.register(info);
@@ -71,7 +73,7 @@ public class AnimalServiceTests {
             }
         });
         log.info("========================= INSERT DONE : apmsCrawlService ===============================");
-        karaservice.doCrawl();
+        karaservice.doCrawl(time);
         karaservice.getAnimalList().forEach(info -> {
             try {
                 log.info(info);
@@ -87,7 +89,7 @@ public class AnimalServiceTests {
             }
         });
         log.info("========================= INSERT DONE : karaservice ===============================");
-        saacCrawlService.doCrawl();
+        saacCrawlService.doCrawl(time);
         saacCrawlService.getAnimalList().forEach(info -> {
             try {
                 log.info(info);
@@ -103,7 +105,7 @@ public class AnimalServiceTests {
             }
         });
         log.info("========================= INSERT DONE :saacCrawlService ===============================");
-        karmaCrawlService.doCrawl();
+        karmaCrawlService.doCrawl(time);
         karmaCrawlService.getAnimalList().forEach(info -> {
             try {
                 service.register(info);
@@ -124,7 +126,7 @@ public class AnimalServiceTests {
             }
         });
         log.info("========================= INSERT DONE : karmaCrawlService ===============================");
-        iJoaCrawlService.doCrawl();
+        iJoaCrawlService.doCrawl(time);
         iJoaCrawlService.getAnimalList().forEach(info -> {
             try {
                 log.info(info);

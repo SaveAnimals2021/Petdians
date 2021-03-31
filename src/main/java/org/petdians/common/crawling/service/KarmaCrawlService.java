@@ -6,14 +6,13 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.petdians.animal.dto.MissingAnimalDTO;
-import org.springframework.stereotype.Service;
+import org.petdians.common.dao.AnimalInfoDAO;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Log4j
-@Service
 // 서울유기동물 입양센터
 public class KarmaCrawlService extends CrawlService{
 
@@ -24,7 +23,9 @@ public class KarmaCrawlService extends CrawlService{
     // page 수집에 실패했을 경우, 무한반복을 막기 위해
     private static int maxCount =3;
 
-    public void doCrawl() throws Exception {
+    public void doCrawl(Integer period) throws Exception {
+        this.period = period;
+
         log.info(serviceName + "가 시작됩니다...");
 
         for(int i = 1; ; i++) {
@@ -62,6 +63,8 @@ public class KarmaCrawlService extends CrawlService{
     }
 
     private void setInfo(Element ele){
+        ++crawlNumber;
+
         // div class="list" 가 들어온다.
         Elements ul = ele.select("ul li");
 
@@ -72,6 +75,10 @@ public class KarmaCrawlService extends CrawlService{
         String date = ul.get(0).select("i").html();
         date = date.substring(0, date.indexOf("&")).replace("-", "/");
 
+        if (false == checkPeriod(date)) {
+            --crawlNumber;
+            return;
+        }
 
         // ========== 종
         String types = removeStrong(ul.get(3).html());
@@ -139,7 +146,7 @@ public class KarmaCrawlService extends CrawlService{
         setAnimalCode(info);
 
         animalList.add(info);
-
+        AnimalInfoDAO.add(info);
     }
 
     private String removeStrong(String str){

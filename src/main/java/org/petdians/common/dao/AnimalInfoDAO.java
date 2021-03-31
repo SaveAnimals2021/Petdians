@@ -1,22 +1,22 @@
 package org.petdians.common.dao;
 
-import org.petdians.animal.dto.AnimalInfoDTO;
+import org.petdians.animal.dto.MissingAnimalDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AnimalInfoDAO {
-    private List<AnimalInfoDTO> animalInfoDTOList;
+    private static final List<MissingAnimalDTO> animalInfoDTOList = new ArrayList<>();
 
-    public AnimalInfoDAO(){
-        animalInfoDTOList = new ArrayList<>();
-    }
-
-    public void addAnimal(AnimalInfoDTO info){
+    public static void add(MissingAnimalDTO info){
         animalInfoDTOList.add(info);
     }
 
-    public List<AnimalInfoDTO> getList(){
+    public static List<MissingAnimalDTO> getList(){
         return animalInfoDTOList;
+    }
+
+    public static void clear(){
+        animalInfoDTOList.clear();
     }
 }

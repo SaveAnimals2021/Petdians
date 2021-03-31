@@ -53,4 +53,13 @@ public class MissingAnimalDTO {
     // 상태
     private Integer rescueStatus;
     private String situation;
+
+    public String findMissingLocation(){
+        String result = missingLocation;
+
+        result.replace("인근", "").replace("부근", "");
+
+
+        return result;
+    }
 }

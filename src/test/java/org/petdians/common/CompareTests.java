@@ -52,10 +52,10 @@ public class CompareTests {
         // CRAWLING LIST
         List<MissingAnimalDTO> crawledList = new ArrayList<>();
 
-        karaservice.doCrawl();
-        saacCrawlService.doCrawl();
-        karmaCrawlService.doCrawl();
-        iJoaCrawlService.doCrawl();
+        karaservice.doCrawl(30);
+        saacCrawlService.doCrawl(30);
+        karmaCrawlService.doCrawl(30);
+        iJoaCrawlService.doCrawl(30);
 
         log.info("====================== CRAWL OVER ======================");
 

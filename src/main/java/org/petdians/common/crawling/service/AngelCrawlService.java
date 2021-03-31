@@ -5,12 +5,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.petdians.animal.dto.MissingAnimalDTO;
-import org.petdians.common.util.DateFormatter;
+import org.petdians.common.dao.AnimalInfoDAO;
 import org.petdians.common.util.SimpleDateFormatter;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -24,7 +23,8 @@ public class AngelCrawlService extends CrawlService {
     private static String serviceName = "동물보호센터";
 
     @Override
-    public void doCrawl() throws Exception {
+    public void doCrawl(Integer period) throws Exception {
+        this.period = period;
 
         log.info(serviceName + "가 시작됩니다...");
 
@@ -37,12 +37,15 @@ public class AngelCrawlService extends CrawlService {
         type = "기타";
         typeURL = "code=other";
         crawlType(type, typeURL);
+
+
     }
 
     public void crawlType(String type, String typeURL) throws Exception{
         int count = 0;
 
         for (int i = 1; ; i++) {
+
             String pageurl = url + typeURL + "&page=" + i;
 
             // DOM
@@ -71,6 +74,7 @@ public class AngelCrawlService extends CrawlService {
         int size = aURL.size();
 
         main : for (int i = 0; i < size; ++i) {
+            ++crawlNumber;
             Document doc = getDocument(baseUrl + aURL.get(i));
 
             // ========== 날짜
@@ -82,11 +86,8 @@ public class AngelCrawlService extends CrawlService {
             date = date.replace("분", "");
 
 
-            Date newDate = DateFormatter.fromStringToDate(date);
-            Boolean isInThree = DateFormatter.checkInThreeMonths(newDate);
-
-            if(false == isInThree){
-                log.info("3달이 지난 게시판입니다...");
+            if(false == checkPeriod(date)){
+                --crawlNumber;
                 return ++count;
             }
 
@@ -146,7 +147,6 @@ public class AngelCrawlService extends CrawlService {
             }
 
             // 등록일 설정
-
             String regDate = date.substring(0,10);
 
             MissingAnimalDTO info = MissingAnimalDTO.builder().age(age).type(type).species(species)
@@ -168,6 +168,7 @@ public class AngelCrawlService extends CrawlService {
             }
 
             animalList.add(info);
+            AnimalInfoDAO.add(info);
         }
 
         return 0;

@@ -59,6 +59,12 @@ public class AnimalServiceImpl implements AnimalService{
     }
 
     @Override
+    public List<MissingAnimalDTO> getUncompletedList() {
+        return toDTOList(mapper.getUncompletedList());
+    }
+
+
+    @Override
     public List<MissingAnimalDTO> getPagedList(PageDTO pageDTO) {
         return toDTOList(mapper.getPagedList(pageDTO.getSkip(), pageDTO.getPerSheet(), pageDTO.getArr(), pageDTO.getType()));
     }

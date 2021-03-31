@@ -13,6 +13,8 @@ public interface AnimalInfoMapper {
 
     List<MissingAnimalVO> getAllList();
 
+    List<MissingAnimalVO> getUncompletedList();
+
     List<MissingAnimalVO> getPagedList(@Param("skip") Integer skip,
                                      @Param("perSheet") Integer perSheet,
                                      @Param("arr") String[] arr,
@@ -20,4 +22,6 @@ public interface AnimalInfoMapper {
 
     Integer getTotalCount(@Param("arr") String[] arr,
                           @Param("keyword") String keyword);
+
+
 }

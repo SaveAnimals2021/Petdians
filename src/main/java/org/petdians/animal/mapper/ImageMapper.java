@@ -10,4 +10,7 @@ public interface ImageMapper {
     void register(ImageVO vo);
 
     List<ImageVO> getImageByAno(Integer ano);
+
+
+    List<ImageVO> getAllImages();
 }

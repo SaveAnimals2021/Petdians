@@ -24,6 +24,8 @@
 		select * from tbl_image where animalNumber = #{ano}
 	</select>
 
-
+	<select id="getAllImages" resultType="org.petdians.animal.domain.ImageVO">
+		select * from tbl_image;
+	</select>
 
 </mapper>
