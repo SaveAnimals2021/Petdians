@@ -34,5 +34,11 @@ public class AnimalInfoMapperTests {
 //        mapper.register(vo);
     }
 
+    @Test
+    public void testAllList(){
+        log.info("mapper : " + mapper);
+        mapper.getAllList().forEach(a->log.info(a));
+        log.info("============ mapper done ============");
+    }
 
 }

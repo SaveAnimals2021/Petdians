@@ -44,51 +44,42 @@
 </head>
 
 <body class="animsition">
-<div class="page-wrapper">
+<div class="page-wrapper" style="padding-bottom: 0;">
     <!-- HEADER DESKTOP-->
     <header class="header-desktop3 d-none d-lg-block">
         <div class="section__content section__content--p35">
             <div class="header3-wrap">
                 <div class="header__logo">
                     <a href="#">
-                        <img src="/resources/images/icon/logo-white.png" alt="CoolAdmin" />
+                        <img src="/resources/images/icon/petdians-finish.png" alt="CoolAdmin" />
                     </a>
                 </div>
                 <div class="header__navbar">
                     <ul class="list-unstyled">
                         <li class="has-sub">
-                            <a href="#">
-                                <i class="fas fa-tachometer-alt"></i>메인
+                            <a href="/petdiansAdmin/home">
+                                <i class="far fa-map"></i>PET MAP
                                 <span class="bot-line"></span>
                             </a>
-                            <ul class="header3-sub-list list-unstyled">
-                                <li>
-                                    <a href="/petdians/home">Dashboard 1</a>
-                                </li>
-                                <li>
-                                    <a href="index2.html">Dashboard 2</a>
-                                </li>
-                                <li>
-                                    <a href="index3.html">Dashboard 3</a>
-                                </li>
-                                <li>
-                                    <a href="index4.html">Dashboard 4</a>
-                                </li>
-                            </ul>
                         </li>
                         <li>
-                            <a href="/">
-                                <i class="fas fa-shopping-basket"></i>
-                                <span class="bot-line"></span>통계</a>
+                            <a href="/petdiansAdmin/statistics">
+                                <i class="fas fa-user"></i>
+                                <span class="bot-line"></span>USER</a>
                         </li>
                         <li>
-                            <a href="/petdians/crawling">
-                                <i class="fas fa-trophy"></i>
-                                <span class="bot-line"></span>크롤링</a>
+                            <a href="/petdiansAdmin/statistics">
+                                <i class="fas fa-chart-bar"></i>
+                                <span class="bot-line"></span>STATISTICS</a>
+                        </li>
+                        <li>
+                            <a href="/petdiansAdmin/crawling">
+                                <i class="fas fa-search"></i>
+                                <span class="bot-line"></span>CRAWLING</a>
                         </li>
                         <li class="has-sub">
                             <a href="#">
-                                <i class="fas fa-copy"></i>
+                                <i class="fas fa-question"></i>
                                 <span class="bot-line"></span>Q&A</a>
                             <ul class="header3-sub-list list-unstyled">
                                 <li>
@@ -105,7 +96,7 @@
                         <li class="has-sub">
                             <a href="#">
                                 <i class="fas fa-desktop"></i>
-                                <span class="bot-line"></span>게시판</a>
+                                <span class="bot-line"></span>BOARD</a>
                             <ul class="header3-sub-list list-unstyled">
                                 <li>
                                     <a href="button.html">Button</a>
@@ -275,7 +266,7 @@
             <div class="container-fluid">
                 <div class="header-mobile-inner">
                     <a class="logo" href="index.html">
-                        <img src="../resources/images/icon/logo-white.png" alt="CoolAdmin" />
+                        <img src="../resources/images/icon/petdians-finish.png" alt="CoolAdmin" />
                     </a>
                     <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">

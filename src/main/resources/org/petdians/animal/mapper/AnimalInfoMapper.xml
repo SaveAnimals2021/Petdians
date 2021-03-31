@@ -4,13 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="org.sa.animal.mapper.AnimalInfoMapper">
+<mapper namespace="org.petdians.animal.mapper.AnimalInfoMapper">
 
 	<!-- Search Where -->
 	<sql id="search">
 		<where>
 			<if test="arr != null">
-				<foreach collection="arr" index="key" item="val" separator="OR" open="(" close=")">
+				<foreach collection="arr" index="key" item="val" separator="OR"  open="(" close=")">
 					<if test="val == 't'.toString">
 						title like concat('%', #{keyword}, '%')
 					</if>
@@ -58,7 +58,7 @@
 		order by bno desc limit #{skip},#{perSheet}
 	</select>
 
-	<select id="getAllList" resultType="org.sa.animal.domain.MissingAnimalVO">
+	<select id="getAllList" resultType="org.petdians.animal.domain.MissingAnimalVO">
 		select * from tbl_animal
 	</select>
 

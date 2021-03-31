@@ -10,23 +10,50 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <!-- MAIN CONTENT-->
 <div class="main-content" style="padding-top: 30px;">
-    <div class="col-lg-3">
-        <div class="au-card au-card--bg-blue au-card-top-countries"
-             style="width: 92vw; padding-right: 10px; margin-bottom: 20px; margin-left: 30px;">
-            <div class="au-card-inner">
-                <div class="table-responsive">
-                    <table class="table table-top-countries">
-                        <tbody style="text-align: center">
-                        <td style="font-size: x-large">크롤링 시도 횟수 :  100</td><td></td>
-                        <td style="font-size: x-large">신규 데이터 수 :  100</td><td></td>
-                        <td style="font-size: x-large">수정 데이터 수 :  100</td><td></td>
-                        <td style="font-size: x-large">총 데이터 수 :  100</td><td></td>
-                        </tbody>
-                    </table>
+    <!-- STATISTIC-->
+    <section class="statistic statistic2" style="padding-top: 0px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-3">
+                    <div class="statistic__item statistic__item--green">
+                        <h2 class="number">10,368</h2>
+                        <span class="desc">Number of Crawling</span>
+                        <div class="icon">
+                            <i class="zmdi zmdi-account-o"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="statistic__item statistic__item--orange">
+                        <h2 class="number">388,688</h2>
+                        <span class="desc">Number of new Data</span>
+                        <div class="icon">
+                            <i class="zmdi zmdi-shopping-cart"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="statistic__item statistic__item--blue">
+                        <h2 class="number">1,086</h2>
+                        <span class="desc">Nuber of modified Data</span>
+                        <div class="icon">
+                            <i class="zmdi zmdi-calendar-note"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="statistic__item statistic__item--red">
+                        <h2 class="number">1,060,386</h2>
+                        <span class="desc">Number of total Data</span>
+                        <div class="icon">
+                            <i class="zmdi zmdi-money"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+    <!-- END STATISTIC-->
     <div class="section__content section__content--p30">
         <div class="container-fluid">
             <div class="row">
