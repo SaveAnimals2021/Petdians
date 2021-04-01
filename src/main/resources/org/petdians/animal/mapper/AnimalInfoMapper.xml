@@ -10,18 +10,26 @@
 	<sql id="search">
 		<where>
 			<if test="arr != null">
-				<foreach collection="arr" index="key" item="val" separator="OR"  open="(" close=")">
+				<foreach collection="arr" index="index" item="val" separator="OR"  open="(" close=")">
 					<if test="val == 't'.toString">
-						title like concat('%', #{keyword}, '%')
+						type = #{keyword}
 					</if>
-					<if test="val == 'c'.toString">
-						content like concat('%', #{keyword}, '%')
+					<if test="val == 'r'.toString">
+						regdate = #{keyword}
 					</if>
-					<if test="val == 'w'.toString">
-						writer like concat('%', #{keyword}, '%')
+					<if test="val == 'd'.toString">
+						rescueDate = #{keyword}
+					</if>
+					<if test="val == 's'.toString">
+						rescueStatus = #{keyword}
 					</if>
 				</foreach>
+				AND
 			</if>
+			<choose>
+				<when test="day != null">regDate BETWEEN DATE_ADD(NOW(),INTERVAL -#{day} DAY ) AND NOW()</when>
+				<otherwise>regDate BETWEEN DATE_ADD(NOW(),INTERVAL -1 MONTH ) AND NOW()</otherwise>
+			</choose>
 		</where>
 	</sql>
 
@@ -55,7 +63,7 @@
 	<select id="getPagedList" resultType="org.petdians.animal.domain.MissingAnimalVO">
 		select * from tbl_animal
 		<include refid="search"></include>
-		order by bno desc limit #{skip},#{perSheet}
+		order by animalNumber desc limit #{skip},#{perSheet}
 	</select>
 
 	<select id="getAllList" resultType="org.petdians.animal.domain.MissingAnimalVO">
@@ -68,7 +76,7 @@
 
 	<!-- ToTal -->
 	<select id="getTotalCount" resultType="Integer">
-		select count(bno) from tbl_animal
+		select count(animalNumber) from tbl_animal
 		<include refid="search"></include>
 	</select>
 

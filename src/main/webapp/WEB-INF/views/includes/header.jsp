@@ -51,7 +51,7 @@
             <div class="header3-wrap">
                 <div class="header__logo">
                     <a href="#">
-                        <img src="/resources/images/icon/petdians-finish.png" alt="CoolAdmin" />
+                        <img src="/resources/images/icon/petdians-finish.png" alt="CoolAdmin" style="max-width: 60%"/>
                     </a>
                 </div>
                 <div class="header__navbar">
@@ -265,8 +265,8 @@
         <div class="header-mobile__bar">
             <div class="container-fluid">
                 <div class="header-mobile-inner">
-                    <a class="logo" href="index.html">
-                        <img src="../resources/images/icon/petdians-finish.png" alt="CoolAdmin" />
+                    <a class="logo" href="index.html" >
+                        <img src="../resources/images/icon/petdians-finish.png" alt="CoolAdmin" style="max-width: 60%"/>
                     </a>
                     <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">

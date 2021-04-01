@@ -63,4 +63,5 @@ public class MissingAnimalDTO {
 
         return result;
     }
+    private Integer isCompleted;
 }
