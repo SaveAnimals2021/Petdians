@@ -1,6 +1,11 @@
 package org.petdians.common.dto;
 
 import lombok.Data;
+import lombok.ToString;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Data
 public class PageDTO {
@@ -8,6 +13,7 @@ public class PageDTO {
 	private Integer page;
 	private Integer perSheet;
 	private String type, keyword;
+	private String day;
 	
 	//default 설정
 	public PageDTO() {
@@ -34,9 +40,8 @@ public class PageDTO {
 			
 			return null;
 		}
-		
+
 		return type.split("");
 	}
-	
 	
 }

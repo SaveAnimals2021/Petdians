@@ -53,4 +53,7 @@ public class MissingAnimalDTO {
     // 상태
     private Integer rescueStatus;
     private String situation;
+
+    private Integer isCompleted;
+
 }

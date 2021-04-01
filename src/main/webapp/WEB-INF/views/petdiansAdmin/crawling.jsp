@@ -43,7 +43,7 @@
                 </div>
                 <div class="col-md-6 col-lg-3">
                     <div class="statistic__item statistic__item--red">
-                        <h2 class="number">1,060,386</h2>
+                        <h2 class="number">${pageMaker.total}</h2>
                         <span class="desc">Number of total Data</span>
                         <div class="icon">
                             <i class="zmdi zmdi-money"></i>
@@ -64,20 +64,24 @@
                         <div class="table-data__tool-left">
                             <div class="rs-select2--light rs-select2--md">
                                 <select class="js-select2" name="property">
-                                    <option selected="selected">All Properties</option>
-                                    <option value="">Option 1</option>
-                                    <option value="">Option 2</option>
+                                    <option value="">All Properties</option>
+                                    <option value="t" ${pageDTO.type == 't'?"selected":"" }>TYPE</option>
+                                    <option value="r" ${pageDTO.type == 'r'?"selected":"" }>RESCUDATE</option>
+                                    <option value="d" ${pageDTO.type == 'd'?"selected":"" }>REGDATE</option>
+                                    <option value="s" ${pageDTO.type == 's'?"selected":"" }>RESCUESTATUS</option>
                                 </select>
                                 <div class="dropDownSelect2"></div>
                             </div>
                             <div class="rs-select2--light rs-select2--sm">
-                                <select class="js-select2" name="time">
-                                    <option selected="selected">Today</option>
-                                    <option value="">3 Days</option>
-                                    <option value="">1 Week</option>
+                                <select class="js-select2" name="day">
+                                    <option value="">DAY</option>
+                                    <option value="0" ${pageDTO.day == '0'?"selected":"" }>Today</option>
+                                    <option value="3" ${pageDTO.day == '3'?"selected":"" }>3 Days</option>
+                                    <option value="7" ${pageDTO.day == '7'?"selected":"" }>1 Week</option>
                                 </select>
                                 <div class="dropDownSelect2"></div>
                             </div>
+                            <input name="skeyword" <c:out value="" /> placeholder="Enter Keyword">
                             <button class="au-btn-filter">
                                 <i class="zmdi zmdi-filter-list"></i>filters</button>
                         </div>
@@ -104,16 +108,17 @@
                                         <span class="au-checkmark"></span>
                                     </label>
                                 </th>
-                                <th>name</th>
-                                <th>email</th>
-                                <th>description</th>
-                                <th>date</th>
-                                <th>status</th>
-                                <th>price</th>
+                                <th style="text-align: center;">ANIMAL NUMBER</th>
+                                <th class="desc" style="text-align: left;">TYPE</th>
+                                <th style="text-align: center;">RESCUEDATE</th>
+                                <th style="text-align: center;">REGDATE</th>
+                                <th style="text-align: center;">UPDATEDATE</th>
+                                <th style="text-align: center;">RESCUESTATUS</th>
                                 <th></th>
                             </tr>
                             </thead>
                             <tbody>
+                            <c:forEach items="${list }" var="animal" >
                             <tr class="tr-shadow">
                                 <td>
                                     <label class="au-checkbox">
@@ -121,16 +126,20 @@
                                         <span class="au-checkmark"></span>
                                     </label>
                                 </td>
-                                <td>Lori Lynch</td>
+                                <!-- ANIMAL NUMBER -->
+                                <td style="text-align: center;">${animal.animalNumber}</td>
                                 <td>
-                                    <span class="block-email">lori@example.com</span>
+                                <!-- TYPE -->
+                                    <span class="desc" style="text-align: center;">${animal.type}</span>
                                 </td>
-                                <td class="desc">Samsung S8 Black</td>
-                                <td>2018-09-27 02:12</td>
-                                <td>
-                                    <span class="status--process">Processed</span>
-                                </td>
-                                <td>$679.00</td>
+                                <!-- RESCUDATE -->
+                                <td class="desc" style="text-align: center;">${animal.rescueDate}</td>
+                                <!-- REGDATE -->
+                                <td style="text-align: center;">${animal.regDate}</td>
+                                <!-- UPDATEDATE -->
+                                <td style="text-align: center;"><p class="status--process" >${animal.updateDate}</p></td>
+                                <!-- RESCUESTATUS -->
+                                <td style="text-align: center;">${animal.rescueStatus}</td>
                                 <td>
                                     <div class="table-data-feature">
                                         <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
@@ -148,160 +157,20 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr class="spacer"></tr>
-                            <tr class="tr-shadow">
-                                <td>
-                                    <label class="au-checkbox">
-                                        <input type="checkbox">
-                                        <span class="au-checkmark"></span>
-                                    </label>
-                                </td>
-                                <td>Lori Lynch</td>
-                                <td>
-                                    <span class="block-email">john@example.com</span>
-                                </td>
-                                <td class="desc">iPhone X 64Gb Grey</td>
-                                <td>2018-09-29 05:57</td>
-                                <td>
-                                    <span class="status--process">Processed</span>
-                                </td>
-                                <td>$999.00</td>
-                                <td>
-                                    <div class="table-data-feature">
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
-                                            <i class="zmdi zmdi-mail-send"></i>
-                                        </button>
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-                                            <i class="zmdi zmdi-edit"></i>
-                                        </button>
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                            <i class="zmdi zmdi-delete"></i>
-                                        </button>
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="More">
-                                            <i class="zmdi zmdi-more"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="spacer"></tr>
-                            <tr class="tr-shadow">
-                                <td>
-                                    <label class="au-checkbox">
-                                        <input type="checkbox">
-                                        <span class="au-checkmark"></span>
-                                    </label>
-                                </td>
-                                <td>Lori Lynch</td>
-                                <td>
-                                    <span class="block-email">john@example.com</span>
-                                </td>
-                                <td class="desc">iPhone X 64Gb Grey</td>
-                                <td>2018-09-29 05:57</td>
-                                <td>
-                                    <span class="status--process">Processed</span>
-                                </td>
-                                <td>$999.00</td>
-                                <td>
-                                    <div class="table-data-feature">
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
-                                            <i class="zmdi zmdi-mail-send"></i>
-                                        </button>
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-                                            <i class="zmdi zmdi-edit"></i>
-                                        </button>
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                            <i class="zmdi zmdi-delete"></i>
-                                        </button>
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="More">
-                                            <i class="zmdi zmdi-more"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="spacer"></tr>
-                            <tr class="tr-shadow">
-                                <td>
-                                    <label class="au-checkbox">
-                                        <input type="checkbox">
-                                        <span class="au-checkmark"></span>
-                                    </label>
-                                </td>
-                                <td>Lori Lynch</td>
-                                <td>
-                                    <span class="block-email">lyn@example.com</span>
-                                </td>
-                                <td class="desc">iPhone X 256Gb Black</td>
-                                <td>2018-09-25 19:03</td>
-                                <td>
-                                    <span class="status--denied">Denied</span>
-                                </td>
-                                <td>$1199.00</td>
-                                <td>
-                                    <div class="table-data-feature">
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
-                                            <i class="zmdi zmdi-mail-send"></i>
-                                        </button>
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-                                            <i class="zmdi zmdi-edit"></i>
-                                        </button>
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                            <i class="zmdi zmdi-delete"></i>
-                                        </button>
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="More">
-                                            <i class="zmdi zmdi-more"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="spacer"></tr>
-                            <tr class="tr-shadow">
-                                <td>
-                                    <label class="au-checkbox">
-                                        <input type="checkbox">
-                                        <span class="au-checkmark"></span>
-                                    </label>
-                                </td>
-                                <td>Lori Lynch</td>
-                                <td>
-                                    <span class="block-email">doe@example.com</span>
-                                </td>
-                                <td class="desc">Camera C430W 4k</td>
-                                <td>2018-09-24 19:10</td>
-                                <td>
-                                    <span class="status--process">Processed</span>
-                                </td>
-                                <td>$699.00</td>
-                                <td>
-                                    <div class="table-data-feature">
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
-                                            <i class="zmdi zmdi-mail-send"></i>
-                                        </button>
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-                                            <i class="zmdi zmdi-edit"></i>
-                                        </button>
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                            <i class="zmdi zmdi-delete"></i>
-                                        </button>
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="More">
-                                            <i class="zmdi zmdi-more"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
                     <!-- END DATA TABLE -->
                     <!-- Pagination -->
                     <div style="align-content: center">
-                        <ul class="pagination" style="justify-content: center; padding-top:10px; padding-bottom:10px;">
+                        <ul class="pagination" style="justify-content: center; padding-top:15px; padding-bottom:10px;">
                             <c:if test="${pageMaker.prev }">
                                 <li class="page-item">
                                     <a class="page-link" href="${pageMaker.start - 10}" tabindex="-1">Previous</a>
                                 </li>
                             </c:if>
-                            <!-- begin=${pageMaker.start } / end=${pageMaker.end } 수정 필요 -->
-                            <c:forEach begin="1" end="10" var = "num">
+                            <c:forEach begin="${pageMaker.start }" end="${pageMaker.end }" var = "num">
                                 <li class="page-item ${num == pageMaker.pageDTO.page?"active":"" }"><a class="page-link" href="${num }">${num }</a></li>
                             </c:forEach>
                             <c:if test="${pageMaker.next }">
@@ -311,6 +180,19 @@
                             </c:if>
                         </ul>
                     </div>
+                    <!-- END Pagination -->
+
+                    <!--                    actionForm                      -->
+                    <div class="activity">
+                        <form class="actionForm" action="/petdiansAdmin/crawling" method="get">
+                            <input type="hidden" name="page" value="${pageDTO.page}">
+                            <input type="hidden" name="perSheet" value="${pageDTO.perSheet}">
+                            <input type="hidden" name="type" value="${pageDTO.type}">
+                            <input type="hidden" name="keyword" value="${pageDTO.keyword}">
+                            <input type="hidden" name="day" value="${pageDTO.day}">
+                        </form>
+                    </div>
+
                 </div>
 
             </div>
@@ -328,4 +210,63 @@
 </div>
 
 </div>
+
+<script>
+    //utill
+    const selOne = document.querySelector.bind(document);
+    const selAll = document.querySelectorAll.bind(document);
+    const addEvent = function (param,event,func,cap) {
+
+        const target = document.querySelector(param);
+
+        target.addEventListener(event,func,cap);
+
+        return target;
+    }
+
+    //실행문
+
+    addEvent(".pagination", "click", function(e){
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        const actionForm = selOne(".actionForm");
+        const target = e.target;
+
+        const pageNum = target.getAttribute("href")
+
+        if(pageNum){
+            actionForm.querySelector("input[name='page']").value = pageNum;
+            actionForm.submit();
+        }
+
+    }, false);
+
+
+    addEvent(".au-btn-filter", "click", function (e) {
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        const actionForm = selOne(".actionForm");
+        //type
+        const type = selOne("select[name='property']");
+        actionForm.querySelector("input[name='type']").value = type[type.selectedIndex].value;
+
+        //keyword
+        const keyword = selOne(".table-data__tool-left input[name='skeyword']").value;
+        actionForm.querySelector("input[name='keyword']").value = keyword;
+
+        //day
+        const day = selOne("select[name='day']");
+        actionForm.querySelector("input[name='day']").value = day[day.selectedIndex].value;
+
+        //init page
+        actionForm.querySelector("input[name='page']").value = pageNum = 1;
+        actionForm.submit();
+
+    }, false)
+
+</script>
 <%@ include file="../includes/footer.jsp"%>

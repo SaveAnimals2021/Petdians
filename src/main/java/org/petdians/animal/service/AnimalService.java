@@ -22,6 +22,7 @@ public interface AnimalService {
     List<MissingAnimalDTO> getPagedList(PageDTO pageDTO);
     List<MissingAnimalDTO> getAllList();
 
+    Integer getTotalCount(PageDTO pageDTO);
 
     default MissingAnimalVO toDomain(MissingAnimalDTO dto) throws Exception{
         Date missingDate = SimpleDateFormatter.fromStringToDate(dto.getMissingDate());
@@ -36,7 +37,7 @@ public interface AnimalService {
                 .name(dto.getName()).species(dto.getSpecies()).sex(dto.getSex()).age(dto.getAge()).situation(dto.getSituation())
                 .special(dto.getSpecial()).color(dto.getColor()).missingDate(missingDate).regDate(regDate).updateDate(updateDate)
                 .originURL(dto.getOriginURL()).missingLocation(dto.getMissingLocation()).rescueLocation(dto.getRescueLocation()).rescueDate(rescueDate)
-                .rescueStatus(dto.getRescueStatus()).bno(dto.getBno()).guardianName(dto.getGuardianName()).phoneNumber(dto.getPhoneNumber())
+                .rescueStatus(dto.getRescueStatus()).bno(dto.getBno()).guardianName(dto.getGuardianName()).phoneNumber(dto.getPhoneNumber()).isCompleted(dto.getIsCompleted())
                 .build();
     }
 
@@ -68,6 +69,7 @@ public interface AnimalService {
 
         animalDTO.setRescueDate(DateFormatter.fromDateToString(vo.getRescueDate()));
         animalDTO.setRescueLocation(vo.getRescueLocation());
+        animalDTO.setIsCompleted(vo.getIsCompleted());
 
         return animalDTO;
     }
@@ -77,6 +79,5 @@ public interface AnimalService {
             return toDTO(a);
         }).collect(Collectors.toList());
     }
-
 
 }
