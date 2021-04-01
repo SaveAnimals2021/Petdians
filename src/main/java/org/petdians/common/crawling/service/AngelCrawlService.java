@@ -122,10 +122,11 @@ public class AngelCrawlService extends CrawlService {
             } else if(statusStr.contains("구조")){
                 status = 2;
                 rescueLocation = eles.get(1).html();
-            } else{
-                missingLocation = eles.get(1).html();
                 rescueDate = missingDate;
                 missingDate = "";
+                // 실종
+            } else{
+                missingLocation = eles.get(1).html();
             }
 
             // 로그인이 필요합니다.
@@ -149,13 +150,15 @@ public class AngelCrawlService extends CrawlService {
             // 등록일 설정
             String regDate = date.substring(0,10);
 
+            log.info("MISSING DATE :" + missingDate);
+
             MissingAnimalDTO info = MissingAnimalDTO.builder().age(age).type(type).species(species)
                     .sex(sex).missingDate(missingDate).missingLocation(missingLocation).guardianName(guardianName)
                     .name(name).imageType("jpg").serviceName(serviceName).originURL(baseUrl).special(special)
                     .imageUrlList(imageList).situation(situation).rescueStatus(status).regDate(regDate).rescueLocation(rescueLocation)
                     .rescueDate(rescueDate)
                     .build();
-
+            log.info("INFO :" + info);
             setAnimalCode(info);
             String code = info.getAnimalCode();
 

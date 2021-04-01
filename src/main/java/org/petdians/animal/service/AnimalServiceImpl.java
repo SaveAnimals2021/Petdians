@@ -74,5 +74,8 @@ public class AnimalServiceImpl implements AnimalService{
         return toDTOList(mapper.getPagedList(pageDTO.getSkip(), pageDTO.getPerSheet(), pageDTO.getArr(), pageDTO.getType(), pageDTO.getDay()));
     }
 
-
+    @Override
+    public List<MissingAnimalDTO> getMissingList(PageDTO pageDTO) {
+        return toDTOList(mapper.getMissingList(pageDTO.getDay()));
+    }
 }

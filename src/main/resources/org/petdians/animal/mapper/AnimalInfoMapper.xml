@@ -66,6 +66,14 @@
 		order by animalNumber desc limit #{skip},#{perSheet}
 	</select>
 
+	<!-- MISSING LIST -->
+	<select id="getMissingList" resultType="org.petdians.animal.domain.MissingAnimalVO">
+		select * from tbl_animal
+		where rescueStatus = '0' and
+		missingDate BETWEEN DATE_ADD(NOW(),INTERVAL -#{day} DAY ) AND NOW()
+		order by animalNumber desc
+	</select>
+
 	<select id="getAllList" resultType="org.petdians.animal.domain.MissingAnimalVO">
 		select * from tbl_animal
 	</select>

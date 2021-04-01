@@ -22,6 +22,7 @@ public interface AnimalService {
     List<MissingAnimalDTO> getPagedList(PageDTO pageDTO);
     List<MissingAnimalDTO> getAllList();
     List<MissingAnimalDTO> getUncompletedList();
+    List<MissingAnimalDTO> getMissingList(PageDTO pageDTO);
 
     Integer getTotalCount(PageDTO pageDTO);
 
@@ -38,7 +39,7 @@ public interface AnimalService {
                 .name(dto.getName()).species(dto.getSpecies()).sex(dto.getSex()).age(dto.getAge()).situation(dto.getSituation())
                 .special(dto.getSpecial()).color(dto.getColor()).missingDate(missingDate).regDate(regDate).updateDate(updateDate)
                 .originURL(dto.getOriginURL()).missingLocation(dto.getMissingLocation()).rescueLocation(dto.getRescueLocation()).rescueDate(rescueDate)
-                .rescueStatus(dto.getRescueStatus()).bno(dto.getBno()).guardianName(dto.getGuardianName()).phoneNumber(dto.getPhoneNumber())
+                .rescueStatus(dto.getRescueStatus()).bno(dto.getBno()).guardianName(dto.getGuardianName()).phoneNumber(dto.getPhoneNumber()).isCompleted(dto.getIsCompleted())
                 .build();
     }
 
@@ -61,6 +62,9 @@ public interface AnimalService {
         animalDTO.setRegDate(DateFormatter.fromDateToString(vo.getRegDate()));
         animalDTO.setUpdateDate(DateFormatter.fromDateToString(vo.getUpdateDate()));
         animalDTO.setOriginURL(vo.getOriginURL());
+        animalDTO.setIsCompleted(vo.getIsCompleted());
+
+
 
         animalDTO.setSituation(vo.getSituation());
         animalDTO.setRescueStatus(vo.getRescueStatus());
