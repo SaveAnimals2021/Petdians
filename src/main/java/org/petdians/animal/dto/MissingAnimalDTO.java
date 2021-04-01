@@ -58,6 +58,7 @@ public class MissingAnimalDTO {
         String result = missingLocation;
 
         result.replace("인근", "").replace("부근", "");
+        result.replace(",", " ");
 
 
         return result;
