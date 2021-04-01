@@ -243,8 +243,16 @@
 
     }, false);
 
+    addEvent("select[name='day']", "change", function (e) {
 
-    addEvent(".au-btn-filter", "click", function (e) {
+        const actionForm = selOne(".actionForm");
+        const day = selOne("select[name='day']");
+        actionForm.querySelector("input[name='day']").value = day[day.selectedIndex].value;
+        actionForm.submit();
+
+    }, false)
+
+    addEvent(".au-btn-filter", "click", function  (e) {
 
         e.preventDefault();
         e.stopPropagation();

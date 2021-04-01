@@ -51,7 +51,7 @@
             <div class="header3-wrap">
                 <div class="header__logo">
                     <a href="#">
-                        <img src="/resources/images/icon/petdians-finish.png" alt="CoolAdmin" style="max-width: 60%"/>
+                        <img src="/resources/images/icon/petdians-finish.png" alt="PetdiansAdmin" style="max-width: 60%"/>
                     </a>
                 </div>
                 <div class="header__navbar">
