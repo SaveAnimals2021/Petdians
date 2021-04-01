@@ -110,7 +110,6 @@
                                 </th>
                                 <th style="text-align: center;">ANIMAL NUMBER</th>
                                 <th class="desc" style="text-align: left;">TYPE</th>
-                                <th style="text-align: center;">RESCUEDATE</th>
                                 <th style="text-align: center;">REGDATE</th>
                                 <th style="text-align: center;">UPDATEDATE</th>
                                 <th style="text-align: center;">RESCUESTATUS</th>
@@ -134,8 +133,6 @@
                                 </td>
                                 <!-- RESCUDATE -->
                                 <td class="desc" style="text-align: center;">${animal.rescueDate}</td>
-                                <!-- REGDATE -->
-                                <td style="text-align: center;">${animal.regDate}</td>
                                 <!-- UPDATEDATE -->
                                 <td style="text-align: center;"><p class="status--process" >${animal.updateDate}</p></td>
                                 <!-- RESCUESTATUS -->

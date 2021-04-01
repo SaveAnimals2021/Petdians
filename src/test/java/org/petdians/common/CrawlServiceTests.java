@@ -52,29 +52,29 @@ public class CrawlServiceTests {
         apmsCrawlService = new APMSCrawlService();
     }
 
-//    @Test
-//    public void testAPMS() {
-//        try {
-//            apmsCrawlService.doCrawl();
-//            log.info("CRAWL OVER");
-//            apmsCrawlService.getAnimalList().forEach(info -> log.info(info));
-//            log.info("size : " + apmsCrawlService.getAnimalList().size());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    @Test
-//    public void testAngel() {
-//        try {
-//            angelCrawlService.doCrawl();
-//            log.info("CRAWL OVER");
-//            angelCrawlService.getAnimalList().forEach(info -> log.info(info));
-//            log.info("size : " + angelCrawlService.getAnimalList().size());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    @Test
+    public void testAPMS() {
+        try {
+            apmsCrawlService.doCrawl(100);
+            log.info("CRAWL OVER");
+            apmsCrawlService.getAnimalList().forEach(info -> log.info(info));
+            log.info("size : " + apmsCrawlService.getAnimalList().size());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testAngel() {
+        try {
+            angelCrawlService.doCrawl(100);
+            log.info("CRAWL OVER");
+            angelCrawlService.getAnimalList().forEach(info -> log.info(info));
+            log.info("size : " + angelCrawlService.getAnimalList().size());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 //
 //    @Test
 //    public void testAll() {

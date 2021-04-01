@@ -12,6 +12,7 @@ import org.petdians.common.config.CommonConfig;
 import org.petdians.common.crawling.config.CrawlConfig;
 import org.petdians.common.crawling.service.*;
 import org.petdians.common.dao.AnimalInfoDAO;
+import org.petdians.common.dto.PageDTO;
 import org.petdians.common.util.ImageManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,17 +24,17 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {CommonConfig.class, AnimalConfig.class, CrawlConfig.class})
 public class AnimalServiceTests {
-    @Autowired
+
     KaraCrawlService karaservice;
-    @Autowired
+
     SaacCrawlService saacCrawlService;
-    @Autowired
+
     KarmaCrawlService karmaCrawlService;
-    @Autowired
+
     IJoaCrawlService iJoaCrawlService;
-    @Autowired
+
     AngelCrawlService angelCrawlService;
-    @Autowired
+
     APMSCrawlService apmsCrawlService;
 
     AnimalInfoDAO dao;
@@ -142,5 +143,15 @@ public class AnimalServiceTests {
             }
         });
         log.info("========================= INSERT DONE : iJoaCrawlService ===============================");
+    }
+
+    @Test
+    public void testMissingList(){
+        PageDTO dto = new PageDTO();
+        dto.setDay("3");
+        dto.setType("s");
+        dto.setKeyword("0");
+        dto.setPerSheet(1000);
+        service.getMissingList(dto).forEach(d->log.info(d));
     }
 }

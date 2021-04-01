@@ -21,6 +21,9 @@ public interface AnimalInfoMapper {
                                      @Param("keyword") String keyword,
                                      @Param("day") String day);
 
+    List<MissingAnimalVO> getMissingList(
+                                       @Param("day") String day);
+
     Integer getTotalCount(@Param("arr") String[] arr,
                           @Param("keyword") String keyword, @Param("day") String day);
 

@@ -37,14 +37,15 @@ public class TotalCrawlService {
         SaacCrawlService saacCrawlService = new SaacCrawlService();
         KarmaCrawlService karmaCrawlService = new KarmaCrawlService();
         IJoaCrawlService iJoaCrawlService = new IJoaCrawlService();
+
         AngelCrawlService angelCrawlService = new AngelCrawlService();
         APMSCrawlService apmsCrawlService = new APMSCrawlService();
 
         sites = new ArrayList<>();
-        sites.add(karaservice);
-        sites.add(saacCrawlService);
-        sites.add(karmaCrawlService);
-        sites.add(iJoaCrawlService);
+//        sites.add(karaservice);
+//        sites.add(saacCrawlService);
+//        sites.add(karmaCrawlService);
+//        sites.add(iJoaCrawlService);
         sites.add(angelCrawlService);
         sites.add(apmsCrawlService);
     }

@@ -4,28 +4,21 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="org.petdians.animal.mapper.ImageMapper">
+<mapper namespace="org.petdians.animal.mapper.LocationMapper">
 
 	<!-- INSERT -->
 	<insert id="register" >
 		<![CDATA[
-		insert into tbl_image (url, animalNumber, regDate, uuid,
+		insert into tbl_image (url, animalNumber, regDate, updateDate, uuid,
 		                       uploadPath, fileName, type)
             values (#{url}, #{animalNumber}, #{regDate}, #{uuid},
 					#{uploadPath}, #{fileName}, #{type})
         ]]>
-
-
+		<selectKey resultType="int" keyProperty="lno" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
 	</insert>
 
 
-
-	<select id="getImageByAno" resultType="org.petdians.animal.domain.ImageVO">
-		select * from tbl_image where animalNumber = #{ano}
-	</select>
-
-	<select id="getAllImages" resultType="org.petdians.animal.domain.ImageVO">
-		select * from tbl_image;
-	</select>
 
 </mapper>

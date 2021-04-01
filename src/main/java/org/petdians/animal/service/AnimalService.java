@@ -22,6 +22,7 @@ public interface AnimalService {
     List<MissingAnimalDTO> getPagedList(PageDTO pageDTO);
     List<MissingAnimalDTO> getAllList();
     List<MissingAnimalDTO> getUncompletedList();
+    List<MissingAnimalDTO> getMissingList(PageDTO pageDTO);
 
     Integer getTotalCount(PageDTO pageDTO);
 
@@ -61,6 +62,9 @@ public interface AnimalService {
         animalDTO.setRegDate(DateFormatter.fromDateToString(vo.getRegDate()));
         animalDTO.setUpdateDate(DateFormatter.fromDateToString(vo.getUpdateDate()));
         animalDTO.setOriginURL(vo.getOriginURL());
+        animalDTO.setIsCompleted(vo.getIsCompleted());
+
+
 
         animalDTO.setSituation(vo.getSituation());
         animalDTO.setRescueStatus(vo.getRescueStatus());
