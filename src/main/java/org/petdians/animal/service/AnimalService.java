@@ -23,6 +23,8 @@ public interface AnimalService {
     List<MissingAnimalDTO> getAllList();
     List<MissingAnimalDTO> getUncompletedList();
 
+    Integer getTotalCount(PageDTO pageDTO);
+
     default MissingAnimalVO toDomain(MissingAnimalDTO dto) throws Exception{
         Date missingDate = SimpleDateFormatter.fromStringToDate(dto.getMissingDate());
         Date rescueDate = SimpleDateFormatter.fromStringToDate(dto.getRescueDate());

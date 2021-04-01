@@ -18,10 +18,11 @@ public interface AnimalInfoMapper {
     List<MissingAnimalVO> getPagedList(@Param("skip") Integer skip,
                                      @Param("perSheet") Integer perSheet,
                                      @Param("arr") String[] arr,
-                                     @Param("keyword") String keyword);
+                                     @Param("keyword") String keyword,
+                                     @Param("day") String day);
 
     Integer getTotalCount(@Param("arr") String[] arr,
-                          @Param("keyword") String keyword);
+                          @Param("keyword") String keyword, @Param("day") String day);
 
 
 }

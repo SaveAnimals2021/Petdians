@@ -63,10 +63,15 @@ public class AnimalServiceImpl implements AnimalService{
         return toDTOList(mapper.getUncompletedList());
     }
 
+    @Override
+    public Integer getTotalCount(PageDTO pageDTO) {
+        return mapper.getTotalCount(pageDTO.getArr(), pageDTO.getKeyword(), pageDTO.getDay());
+    }
+
 
     @Override
     public List<MissingAnimalDTO> getPagedList(PageDTO pageDTO) {
-        return toDTOList(mapper.getPagedList(pageDTO.getSkip(), pageDTO.getPerSheet(), pageDTO.getArr(), pageDTO.getType()));
+        return toDTOList(mapper.getPagedList(pageDTO.getSkip(), pageDTO.getPerSheet(), pageDTO.getArr(), pageDTO.getType(), pageDTO.getDay()));
     }
 
 
