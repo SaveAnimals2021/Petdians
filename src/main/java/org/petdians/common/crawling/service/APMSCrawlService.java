@@ -106,12 +106,11 @@ public class APMSCrawlService extends CrawlService {
                 regDate =  href.substring(href.lastIndexOf("/") + 1).substring(0, 8);
             }
 
-            log.info("regDate : " + regDate);
             regDate = SimpleDateFormatter.makeDateFormat(regDate);
 
             // 기간 체크
 
-
+            log.info("name : " + name);
             log.info("regDate : " + regDate);
             log.info("missingDate : " + missingDate);
 

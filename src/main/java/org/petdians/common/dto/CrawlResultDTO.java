@@ -17,6 +17,8 @@ public class CrawlResultDTO {
    private Integer newDataNumber;
    private Integer modDataNumber;
    private Integer totalDataNumber;
+   // 몇일동안의 정보를 수집했는가?
+   private Integer period;
    private Date crawlDate;
    private String takingTime;
 }

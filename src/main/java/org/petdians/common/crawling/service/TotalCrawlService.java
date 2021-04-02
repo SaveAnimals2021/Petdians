@@ -8,9 +8,12 @@ import org.petdians.animal.service.AnimalService;
 import org.petdians.common.dao.AnimalInfoDAO;
 import org.petdians.common.dto.CrawlResultDTO;
 import org.petdians.common.util.DateFormatter;
+import org.petdians.common.util.FileManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +35,8 @@ public class TotalCrawlService {
 
     private Integer period = 90; // 기본 30일
 
+    private static String uploadPath = "C://upload";
+
     public TotalCrawlService() {
         KaraCrawlService karaservice = new KaraCrawlService();
         SaacCrawlService saacCrawlService = new SaacCrawlService();
@@ -42,10 +47,10 @@ public class TotalCrawlService {
         APMSCrawlService apmsCrawlService = new APMSCrawlService();
 
         sites = new ArrayList<>();
-//        sites.add(karaservice);
-//        sites.add(saacCrawlService);
-//        sites.add(karmaCrawlService);
-//        sites.add(iJoaCrawlService);
+        sites.add(karaservice);
+        sites.add(saacCrawlService);
+        sites.add(karmaCrawlService);
+        sites.add(iJoaCrawlService);
         sites.add(angelCrawlService);
         sites.add(apmsCrawlService);
     }
@@ -101,14 +106,15 @@ public class TotalCrawlService {
             // for i ends
         }
 
+
         int csize = crawlList.size();
         // 새로운 데이터 수!!!
         newDataNumber = csize;
 
         for (int i = 0; i < csize; ++i) {
             // 2번상황 = insert한다.
-            service.register(crawlList.get(i));
-
+            MissingAnimalDTO dto = crawlList.get(i);
+            service.register(dto);
         }
 
         int dsize = dbList.size();
@@ -130,10 +136,44 @@ public class TotalCrawlService {
 
         CrawlResultDTO result = CrawlResultDTO.builder()
                 .crawlDate(crawlDate).newDataNumber(newDataNumber).modDataNumber(modDataNumber).totalDataNumber(total)
-                .takingTime(timeDif).crawlNumber(crawlNumber)
+                .takingTime(timeDif).crawlNumber(crawlNumber).period(period)
                 .build();
 
+        // 파일로 저장!
+        // 1. 파일 이름 설정!
+        String fileName = "C:\\upload\\" + getFileName();
+
+        // 2. 파일 내용 저장
+        String contents = "========== CRAWL RESULT INFO ==========\n";
+        contents += result.toString() + "\n";
+
+        // 2-1. crawlData 저장(새로 추가됨)
+        contents += "\n========== NEW DATA ==========\n";
+        for (int i = 0; i < csize; ++i) {
+            contents += crawlList.get(i).toString() + "\n";
+        }
+
+        // 2-2. dbList 저장(isCompleted = true로 된다...)
+        contents += "\n========== COMPLETED DATA ==========\n";
+        for (int i = 0; i < dsize; ++i) {
+            contents += dbList.get(i).toString() + "\n";
+        }
+
+        // 3. 파일에 저장
+        try {
+            FileManager.saveFile(contents.getBytes(StandardCharsets.UTF_8), fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.info("파일 저장 실패");
+        }
+
         return result;
+    }
+
+    private String getFileName() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd hh시mm분ss초");
+        String result = sdf.format(new Date()); // 시스템 시간
+        return result + ".txt";
     }
 }
 
