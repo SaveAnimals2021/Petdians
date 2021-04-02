@@ -39,6 +39,8 @@
         width: 100%;
         height: 100%;
         background-color: gray;
+        display: flex;
+        flex-direction: row;
 
     }
 
@@ -47,46 +49,10 @@
         height: 100%;
     }
 
-    .daySelection {
-
-        /*border: none;*/
-        /*outline: none;*/
-        /*padding-left: 18px;*/
-        /*-webkit-border-radius: 3px; !**!*/
-        /*-moz-border-radius: 3px;!**!*/
-        /*border-radius: 3px;*/
-        /*height: 40px;*/
-        /*background: #fff;*/
-        /*display: -webkit-box;!**!*/
-        /*display: -webkit-flex;!**!*/
-        /*display: -moz-box;!**!*/
-        /*display: -ms-flexbox;!**!*/
-        /*display: flex;*/
-        /*-webkit-box-align: center;*/
-        /*-webkit-align-items: center;!**!*/
-        /*-moz-box-align: center;!**!*/
-        /*-ms-flex-align: center;!**!*/
-        /*align-items: center;*/
-        /*-webkit-box-shadow: 0px 10px 20px 0px rgb(0 0 0 / 3%);!**!*/
-        /*-moz-box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.03);!**!*/
-        /*box-shadow: 0px 10px 20px 0px rgb(0 0 0 / 3%);*/
-        /*background-color: #fff;!**!*/
-        /*border: 1px solid #aaa;!**!*/
-        /*border-radius: 4px;!**!*/
-        /*box-sizing: border-box;*/
-        /*cursor: pointer;*/
-        /*display: block;!**!*/
-        /*height: 28px;!**!*/
-        /*user-select: none;!**!*/
-        /*-webkit-user-select: none;*/
-
-        color: #808080;
-        font-size: 14px;
-        line-height: 28px;
-        display: block;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+    .imageDiv {
+        padding: 20px;
+        width: 50%;
+        background-color: #00a2e3;
 
     }
 
@@ -95,17 +61,88 @@
 
 <button class="testButton">LIST TEST</button>
 
-<div class="container">
+<div class="container" style="max-width: 90%;">
     <div class="firstBody">
 
         <div class="mapDiv">
             <div class="animalMap"></div>
         </div>
 
+        <%-- ======================= View Div ============================ --%>
         <div class="viewDiv">
+            <div class="imageDiv">
+                <div class="image1">
 
+                </div>
+            </div>
+<%--            <div class="col-lg-6">--%>
+                <div class="card" style="width: 100%; margin-bottom: 0px">
+                    <div class="card-header">
+                        <strong>Name</strong>
+                    </div>
+                    <div class="card-body card-block">
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label class=" form-control-label">Type</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" id="text-inputt" name="text-input" placeholder="Type" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label for="text-input" class=" form-control-label">Species</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" id="text-input" name="text-input" placeholder="Text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label for="email-input" class=" form-control-label">Sex</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="email" id="email-input" name="email-input" placeholder="Enter Email" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label for="password-input" class=" form-control-label">Gudian</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="password" id="password-input" name="password-input" placeholder="Password" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label for="disabled-input" class=" form-control-label">Date</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" id="disabled-input" name="disabled-input" placeholder="Disabled" disabled="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label for="disabled-input" class=" form-control-label">Location</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" id="disabled-inputs" name="disabled-input" placeholder="Disabled" disabled="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label for="textarea-input" class=" form-control-label">Situation</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <textarea name="textarea-input" id="textarea-input" rows="5" placeholder="Content..." class="form-control"></textarea>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+<%--        </div>--%>
+        <%-- ======================= End View Div ============================ --%>
 
-        </div>
     </div>
 
     <div class="table-responsive table-responsive-data2" style="margin-top: 1em">
@@ -119,9 +156,11 @@
                 </select>
                 <div class="dropDownSelect2"></div>
             </div>
-            <input name="skeyword" <c:out value="" /> placeholder="Enter Keyword">
+            <input name="skeyword"
+            <c:out value=""/> placeholder="Enter Keyword">
             <button class="au-btn-filter">
-                <i class="zmdi zmdi-filter-list"></i>filters</button>
+                <i class="zmdi zmdi-filter-list"></i>filters
+            </button>
         </div>
         <table class="table table-data2">
             <thead>
@@ -140,9 +179,9 @@
                 <th></th>
             </tr>
             </thead>
-            <tbody>
-            <c:forEach items="${list }" var="animal">
-                <tr class="tr-shadow">
+            <tbody class="animalTable">
+            <c:forEach items="${list }" var="animal" varStatus="i">
+                <tr class="tr-shadow" data-number="${animal.animalNumber}" data-idx="${i.index}">
                     <td>
                         <label class="au-checkbox">
                             <input type="checkbox">
@@ -178,7 +217,7 @@
 
 <script>
 
-    function change () {
+    function change() {
 
         console.log("change...................");
 
@@ -193,6 +232,16 @@
     }
 
     $(document).ready(function () {
+        var urlMap = new Map();
+        <c:forEach items = '${list}' var="item">
+            var urlList = new Array();
+            <c:forEach items = '${item.imageUrlList}' var="url">
+                urlList.add(${url});
+            </c:forEach>
+            urlMap.set(${item.animalNumber}, urlList);
+        </c:forEach>
+
+
         //      kakao.maps.load(function () {
         // 지도 생성하기
         var mapContainer = document.querySelector('.animalMap'), // 지도를 표시할 div
@@ -207,6 +256,8 @@
         var geocoder = new kakao.maps.services.Geocoder();
         var dtoList = [];
         var markerList = [];
+        var animalMap = new Map();
+
         var i = 0;
 
         <c:forEach items = '${list}' var="item">
@@ -220,33 +271,36 @@
         console.log(dtoList);
 
         // 결과 생성...
-        function makeResult(missingLocation, count) {
+        function makeResult(missingLocation, count, animalNumber) {
             var maxCount = 10;
             var result = getMapByUrl(missingLocation);
             var arr = [];
 
             return result.then(res => {
-                console.log(2);
                 var val = res.documents;
 
                 //Marker 생성성
-               if (typeof (val[0]) != "undefined") {
+                if (typeof (val[0]) != "undefined") {
                     // console.log("coords............................................................................")
                     // console.log(val[0])
 
                     var coords = new kakao.maps.LatLng(val[0].y, val[0].x);
-                    console.log("coords............................................................................")
-                    console.log(coords);
+
                     var marker = new kakao.maps.Marker({
                         map: map,
-                        position: coords
+                        position: coords,
+                        // animal number
+                        title : animalNumber
+
                     });
-                    map.setCenter(coords);
 
                     resultList.push(val[0])
                     markerList.push(marker);
-                    return val[0];
 
+                    // 1. animal number가 키를 가지는 map에 넣는다. value는 marker
+                    animalMap.set(animalNumber, marker);
+
+                    return val[0];
                 }
 
                 if (0 == val.length) {
@@ -265,7 +319,7 @@
 
                     ++count;
                     console.log("결과 없음... 재검색 시작 =>" + missingLocation);
-                    makeResult(missingLocation, count)
+                    makeResult(missingLocation, count, animalNumber)
                     return;
                 }
 
@@ -320,7 +374,7 @@
 
         // MAP MARKER 만들기 실행
         for (var dto of dtoList) {
-            var result = makeResult(dto.missingLocation, 0);
+            var result = makeResult(dto.missingLocation, 0, dto.animalNumber);
 
             result.then(res => {
                 console.log(3);
@@ -350,7 +404,7 @@
         //     infowindow.open(map, marker);
         // });
 
-        document.querySelector(".testButton").addEventListener("click", function(){
+        document.querySelector(".testButton").addEventListener("click", function () {
             console.log("================= resultList ===============");
 
             console.log(resultList);
@@ -360,7 +414,7 @@
         }, false)
         // ============= INFO WINDOW END ============ //
 
-        document.querySelector(".au-btn-filter").addEventListener("click", function  (e) {
+        document.querySelector(".au-btn-filter").addEventListener("click", function (e) {
 
             e.preventDefault();
             e.stopPropagation();
@@ -380,16 +434,34 @@
 
         }, false)
 
-        //실행문
-        // $(".btn").addEventListener("click", function (e){
-        //
-        //
-        //
-        // }, false)
+        // LIST 누르기 => 지도에서 해당 위치로 이동 + View 창에 띄우기
+        document.querySelector(".animalTable").addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var tr = e.target.closest("tr");
+            var animalNumber = tr.getAttribute("data-number");
+            var value = animalMap.get(animalNumber);
+            map.setCenter(value.getPosition());
+
+            // controller에서 다시 쏴주어야한다.
+
+
+
+            var test = <c:out value= '${list[1].imageUrlList}'/>;
+            console.log("================ TEST ================");
+            console.log(test);
+
+            // View 창에 띄우기
+            document.querySelector(".imageDiv .image1").innerHTML = "<img src='C:\\upload\2021\04\01\1cf4a618-ba02-40ff-8507-e53cf0001a99_8beaca5cb77e8.jpg'>";
+            // '../resources/img1.jpg'
+
+        }, false)
+
+
 
     })
 
-        // }) // kakao.maps.load END
+    // }) // kakao.maps.load END
 </script>
 
 

@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.File;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -21,6 +23,9 @@ public class ImageDTO {
     private String regDate;
     private String updateDate;
 
-
+    public String getFullURL(){
+        String newPath = uploadPath.replace("C:\\", "C:\\\\");
+        return newPath + File.separator + fileName;
+    }
 
 }
