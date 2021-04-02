@@ -6,7 +6,6 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-
 <style>
 
     .container {
@@ -47,6 +46,50 @@
         width: 100%;
         height: 100%;
     }
+
+    .daySelection {
+
+        /*border: none;*/
+        /*outline: none;*/
+        /*padding-left: 18px;*/
+        /*-webkit-border-radius: 3px; !**!*/
+        /*-moz-border-radius: 3px;!**!*/
+        /*border-radius: 3px;*/
+        /*height: 40px;*/
+        /*background: #fff;*/
+        /*display: -webkit-box;!**!*/
+        /*display: -webkit-flex;!**!*/
+        /*display: -moz-box;!**!*/
+        /*display: -ms-flexbox;!**!*/
+        /*display: flex;*/
+        /*-webkit-box-align: center;*/
+        /*-webkit-align-items: center;!**!*/
+        /*-moz-box-align: center;!**!*/
+        /*-ms-flex-align: center;!**!*/
+        /*align-items: center;*/
+        /*-webkit-box-shadow: 0px 10px 20px 0px rgb(0 0 0 / 3%);!**!*/
+        /*-moz-box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.03);!**!*/
+        /*box-shadow: 0px 10px 20px 0px rgb(0 0 0 / 3%);*/
+        /*background-color: #fff;!**!*/
+        /*border: 1px solid #aaa;!**!*/
+        /*border-radius: 4px;!**!*/
+        /*box-sizing: border-box;*/
+        /*cursor: pointer;*/
+        /*display: block;!**!*/
+        /*height: 28px;!**!*/
+        /*user-select: none;!**!*/
+        /*-webkit-user-select: none;*/
+
+        color: #808080;
+        font-size: 14px;
+        line-height: 28px;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+    }
+
 </style>
 
 
@@ -66,17 +109,19 @@
     </div>
 
     <div class="table-responsive table-responsive-data2" style="margin-top: 1em">
-        <div class="rs-select2--light rs-select2--sm">
-            <select class="daySelection js-select2" name="day">
-                <option value="">DAY</option>
-                <option value="0" ${pageDTO.day == '0'?"selected":"" }>Today</option>
-                <option value="3" ${pageDTO.day == '3'?"selected":"" }>3 Days</option>
-                <option value="7" ${pageDTO.day == '7'?"selected":"" }>1 Week</option>
-            </select>
-            <div class="dropDownSelect2">
-                <button class="btn">Apply</button>
+        <div class="table-data__tool-left">
+            <div class="rs-select2--light rs-select2--sm">
+                <select class="js-select2" name="day" onchange="change()">
+                    <option value="">DAY</option>
+                    <option value="0" ${pageDTO.day == '0'?"selected":"" }>Today</option>
+                    <option value="3" ${pageDTO.day == '3'?"selected":"" }>3 Days</option>
+                    <option value="7" ${pageDTO.day == '7'?"selected":"" }>1 Week</option>
+                </select>
+                <div class="dropDownSelect2"></div>
             </div>
-
+            <input name="skeyword" <c:out value="" /> placeholder="Enter Keyword">
+            <button class="au-btn-filter">
+                <i class="zmdi zmdi-filter-list"></i>filters</button>
         </div>
         <table class="table table-data2">
             <thead>
@@ -132,6 +177,21 @@
 
 
 <script>
+
+    function change () {
+
+        console.log("change...................");
+
+        const actionForm = document.querySelector(".actionForm");
+
+        //day
+        const day = document.querySelector("select[name='day']");
+        actionForm.querySelector("input[name='day']").value = day[day.selectedIndex].value;
+        console.log(day);
+        actionForm.submit();
+
+    }
+
     $(document).ready(function () {
         //      kakao.maps.load(function () {
         // 지도 생성하기
@@ -169,7 +229,8 @@
                 console.log(2);
                 var val = res.documents;
 
-                if (typeof (val[0]) != "undefined") {
+                //Marker 생성성
+               if (typeof (val[0]) != "undefined") {
                     // console.log("coords............................................................................")
                     // console.log(val[0])
 
@@ -299,20 +360,25 @@
         }, false)
         // ============= INFO WINDOW END ============ //
 
+        document.querySelector(".au-btn-filter").addEventListener("click", function  (e) {
 
-        // ============= utill ============
-        // ============= utill ============
-        // ============= utill ============
-        const selOne = document.querySelector.bind(document);
-        const selAll = document.querySelectorAll.bind(document);
+            e.preventDefault();
+            e.stopPropagation();
 
-        const addEvent = function (param, event, func, cap) {
+            const actionForm = document.querySelector(".actionForm");
+            //type
+            const type = document.querySelector("select[name='property']");
+            actionForm.querySelector("input[name='type']").value = type[type.selectedIndex].value;
 
-            const target = document.querySelector(param);
-            target.addEventListener(event, func, cap);
+            //keyword
+            const keyword = document.querySelector(".table-data__tool-left input[name='skeyword']").value;
+            actionForm.querySelector("input[name='keyword']").value = keyword;
 
-            return target;
-        }
+            //init page
+            actionForm.querySelector("input[name='page']").value = pageNum = 1;
+            actionForm.submit();
+
+        }, false)
 
         //실행문
         // $(".btn").addEventListener("click", function (e){
@@ -321,27 +387,9 @@
         //
         // }, false)
 
-        addEvent(".btn", "click", function (e) {
-
-            console.log("change...................");
-
-            const actionForm = selOne(".actionForm");
-
-            //day
-            const day = selOne("select[name='day']");
-            actionForm.querySelector("input[name='day']").value = day[day.selectedIndex].value;
-            console.log(day);
-            actionForm.submit();
-
-        }, false)
-
+    })
 
         // }) // kakao.maps.load END
-    }) // doc.ready END
-</script>
-
-<script>
-
 </script>
 
 

@@ -62,6 +62,15 @@
                     <!-- DATA TABLE -->
                     <div class="table-data__tool">
                         <div class="table-data__tool-left">
+                            <div class="rs-select2--light rs-select2--sm">
+                                <select class="js-select2" name="day" onchange="change()">
+                                    <option value="">DAY</option>
+                                    <option value="0" ${pageDTO.day == '0'?"selected":"" }>Today</option>
+                                    <option value="3" ${pageDTO.day == '3'?"selected":"" }>3 Days</option>
+                                    <option value="7" ${pageDTO.day == '7'?"selected":"" }>1 Week</option>
+                                </select>
+                                <div class="dropDownSelect2"></div>
+                            </div>
                             <div class="rs-select2--light rs-select2--md">
                                 <select class="js-select2" name="property">
                                     <option value="">All Properties</option>
@@ -69,15 +78,6 @@
                                     <option value="r" ${pageDTO.type == 'r'?"selected":"" }>RESCUDATE</option>
                                     <option value="d" ${pageDTO.type == 'd'?"selected":"" }>REGDATE</option>
                                     <option value="s" ${pageDTO.type == 's'?"selected":"" }>RESCUESTATUS</option>
-                                </select>
-                                <div class="dropDownSelect2"></div>
-                            </div>
-                            <div class="rs-select2--light rs-select2--sm">
-                                <select class="js-select2" name="day">
-                                    <option value="">DAY</option>
-                                    <option value="0" ${pageDTO.day == '0'?"selected":"" }>Today</option>
-                                    <option value="3" ${pageDTO.day == '3'?"selected":"" }>3 Days</option>
-                                    <option value="7" ${pageDTO.day == '7'?"selected":"" }>1 Week</option>
                                 </select>
                                 <div class="dropDownSelect2"></div>
                             </div>
@@ -209,26 +209,13 @@
 </div>
 
 <script>
-    //utill
-    const selOne = document.querySelector.bind(document);
-    const selAll = document.querySelectorAll.bind(document);
-    const addEvent = function (param,event,func,cap) {
 
-        const target = document.querySelector(param);
-
-        target.addEventListener(event,func,cap);
-
-        return target;
-    }
-
-    //실행문
-
-    addEvent(".pagination", "click", function(e){
+    document.querySelector(".pagination").addEventListener("click", function(e){
 
         e.preventDefault();
         e.stopPropagation();
 
-        const actionForm = selOne(".actionForm");
+        const actionForm = document.querySelector(".actionForm");
         const target = e.target;
 
         const pageNum = target.getAttribute("href")
@@ -240,38 +227,45 @@
 
     }, false);
 
-    addEvent("select[name='day']", "change", function (e) {
+    document.querySelector("select[name='day']").addEventListener("change", function (e) {
 
-        const actionForm = selOne(".actionForm");
-        const day = selOne("select[name='day']");
+        const actionForm = document.querySelector(".actionForm");
+        const day = document.querySelector("select[name='day']");
         actionForm.querySelector("input[name='day']").value = day[day.selectedIndex].value;
         actionForm.submit();
 
     }, false)
 
-    addEvent(".au-btn-filter", "click", function  (e) {
+    document.querySelector(".au-btn-filter").addEventListener("click", function  (e) {
 
         e.preventDefault();
         e.stopPropagation();
 
-        const actionForm = selOne(".actionForm");
+        const actionForm = document.querySelector(".actionForm");
         //type
-        const type = selOne("select[name='property']");
+        const type = document.querySelector("select[name='property']");
         actionForm.querySelector("input[name='type']").value = type[type.selectedIndex].value;
 
         //keyword
-        const keyword = selOne(".table-data__tool-left input[name='skeyword']").value;
+        const keyword = document.querySelector(".table-data__tool-left input[name='skeyword']").value;
         actionForm.querySelector("input[name='keyword']").value = keyword;
-
-        //day
-        const day = selOne("select[name='day']");
-        actionForm.querySelector("input[name='day']").value = day[day.selectedIndex].value;
 
         //init page
         actionForm.querySelector("input[name='page']").value = pageNum = 1;
         actionForm.submit();
 
     }, false)
+
+    //day
+    function change() {
+
+        const day = document.querySelector("select[name='day']");
+        const actionForm = document.querySelector(".actionForm");
+        actionForm.querySelector("input[name='day']").value = day[day.selectedIndex].value;
+        actionForm.querySelector("input[name='page']").value = pageNum = 1;
+        actionForm.submit();
+
+    }
 
 </script>
 <%@ include file="../includes/footer.jsp"%>

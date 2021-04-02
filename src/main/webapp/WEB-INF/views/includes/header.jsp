@@ -57,7 +57,7 @@
                 <div class="header__navbar">
                     <ul class="list-unstyled">
                         <li class="has-sub">
-                            <a href="/petdiansAdmin/home">
+                            <a href="/petdiansAdmin/petMap">
                                 <i class="far fa-map"></i>PET MAP
                                 <span class="bot-line"></span>
                             </a>

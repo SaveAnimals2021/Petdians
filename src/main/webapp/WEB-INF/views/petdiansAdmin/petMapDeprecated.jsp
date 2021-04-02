@@ -233,20 +233,6 @@
 
         // ============= End Map ==========
 
-        // ============= utill ============
-        // ============= utill ============
-        // ============= utill ============
-        const selOne = document.querySelector.bind(document);
-        const selAll = document.querySelectorAll.bind(document);
-
-        const addEvent = function (param, event, func, cap) {
-
-            const target = document.querySelector(param);
-            target.addEventListener(event, func, cap);
-
-            return target;
-        }
-
         //실행문
         // $(".btn").addEventListener("click", function (e){
         //
@@ -254,20 +240,19 @@
         //
         // }, false)
 
-        addEvent(".btn", "click", function (e) {
+        document.querySelector(".btn").addEventListener("click", function (e) {
 
             console.log("change...................");
 
-            const actionForm = selOne(".actionForm");
+            const actionForm = document.querySelector(".actionForm");
 
             //day
-            const day = selOne("select[name='day']");
+            const day = document.querySelector("select[name='day']");
             actionForm.querySelector("input[name='day']").value = day[day.selectedIndex].value;
             console.log(day);
             actionForm.submit();
 
         }, false)
-
 
         // }) // kakao.maps.load END
     }) // doc.ready END
@@ -276,6 +261,5 @@
 <script>
 
 </script>
-
 
 <%@ include file="../includes/footer.jsp" %>
