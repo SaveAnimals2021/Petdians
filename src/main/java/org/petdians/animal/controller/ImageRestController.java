@@ -19,7 +19,7 @@ import java.nio.file.Files;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/petdians/image")
+@RequestMapping("/petdiansAdmin/image")
 @RequiredArgsConstructor
 @Log4j
 public class ImageRestController {
