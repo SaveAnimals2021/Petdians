@@ -10,14 +10,14 @@
 
     .container {
         margin-top: 1em;
+        display: flex;
+        flex-direction: row;
     }
 
     .firstBody {
         width: 100%;
-        height: 60vh;
+        height: 85vh;
 
-        display: flex;
-        flex-direction: row;
     }
 
     .secondBody {
@@ -42,6 +42,7 @@
         display: flex;
         flex-direction: row;
 
+        margin-top: 1em;
     }
 
     .animalMap {
@@ -59,8 +60,6 @@
 </style>
 
 
-<button class="testButton">LIST TEST</button>
-
 <div class="container" style="max-width: 90%;">
     <div class="firstBody">
 
@@ -69,78 +68,10 @@
         </div>
 
         <%-- ======================= View Div ============================ --%>
-        <div class="viewDiv">
-            <div class="imageDiv">
-                <div class="image1">
+        <%--
 
-                </div>
-            </div>
-<%--            <div class="col-lg-6">--%>
-                <div class="card" style="width: 100%; margin-bottom: 0px">
-                    <div class="card-header">
-                        <strong>Name</strong>
-                    </div>
-                    <div class="card-body card-block">
-                            <div class="row form-group">
-                                <div class="col col-md-3">
-                                    <label class=" form-control-label">Type</label>
-                                </div>
-                                <div class="col-12 col-md-9">
-                                    <input type="text" id="text-inputt" name="text-input" placeholder="Type" class="form-control">
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col col-md-3">
-                                    <label for="text-input" class=" form-control-label">Species</label>
-                                </div>
-                                <div class="col-12 col-md-9">
-                                    <input type="text" id="text-input" name="text-input" placeholder="Text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col col-md-3">
-                                    <label for="email-input" class=" form-control-label">Sex</label>
-                                </div>
-                                <div class="col-12 col-md-9">
-                                    <input type="email" id="email-input" name="email-input" placeholder="Enter Email" class="form-control">
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col col-md-3">
-                                    <label for="password-input" class=" form-control-label">Gudian</label>
-                                </div>
-                                <div class="col-12 col-md-9">
-                                    <input type="password" id="password-input" name="password-input" placeholder="Password" class="form-control">
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col col-md-3">
-                                    <label for="disabled-input" class=" form-control-label">Date</label>
-                                </div>
-                                <div class="col-12 col-md-9">
-                                    <input type="text" id="disabled-input" name="disabled-input" placeholder="Disabled" disabled="" class="form-control">
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col col-md-3">
-                                    <label for="disabled-input" class=" form-control-label">Location</label>
-                                </div>
-                                <div class="col-12 col-md-9">
-                                    <input type="text" id="disabled-inputs" name="disabled-input" placeholder="Disabled" disabled="" class="form-control">
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col col-md-3">
-                                    <label for="textarea-input" class=" form-control-label">Situation</label>
-                                </div>
-                                <div class="col-12 col-md-9">
-                                    <textarea name="textarea-input" id="textarea-input" rows="5" placeholder="Content..." class="form-control"></textarea>
-                                </div>
-                            </div>
-                    </div>
-                </div>
-            </div>
-<%--        </div>--%>
+    --%>
+        <%--        </div>--%>
         <%-- ======================= End View Div ============================ --%>
 
     </div>
@@ -212,6 +143,113 @@
         </form>
     </div>
 
+    <!-- LARGE MODAL -->
+    <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel"
+         style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="largeModalLabel">Large Modal</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="viewDiv">
+                        <div class="imageDiv" style="max-width:45%;">
+                            <div class="image1">
+
+                            </div>
+                        </div>
+                        <%--            <div class="col-lg-6">--%>
+                        <div class="card" style="width: 55%; margin-bottom: 0px">
+                            <div class="cardName card-header">
+                                <strong>Name</strong>
+                            </div>
+                            <div class="card-body card-block">
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label class=" form-control-label">Type</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="text" id="text-type" name="text-input" disabled="Disabled"
+                                               class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="text-species" class=" form-control-label">Species</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="text" id="text-species" name="text-input" disabled="Disabled"
+                                               class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="text-sex" class=" form-control-label">Sex</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="text" id="text-sex" name="email-input"  disabled="Disabled"
+                                               class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="text-guardian" class=" form-control-label">Guardian</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="text" id="text-guardian" name="password-input"
+                                               disabled="Disabled" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="text-date" class=" form-control-label">Date</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="text" id="text-date" name="disabled-input" placeholder="Disabled"
+                                               disabled="Disabled" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="text-location" class=" form-control-label">Location</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <textarea type="text" id="text-location" name="disabled-input" rows="2"
+                                               placeholder="Disabled" disabled="" class="form-control"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="text-situation" class=" form-control-label">Situation</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <textarea name="textarea-input" id="text-situation" rows="5"
+                                                  placeholder="Disabled" class="form-control"
+                                                  style="height: 90%;"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- MODAL BODY END -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 
@@ -233,13 +271,8 @@
 
     $(document).ready(function () {
         var urlMap = new Map();
-        <c:forEach items = '${list}' var="item">
-            var urlList = new Array();
-            <c:forEach items = '${item.imageUrlList}' var="url">
-                urlList.add(${url});
-            </c:forEach>
-            urlMap.set(${item.animalNumber}, urlList);
-        </c:forEach>
+
+
 
 
         //      kakao.maps.load(function () {
@@ -290,7 +323,7 @@
                         map: map,
                         position: coords,
                         // animal number
-                        title : animalNumber
+                        title: animalNumber
 
                     });
 
@@ -404,14 +437,6 @@
         //     infowindow.open(map, marker);
         // });
 
-        document.querySelector(".testButton").addEventListener("click", function () {
-            console.log("================= resultList ===============");
-
-            console.log(resultList);
-            console.log(markerList);
-
-            // testBUTTON end
-        }, false)
         // ============= INFO WINDOW END ============ //
 
         document.querySelector(".au-btn-filter").addEventListener("click", function (e) {
@@ -434,31 +459,37 @@
 
         }, false)
 
+        var largeModal = $("#largeModal");
+        var myList = ${jsonList};
+
         // LIST 누르기 => 지도에서 해당 위치로 이동 + View 창에 띄우기
         document.querySelector(".animalTable").addEventListener("click", function (e) {
             e.preventDefault();
             e.stopPropagation();
             var tr = e.target.closest("tr");
-            var animalNumber = tr.getAttribute("data-number");
-            var value = animalMap.get(animalNumber);
-            map.setCenter(value.getPosition());
+            var index = tr.getAttribute("data-idx");
 
-            // controller에서 다시 쏴주어야한다.
+            var animalInfo = JSON.parse(myList[index]);
 
-
-
-            var test = <c:out value= '${list[1].imageUrlList}'/>;
-            console.log("================ TEST ================");
-            console.log(test);
-
-            // View 창에 띄우기
-            document.querySelector(".imageDiv .image1").innerHTML = "<img src='C:\\upload\2021\04\01\1cf4a618-ba02-40ff-8507-e53cf0001a99_8beaca5cb77e8.jpg'>";
-            // '../resources/img1.jpg'
-
+            showModal(animalInfo);
         }, false)
 
+        // 모달창...
+        function showModal(animalInfo) {
 
+            largeModal.modal('show');
 
+            document.querySelector("#text-type").value = animalInfo.type;
+            document.querySelector("#text-species").value = animalInfo.species;
+            document.querySelector("#text-sex").value = animalInfo.sex;
+            document.querySelector("#text-guardian").value = animalInfo.guardianName;
+            document.querySelector("#text-date").value = animalInfo.missingDate;
+            document.querySelector("#text-location").value = animalInfo.missingLocation;
+            document.querySelector("#text-situation").value = animalInfo.situation;
+            document.querySelector(".cardName strong").innerHTML = animalInfo.name;
+        }
+
+        // DOC.ready END
     })
 
     // }) // kakao.maps.load END

@@ -1,5 +1,7 @@
 package org.petdians.animal.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.petdians.animal.dto.ImageDTO;
@@ -38,6 +40,7 @@ public class AnimalController {
         // ${list.getFileList.
         List<MissingAnimalDTO> list =  service.getMissingList(dto);
 
+        JsonArray jsonArray = new JsonArray();
 
         list.forEach(d->{
             int ano = d.getAnimalNumber();
@@ -54,13 +57,25 @@ public class AnimalController {
 
                 d.setImageUrlList(urlList);
 
+
+                // JSON
+                Gson gson = new Gson();
+                String json = gson.toJson(d);
+                jsonArray.add(json);
             } catch(Exception e){
                 e.printStackTrace();
             }
         });
+//        Gson gson = new Gson();
+//        String json = gson.toJson(1);
+//        JsonArray jsonArray = new JsonArray();
+//        jsonArray.add(json);
+
+
 
 
         model.addAttribute("list", list);
+        model.addAttribute("jsonList", jsonArray);
         model.addAttribute("pageMaker", new PageMaker(dto, service.getTotalCount(dto)));
 
         log.info(" PAGE : " + dto);
