@@ -8,6 +8,10 @@
 
 <style>
 
+    .modal-hidden{
+        overflow: hidden;
+    }
+
     .container {
         margin-top: 1em;
         display: flex;
@@ -51,9 +55,21 @@
     }
 
     .imageDiv {
-        padding: 20px;
         width: 50%;
         background-color: #00a2e3;
+        margin-right: 5%;
+        margin-left: 5%;
+
+    }
+
+    .imageModal {
+        height: 100%;
+        width: 100%;
+    }
+
+    .image1{
+
+        height: 100%;
 
     }
 
@@ -131,8 +147,16 @@
                     <td style="text-align: center;">${animal.regDate}</td>
                     <!-- UPDATEDATE -->
                     <td style="text-align: center;"><p class="status--process">${animal.updateDate}</p></td>
+                    <td>
+                        <div class="table-data-feature">
+                            <button class="item view" data-toggle="tooltip" data-placement="top" title="Send">
+                                <i class="zmdi zmdi-mail-send"></i>
+                            </button>
+                        </div>
+                    </td>
                 </tr>
             </c:forEach>
+
             </tbody>
         </table>
     </div>
@@ -146,21 +170,23 @@
     <!-- LARGE MODAL -->
     <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel"
          style="display: none;" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-lg" role="document" style="max-width: 70%;">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="largeModalLabel">Large Modal</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                        <span class="closex" aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="viewDiv">
+                        <div><i class="fa fa-caret-left" aria-hidden="true"></i></div>
                         <div class="imageDiv" style="max-width:45%;">
                             <div class="image1">
 
                             </div>
                         </div>
+                        <div><i class="fa fa-caret-right" aria-hidden="true"></i></div>
                         <%--            <div class="col-lg-6">--%>
                         <div class="card" style="width: 55%; margin-bottom: 0px">
                             <div class="cardName card-header">
@@ -464,20 +490,37 @@
 
         // LIST 누르기 => 지도에서 해당 위치로 이동 + View 창에 띄우기
         document.querySelector(".animalTable").addEventListener("click", function (e) {
+
             e.preventDefault();
             e.stopPropagation();
+
             var tr = e.target.closest("tr");
-            var index = tr.getAttribute("data-idx");
+            var btn = e.target.closest("button");
+            console.log(btn);
+            if(btn) {
 
-            var animalInfo = JSON.parse(myList[index]);
+                var index = tr.getAttribute("data-idx");
+                var animalInfo = JSON.parse(myList[index]);
+                showModal(animalInfo);
 
-            showModal(animalInfo);
+            }
+
+            console.log(animalInfo);
+
         }, false)
 
         // 모달창...
+        let modalArray = new Array();
+        const image1 = document.querySelector(".image1");
         function showModal(animalInfo) {
 
-            largeModal.modal('show');
+            modalArray.length = 0;
+            //largeModal.get(0).classList.add("show");
+            //largeModal.get(0).setAttribute("style","display: block; overflow : hidden;");
+            // document.body.classList.add("modal-hidden");
+            //     //.style.overflow = "hidden";
+            // //("modal-open");
+            // largeModal.get(0).classList.add("show");
 
             document.querySelector("#text-type").value = animalInfo.type;
             document.querySelector("#text-species").value = animalInfo.species;
@@ -487,7 +530,53 @@
             document.querySelector("#text-location").value = animalInfo.missingLocation;
             document.querySelector("#text-situation").value = animalInfo.situation;
             document.querySelector(".cardName strong").innerHTML = animalInfo.name;
-        }
+
+            console.log(animalInfo.imageUrlList);
+            const imageUrlList = animalInfo.imageUrlList;
+            //let htmlCode = "";
+            let idx = 0;
+            for (let image of imageUrlList) {
+
+                ++idx;
+                console.log(image);
+                image = encodeURIComponent(image.substring(11));
+                console.log(image);
+                modalArray.push(image);
+                //htmlCode += "<div class='image'" + idx + "><img src='/petdiansAdmin/image/get?file=" + image +"'/> </div>";
+
+                }//end for
+
+            image1.innerHTML =
+                "<img class='imageModal' src='/petdiansAdmin/image/get?file=" + modalArray[0] + "'/>";
+
+
+            largeModal.modal("show");
+
+            }//end showModal
+
+        document.querySelector(".viewDiv")
+
+        // //모달창 버튼
+        // largeModal.get(0).addEventListener("click", function (e) {
+        //
+        //     e.preventDefault();
+        //     e.stopPropagation();
+        //
+        //     const target = e.target;
+        //     console.log(target);
+        //
+        //     if (target.className == 'btn btn-primary') {
+        //
+        //         console.log("btn btn-primary");
+        //         return;
+        //
+        //     } else if (target.className == 'btn btn-secondary' || target.className == "closex"){
+        //
+        //         console.log("close")
+        //
+        //     }
+        //
+        // }, false);
 
         // DOC.ready END
     })
