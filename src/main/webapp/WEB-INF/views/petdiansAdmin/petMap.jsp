@@ -21,6 +21,7 @@
     .firstBody {
         width: 100%;
         height: 85vh;
+        margin-right: 2%;
 
     }
 
