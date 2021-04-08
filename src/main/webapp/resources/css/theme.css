@@ -3164,9 +3164,9 @@ section {
 }
 
 .overview-item--c3 {
-    background-image: -moz-linear-gradient(90deg, #ee0979 0%, #ff6a00 100%);
-    background-image: -webkit-linear-gradient(90deg, #ee0979 0%, #ff6a00 100%);
-    background-image: -ms-linear-gradient(90deg, #ee0979 0%, #ff6a00 100%);
+    background-image: -moz-linear-gradient(90deg, #ee7f09 0%, #ee9e09 100%);
+    background-image: -webkit-linear-gradient(90deg, #ee7f09 0%, #ee9e09 100%);
+    background-image: -ms-linear-gradient(90deg, #ee7f09 0%, #ee9e09 100%);
 }
 
 .overview-item--c4 {
@@ -4139,6 +4139,19 @@ section {
 
 .dot--red {
     background: #fa4251;
+}
+
+.dot--missing{
+    background: #5EEE98;
+}
+.dot--rescued{
+    background: #FE813C;
+}
+.dot--adopted{
+    background: #DDE77B;
+}
+.dot--witnessed{
+    background: #6C7EF8;
 }
 
 .chart-note-wrap {

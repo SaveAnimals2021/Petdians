@@ -1,4 +1,4 @@
-package org.petdians.common.crawling.service;
+package org.petdians.common.crawling.util;
 
 import lombok.extern.log4j.Log4j;
 import org.jsoup.Jsoup;
@@ -15,7 +15,7 @@ import java.util.List;
 
 @Log4j
 @Service
-public class AngelCrawlService extends CrawlService {
+public class AngelCrawlManager extends CrawlManager {
 
 
     private static String baseUrl = "http://www.angel.or.kr/";

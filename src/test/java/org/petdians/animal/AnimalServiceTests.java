@@ -10,7 +10,7 @@ import org.petdians.animal.service.AnimalService;
 import org.petdians.animal.service.ImageService;
 import org.petdians.common.config.CommonConfig;
 import org.petdians.common.crawling.config.CrawlConfig;
-import org.petdians.common.crawling.service.*;
+import org.petdians.common.crawling.util.*;
 import org.petdians.common.dao.AnimalInfoDAO;
 import org.petdians.common.dto.PageDTO;
 import org.petdians.common.util.ImageManager;
@@ -25,17 +25,17 @@ import java.util.List;
 @ContextConfiguration(classes = {CommonConfig.class, AnimalConfig.class, CrawlConfig.class})
 public class AnimalServiceTests {
 
-    KaraCrawlService karaservice;
+    KaraCrawlManager karaservice;
 
-    SaacCrawlService saacCrawlService;
+    SaacCrawlManager saacCrawlService;
 
-    KarmaCrawlService karmaCrawlService;
+    KarmaCrawlManager karmaCrawlService;
 
-    IJoaCrawlService iJoaCrawlService;
+    IJoaCrawlManager iJoaCrawlService;
 
-    AngelCrawlService angelCrawlService;
+    AngelCrawlManager angelCrawlService;
 
-    APMSCrawlService apmsCrawlService;
+    APMSICrawlManager apmsCrawlService;
 
     AnimalInfoDAO dao;
 

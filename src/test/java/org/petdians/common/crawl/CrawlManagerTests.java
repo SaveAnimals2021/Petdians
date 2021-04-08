@@ -1,4 +1,4 @@
-package org.petdians.common;
+package org.petdians.common.crawl;
 
 import lombok.extern.log4j.Log4j;
 import org.junit.Before;
@@ -10,9 +10,9 @@ import org.petdians.animal.service.ImageService;
 import org.petdians.aop.config.AopConfig;
 import org.petdians.common.config.CommonConfig;
 import org.petdians.common.crawling.config.CrawlConfig;
-import org.petdians.common.crawling.service.*;
+import org.petdians.common.crawling.util.*;
 import org.petdians.common.dao.AnimalInfoDAO;
-import org.petdians.common.dto.CrawlResultDTO;
+import org.petdians.common.crawling.dto.CrawlResultDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -20,20 +20,20 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {CommonConfig.class, AnimalConfig.class, CrawlConfig.class, AopConfig.class})
-public class CrawlServiceTests {
+public class CrawlManagerTests {
 
-    KaraCrawlService karaservice;
-    SaacCrawlService saacCrawlService;
-    KarmaCrawlService karmaCrawlService;
-    IJoaCrawlService iJoaCrawlService;
+    KaraCrawlManager karaservice;
+    SaacCrawlManager saacCrawlService;
+    KarmaCrawlManager karmaCrawlService;
+    IJoaCrawlManager iJoaCrawlService;
 
-    AngelCrawlService angelCrawlService;
-    APMSCrawlService apmsCrawlService;
+    AngelCrawlManager angelCrawlService;
+    APMSICrawlManager apmsCrawlService;
 
     AnimalInfoDAO dao;
 
     @Autowired
-    TotalCrawlService totalService;
+    TotalCrawlManager totalService;
 
     @Autowired
     AnimalService service;
@@ -43,13 +43,13 @@ public class CrawlServiceTests {
     @Before
     public void setup() {
         dao = new AnimalInfoDAO();
-        karaservice = new KaraCrawlService();
-        saacCrawlService = new SaacCrawlService();
-        karmaCrawlService = new KarmaCrawlService();
-        iJoaCrawlService = new IJoaCrawlService();
+        karaservice = new KaraCrawlManager();
+        saacCrawlService = new SaacCrawlManager();
+        karmaCrawlService = new KarmaCrawlManager();
+        iJoaCrawlService = new IJoaCrawlManager();
 
-        angelCrawlService = new AngelCrawlService();
-        apmsCrawlService = new APMSCrawlService();
+        angelCrawlService = new AngelCrawlManager();
+        apmsCrawlService = new APMSICrawlManager();
     }
 
 

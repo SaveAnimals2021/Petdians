@@ -3,7 +3,7 @@ package org.petdians.common.util;
 import lombok.extern.log4j.Log4j;
 import org.petdians.animal.dto.ImageDTO;
 import org.petdians.animal.dto.MissingAnimalDTO;
-import org.petdians.common.crawling.service.CrawlService;
+import org.petdians.common.crawling.util.CrawlManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -22,7 +22,6 @@ public class ImageManager {
     private static final String uploadFolder = "C:\\upload";
 
 
-
     // MissingAnimalDTO의 정로를 통해 생성한다.
     public static List<ImageDTO> saveImage(MissingAnimalDTO dto) throws Exception {
         List<String> urlList = dto.getImageUrlList();
@@ -38,7 +37,7 @@ public class ImageManager {
             URL urlObj = new URL(url);
 
             HttpURLConnection urlCon = (HttpURLConnection) urlObj.openConnection();
-            urlCon.setRequestProperty("User-Agent", CrawlService.agent);
+            urlCon.setRequestProperty("User-Agent", CrawlManager.agent);
 
             // 1. 폴더 만들기
             // 파일 이름 뽑기
@@ -70,6 +69,7 @@ public class ImageManager {
                 last = uploadPath + File.separator + fileFullName.substring(0, lastindex) + "." + dto.getImageType();
             }
 
+
             // 파일 저장
             saveFile(urlCon, last);
 
@@ -85,32 +85,87 @@ public class ImageManager {
         return resultImages;
     }
 
-    public static Boolean saveFile(HttpURLConnection con, String path) throws Exception{
-        // 이미지 저장하기 위해 inputStream 생성
-        InputStream in = con.getInputStream();
+    public static void saveImageDTO(ImageDTO dto) throws Exception {
+        String url = dto.getUrl();
+        URL urlObj = new URL(url);
 
-        if(null == in){
-            return false;
+        HttpURLConnection urlCon = (HttpURLConnection) urlObj.openConnection();
+        urlCon.setRequestProperty("User-Agent", CrawlManager.agent);
+
+        // 1. 폴더 만들기
+        // 파일 이름 뽑기
+        String fileName = url.substring(url.lastIndexOf("/") + 1);
+        String uuid = dto.getUuid();
+
+        String fileFullName = uuid + "_" + fileName;
+
+        String folderPath = dto.getRegDate().substring(0, 10).replace("-", File.separator); // 2021/03/17
+        // 최종 폴더 생성
+        File uploadPath = new File(uploadFolder, folderPath); // 경로를 설정... (부모 경로), (자식 경로) C:\\upload\\2021\\03\\17
+
+        // 있으면 null이 아니다. 없으면 null이다.
+        if (false == uploadPath.exists()) {
+            // 실제 폴더를 생성
+            uploadPath.mkdirs();
         }
 
-        FileOutputStream fos = new FileOutputStream(path);
+        // 2. 파일 만들기
+        // 실제 저장할 파일 이름
+        // 이미지를 파일로 저장하기 위해
+        // 경로 + 파일이름 + 확장자
+        int lastindex = fileFullName.lastIndexOf(".");
+        String last = "";
+        // .이 없다 = 확장자가 있다.
+        if (-1 == lastindex) {
+            last = uploadPath + File.separator + fileFullName + "." + dto.getType();
+        } else {
+            last = uploadPath + File.separator + fileFullName.substring(0, lastindex) + "." + dto.getType();
+        }
 
-        byte[] buffer = new byte[1024 * 8];
 
-        while (true) {
-            int count = in.read(buffer);
+        // 파일 저장
+        saveFile(urlCon, last);
+    }
 
-            if (-1 == count) {
-                break;
+
+    public static Boolean saveFile(HttpURLConnection con, String path) {
+        FileOutputStream fos = null;
+        try {
+            // 이미지 저장하기 위해 inputStream 생성
+            InputStream in = con.getInputStream();
+
+            if (null == in) {
+                return false;
             }
 
-            fos.write(buffer, 0, count);
-        }
+            fos = new FileOutputStream(path);
 
-        fos.close();
+            byte[] buffer = new byte[1024 * 8];
+
+            while (true) {
+                int count = in.read(buffer);
+
+                if (-1 == count) {
+                    break;
+                }
+
+                fos.write(buffer, 0, count);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (null != fos) {
+                    fos.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         return true;
     }
+
 
     // 폴더 생성, 경로 반환
     private static String getFolder() {

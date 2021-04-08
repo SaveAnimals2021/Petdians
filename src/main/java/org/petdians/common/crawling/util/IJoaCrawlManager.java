@@ -1,4 +1,4 @@
-package org.petdians.common.crawling.service;
+package org.petdians.common.crawling.util;
 
 import lombok.extern.log4j.Log4j;
 import org.jsoup.Jsoup;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Log4j
-public class IJoaCrawlService extends CrawlService {
+public class IJoaCrawlManager extends CrawlManager {
 
     private static String baseUrl = "https://www.ijoa.co.kr";
     private static String imageBaseUrl = "https://cdn.imweb.me/upload/";

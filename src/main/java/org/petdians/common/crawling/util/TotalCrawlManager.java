@@ -1,12 +1,12 @@
-package org.petdians.common.crawling.service;
+package org.petdians.common.crawling.util;
 
 
 import lombok.extern.log4j.Log4j;
 import org.petdians.animal.dto.AnimalInfoDTO;
 import org.petdians.animal.dto.MissingAnimalDTO;
 import org.petdians.animal.service.AnimalService;
+import org.petdians.common.crawling.dto.CrawlResultDTO;
 import org.petdians.common.dao.AnimalInfoDAO;
-import org.petdians.common.dto.CrawlResultDTO;
 import org.petdians.common.util.DateFormatter;
 import org.petdians.common.util.FileManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +20,12 @@ import java.util.List;
 
 @Log4j
 @Service
-public class TotalCrawlService {
+public class TotalCrawlManager {
 
     @Autowired
     AnimalService service;
 
-    List<CrawlService> sites;
+    List<CrawlManager> sites;
 
     private Integer crawlNumber = 0; // 시도 회수
     private Integer newDataNumber; // 새로운 데이터 개수
@@ -37,14 +37,14 @@ public class TotalCrawlService {
 
     private static String uploadPath = "C://upload";
 
-    public TotalCrawlService() {
-        KaraCrawlService karaservice = new KaraCrawlService();
-        SaacCrawlService saacCrawlService = new SaacCrawlService();
-        KarmaCrawlService karmaCrawlService = new KarmaCrawlService();
-        IJoaCrawlService iJoaCrawlService = new IJoaCrawlService();
+    public TotalCrawlManager() {
+        KaraCrawlManager karaservice = new KaraCrawlManager();
+        SaacCrawlManager saacCrawlService = new SaacCrawlManager();
+        KarmaCrawlManager karmaCrawlService = new KarmaCrawlManager();
+        IJoaCrawlManager iJoaCrawlService = new IJoaCrawlManager();
 
-        AngelCrawlService angelCrawlService = new AngelCrawlService();
-        APMSCrawlService apmsCrawlService = new APMSCrawlService();
+        AngelCrawlManager angelCrawlService = new AngelCrawlManager();
+        APMSICrawlManager apmsCrawlService = new APMSICrawlManager();
 
         sites = new ArrayList<>();
         sites.add(karaservice);
@@ -110,11 +110,30 @@ public class TotalCrawlService {
         int csize = crawlList.size();
         // 새로운 데이터 수!!!
         newDataNumber = csize;
-
+        int newMissing = 0;
+        int newWit = 0;
+        int newRescued = 0;
+        int newAdopted = 0;
+        // NEW DATA
         for (int i = 0; i < csize; ++i) {
             // 2번상황 = insert한다.
             MissingAnimalDTO dto = crawlList.get(i);
             service.register(dto);
+
+            switch(dto.getRescueStatus()){
+                case 0:
+                    ++newMissing;
+                    break;
+                case 1:
+                    ++newWit;
+                    break;
+                case 2:
+                    ++newRescued;
+                    break;
+                case 3:
+                    ++newAdopted;
+                    break;
+            }
         }
 
         int dsize = dbList.size();
@@ -135,9 +154,12 @@ public class TotalCrawlService {
         String timeDif = DateFormatter.calcTimeDiff(crawlDate, finishedTime);
 
         CrawlResultDTO result = CrawlResultDTO.builder()
-                .crawlDate(crawlDate).newDataNumber(newDataNumber).modDataNumber(modDataNumber).totalDataNumber(total)
-                .takingTime(timeDif).crawlNumber(crawlNumber).period(period)
+                .newDataCount(newDataNumber).modDataCount(modDataNumber).totalDataCount(total)
+                .adoptedCount(newAdopted).missingCount(newMissing).rescuedCount(newRescued).witnessedCount(newWit)
+                .takingTime(timeDif).crawlCount(crawlNumber).period(period)
                 .build();
+
+
 
         // 파일로 저장!
         // 1. 파일 이름 설정!

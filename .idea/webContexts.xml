@@ -4,6 +4,7 @@
     <option name="state">
       <map>
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/petdiansAdmin/crawling.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/petdiansAdmin" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/petdiansAdmin/crawling/statistics.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/petdiansAdmin/crawling" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/petdiansAdmin/petMap.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/petdiansAdmin" />
       </map>
     </option>

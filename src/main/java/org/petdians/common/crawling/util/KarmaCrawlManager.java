@@ -1,4 +1,4 @@
-package org.petdians.common.crawling.service;
+package org.petdians.common.crawling.util;
 
 import lombok.extern.log4j.Log4j;
 import org.jsoup.Jsoup;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @Log4j
 // 서울유기동물 입양센터
-public class KarmaCrawlService extends CrawlService{
+public class KarmaCrawlManager extends CrawlManager {
 
     private static String baseUrl = "http://www.karma.or.kr";
     private static String url = "http://www.karma.or.kr/human_boardA/animal_board.php?act=list&bid=animal&page=";

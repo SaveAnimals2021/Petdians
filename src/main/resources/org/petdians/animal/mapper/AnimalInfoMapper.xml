@@ -109,4 +109,19 @@
 		and rescueStatus = '0'
 	</select>
 
+
+	<!-- STATISTICS -->
+	<!-- STATISTICS -->
+	<!-- STATISTICS -->
+	<!-- Missing Pets Count -->
+	<select id="getMissingCount" resultType="org.petdians.animal.domain.MissingAnimalVO">
+		select count(animalNumber) from tbl_animal
+		where rescueStatus = '0' and
+		<choose>
+			<when test="day != null">missingDate BETWEEN DATE_ADD(NOW(),INTERVAL -#{day} DAY ) AND NOW()</when>
+			<otherwise>missingDate BETWEEN DATE_ADD(NOW(),INTERVAL -1 MONTH ) AND NOW()</otherwise>
+		</choose>
+		order by animalNumber desc
+	</select>
+
 </mapper>
