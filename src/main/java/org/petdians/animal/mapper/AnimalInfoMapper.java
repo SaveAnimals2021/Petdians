@@ -21,10 +21,14 @@ public interface AnimalInfoMapper {
                                      @Param("keyword") String keyword,
                                      @Param("day") String day);
 
-    List<MissingAnimalVO> getMissingList(
+    List<MissingAnimalVO> getMissingList(@Param("skip") Integer skip,
+                                         @Param("perSheet") Integer perSheet,
                                        @Param("day") String day);
 
     Integer getTotalCount(@Param("arr") String[] arr,
+                          @Param("keyword") String keyword, @Param("day") String day);
+
+    Integer getMissingTotal(@Param("arr") String[] arr,
                           @Param("keyword") String keyword, @Param("day") String day);
 
 

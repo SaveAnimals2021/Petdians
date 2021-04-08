@@ -19,27 +19,19 @@
 
     <!-- Title Page-->
     <title>Dashboard 3</title>
-
-    <!-- Fontfaces CSS-->
-    <link href="../resources/css/font-face.css" rel="stylesheet" media="all">
-    <link href="../resources/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
-    <link href="../resources/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
-    <link href="../resources/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
-
-    <!-- Bootstrap CSS-->
-    <link href="../resources/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
-
-    <!-- Vendor CSS-->
-    <link href="../resources/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
-    <link href="../resources/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
-    <link href="../resources/vendor/wow/animate.css" rel="stylesheet" media="all">
-    <link href="../resources/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
-    <link href="../resources/vendor/slick/slick.css" rel="stylesheet" media="all">
-    <link href="../resources/vendor/select2/select2.min.css" rel="stylesheet" media="all">
-    <link href="../resources/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
-
-    <!-- Main CSS-->
-    <link href="../resources/css/theme.css" rel="stylesheet" media="all">
+    <link href="../../resources/css/font-face.css" rel="stylesheet" media="all">
+    <link href="../../resources/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <link href="../../resources/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
+    <link href="../../resources/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <link href="../../resources/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+    <link href="../../resources/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
+    <link href="../../resources/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
+    <link href="../../resources/vendor/wow/animate.css" rel="stylesheet" media="all">
+    <link href="../../resources/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
+    <link href="../../resources/vendor/slick/slick.css" rel="stylesheet" media="all">
+    <link href="../../resources/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="../../resources/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
+    <link href="../../resources/css/theme.css" rel="stylesheet" media="all">
 
 </head>
 
@@ -57,7 +49,7 @@
                 <div class="header__navbar">
                     <ul class="list-unstyled">
                         <li class="has-sub">
-                            <a href="/petdiansAdmin/petMap">
+                            <a href="/petdiansAdmin/petMap/list">
                                 <i class="far fa-map"></i>PET MAP
                                 <span class="bot-line"></span>
                             </a>
@@ -214,7 +206,7 @@
                     <div class="account-wrap">
                         <div class="account-item account-item--style2 clearfix js-item-menu">
                             <div class="image">
-                                <img src="../resources/images/icon/avatar-01.jpg" alt="John Doe" />
+                                <img src="../../resources/images/icon/avatar-01.jpg" alt="John Doe" />
                             </div>
                             <div class="content">
                                 <a class="js-acc-btn" href="#">john doe</a>
@@ -223,7 +215,7 @@
                                 <div class="info clearfix">
                                     <div class="image">
                                         <a href="#">
-                                            <img src="../resources/images/icon/avatar-01.jpg" alt="John Doe" />
+                                            <img src="../../resources/images/icon/avatar-01.jpg" alt="John Doe" />
                                         </a>
                                     </div>
                                     <div class="content">
@@ -266,7 +258,7 @@
             <div class="container-fluid">
                 <div class="header-mobile-inner">
                     <a class="logo" href="index.html" >
-                        <img src="../resources/images/icon/petdians-finish.png" alt="CoolAdmin" style="max-width: 60%"/>
+                        <img src="../../resources/images/icon/petdians-finish.png" alt="CoolAdmin" style="max-width: 60%"/>
                     </a>
                     <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">
@@ -455,7 +447,7 @@
             <div class="account-wrap">
                 <div class="account-item account-item--style2 clearfix js-item-menu">
                     <div class="image">
-                        <img src="../resources/images/icon/avatar-01.jpg" alt="John Doe" />
+                        <img src="../../resources/images/icon/avatar-01.jpg" alt="John Doe" />
                     </div>
                     <div class="content">
                         <a class="js-acc-btn" href="#">john doe</a>
@@ -464,7 +456,7 @@
                         <div class="info clearfix">
                             <div class="image">
                                 <a href="#">
-                                    <img src="../resources/images/icon/avatar-01.jpg" alt="John Doe" />
+                                    <img src="../../resources/images/icon/avatar-01.jpg" alt="John Doe" />
                                 </a>
                             </div>
                             <div class="content">

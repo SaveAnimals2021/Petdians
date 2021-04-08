@@ -26,10 +26,6 @@
 				</foreach>
 				AND
 			</if>
-			<choose>
-				<when test="day != null">regDate BETWEEN DATE_ADD(NOW(),INTERVAL -#{day} DAY ) AND NOW()</when>
-				<otherwise>regDate BETWEEN DATE_ADD(NOW(),INTERVAL -1 MONTH ) AND NOW()</otherwise>
-			</choose>
 		</where>
 	</sql>
 
@@ -63,6 +59,11 @@
 	<select id="getPagedList" resultType="org.petdians.animal.domain.MissingAnimalVO">
 		select * from tbl_animal
 		<include refid="search"></include>
+		<if test="arr == null">where</if>
+		<choose>
+			<when test="day != null">regDate BETWEEN DATE_ADD(NOW(),INTERVAL -#{day} DAY ) AND NOW()</when>
+			<otherwise>regDate BETWEEN DATE_ADD(NOW(),INTERVAL -1 MONTH ) AND NOW()</otherwise>
+		</choose>
 		order by animalNumber desc limit #{skip},#{perSheet}
 	</select>
 
@@ -72,9 +73,10 @@
 		where rescueStatus = '0' and
 		<choose>
 			<when test="day != null">missingDate BETWEEN DATE_ADD(NOW(),INTERVAL -#{day} DAY ) AND NOW()</when>
+			<when test='day == "-1"'>missingDate BETWEEN DATE_ADD(NOW(),INTERVAL -1 MONTH ) AND NOW()</when>
 			<otherwise>missingDate BETWEEN DATE_ADD(NOW(),INTERVAL -1 MONTH ) AND NOW()</otherwise>
 		</choose>
-		order by animalNumber desc
+		order by animalNumber desc limit #{skip},#{perSheet}
 	</select>
 
 	<select id="getAllList" resultType="org.petdians.animal.domain.MissingAnimalVO">
@@ -89,6 +91,22 @@
 	<select id="getTotalCount" resultType="Integer">
 		select count(animalNumber) from tbl_animal
 		<include refid="search"></include>
+		<if test="arr == null">where</if>
+		<choose>
+			<when test="day != null">regDate BETWEEN DATE_ADD(NOW(),INTERVAL -#{day} DAY ) AND NOW()</when>
+			<otherwise>regDate BETWEEN DATE_ADD(NOW(),INTERVAL -1 MONTH ) AND NOW()</otherwise>
+		</choose>
+	</select>
+
+	<select id="getMissingTotal" resultType="Integer">
+		select count(animalNumber) from tbl_animal
+		<include refid="search"></include>
+		<if test="arr == null">where</if>
+		<choose>
+			<when test="day != null">missingDate BETWEEN DATE_ADD(NOW(),INTERVAL -#{day} DAY ) AND NOW()</when>
+			<otherwise>missingDate BETWEEN DATE_ADD(NOW(),INTERVAL -1 MONTH ) AND NOW()</otherwise>
+		</choose>
+		and rescueStatus = '0'
 	</select>
 
 </mapper>

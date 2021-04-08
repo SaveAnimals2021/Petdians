@@ -1,8 +1,8 @@
-<%@ include file="../includes/header.jsp" %>
+<%@ include file="../../includes/header.jsp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 
-<%@ include file="appKey.js" %>
+<%@ include file="../appKey.js" %>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -10,6 +10,8 @@
 
     .maplabel{
         background-color: #FAF6FE;
+        height: auto;
+        width: auto;
     }
 
     .modal-hidden{
@@ -101,7 +103,7 @@
         <div class="table-data__tool-left">
             <div class="rs-select2--light rs-select2--sm">
                 <select class="js-select2" name="day" onchange="change()">
-                    <option value="">DAY</option>
+                    <option value="-1">DAY</option>
                     <option value="0" ${pageDTO.day == '0'?"selected":"" }>Today</option>
                     <option value="3" ${pageDTO.day == '3'?"selected":"" }>3 Days</option>
                     <option value="7" ${pageDTO.day == '7'?"selected":"" }>1 Week</option>
@@ -124,7 +126,7 @@
                     </label>
                 </th>
                 <th style="text-align: center;">ANIMAL NUMBER</th>
-                <th class="desc" style="text-align: left;">TYPE</th>
+                <th class="desc" style="text-align: left;">ANIMAL TYPE</th>
                 <th style="text-align: center;">MISSINGDATE</th>
                 <th style="text-align: center;">REGDATE</th>
                 <th style="text-align: center;">UPDATEDATE</th>
@@ -164,10 +166,31 @@
 
             </tbody>
         </table>
+        <!-- Pagination -->
+        <div style="align-content: center">
+            <ul class="pagination" style="justify-content: center; padding-top:15px; padding-bottom:10px;">
+                <c:if test="${pageMaker.prev }">
+                    <li class="page-item">
+                        <a class="page-link" href="${pageMaker.start - 10}" tabindex="-1">Previous</a>
+                    </li>
+                </c:if>
+                <c:forEach begin="${pageMaker.start }" end="${pageMaker.end }" var = "num">
+                    <li class="page-item ${num == pageMaker.pageDTO.page?"active":"" }"><a class="page-link" href="${num }">${num }</a></li>
+                </c:forEach>
+                <c:if test="${pageMaker.next }">
+                    <li class="page-item">
+                        <a class="page-link" href="${pageMaker.end + 1}">Next</a>
+                    </li>
+                </c:if>
+            </ul>
+        </div>
+        <!-- END Pagination -->
     </div>
     <!--                    actionForm                      -->
     <div class="activity">
-        <form class="actionForm" action="/petdiansAdmin/petMap" method="get">
+        <form class="actionForm" action="/petdiansAdmin/petMap/list" method="get">
+            <input type="hidden" name="page" value="${pageDTO.page}">
+            <input type="hidden" name="perSheet" value="${pageDTO.perSheet}">
             <input type="hidden" name="day" value="${pageDTO.day}">
         </form>
     </div>
@@ -301,10 +324,6 @@
     }
 
     $(document).ready(function () {
-        var urlMap = new Map();
-
-
-
 
         //      kakao.maps.load(function () {
         // 지도 생성하기
@@ -322,110 +341,26 @@
         var markerList = [];
         var animalMap = new Map();
 
-        var i = 0;
+<%--        <c:forEach items = '${list}' var="item">--%>
+<%--        var obj = {--%>
+<%--            animalNumber: '${item.animalNumber}',--%>
+<%--            missingLocation: '${item.missingLocation}',--%>
+<%--            type: '${item.type}',--%>
+<%--            name: '${item.name}',--%>
+<%--            missingDate: '${item.missingDate}'--%>
+<%--        }--%>
+<%--        obj.missingDate = obj.missingDate.substring(0, obj.missingDate.lastIndexOf(" "))--%>
+<%--        dtoList.push(obj);--%>
+<%--        </c:forEach>--%>
+<%--        console.log(${jsonList});--%>
+<%--        console.log(dtoList);--%>
 
-        <c:forEach items = '${list}' var="item">
-        var obj = {
-            animalNumber: '${item.animalNumber}',
-            missingLocation: '${item.missingLocation}',
-            type: '${item.type}',
-            name: '${item.name}',
-            missingDate: '${item.missingDate}'
-        }
-        obj.missingDate = obj.missingDate.substring(0, obj.missingDate.lastIndexOf(" "))
-        dtoList.push(obj);
-        </c:forEach>
-        console.log(dtoList);
+        var dtoList = (${jsonList});
+        const size = dtoList.length;
 
-        // 결과 생성...
-        function makeResult(animalDTO, count) {
-            var maxCount = 10;
-            var result = getMapByUrl(animalDTO.missingLocation);
-            var arr = [];
-
-            return result.then(res => {
-                var val = res.documents;
-                var missingLoc = animalDTO.missingLocation;
-                var animalNum = animalDTO.animalNumber;
-                //Marker 생성
-                if (typeof (val[0]) != "undefined") {
-
-                    var coords = new kakao.maps.LatLng(val[0].y, val[0].x);
-
-                    var marker = new kakao.maps.Marker({
-                        map: map,
-                        position: coords,
-                        title: animalNum
-                    });
-
-                    resultList.push(val[0])
-                    markerList.push(marker);
-
-                    // 1. animal number가 키를 가지는 map에 넣는다. value는 marker
-                    animalMap.set(animalNum, marker);
-
-                    var iwString = '이름: ' + animalDTO.name + '<br/>' + '날짜: ' + animalDTO.missingDate;
-
-                    console.log("iwString : " + iwString);
-
-                    // 2. 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
-                    // 커스텀 오버레이에 표시할 내용입니다
-                    // HTML 문자열 또는 Dom Element 입니다
-                    var content = '<div class ="maplabel"><span class="left"></span><span class="center">'+iwString+'</span><span class="right"></span></div>';
-
-                    var position = new kakao.maps.LatLng((val[0].y+0.0005) , val[0].x);
-
-                    // 커스텀 오버레이를 생성합니다
-                    var customOverlay = new kakao.maps.CustomOverlay({
-                        position: position,
-                        content: content
-                    });
-
-                    // 커스텀 오버레이를 지도에 표시합니다
-                    customOverlay.setMap(map);
-
-                    return val[0];
-                }
-
-                if (0 == val.length) {
-
-                    var index = missingLoc.lastIndexOf(" ");
-                    if (-1 == index) {
-                        console.log("결과 없음... 검색 완료");
-                    }
-
-                    missingLoc = missingLoc.substring(0, index);
-                    animalDTO.missingLocation = missingLoc;
-
-                    if (count >= maxCount) {
-                        console.log("결과 없음... 검색 완료");
-                        return;
-                    }
-
-                    ++count;
-                    console.log("결과 없음... 재검색 시작 =>" + missingLoc);
-                    makeResult(animalDTO, count)
-                    return;
-                }
-
-                for (var i = 0; i < val.length; ++i) {
-                    if (i > 2) {
-                        break;
-                    }
-                    arr[i] = val[i];
-                }
-
-                console.log("arr=================================")
-                console.log(arr[0])
-                console.log("=================================")
-                return arr[0];
-
-            })
-            // 결과 생성 END
-        }
-
-        // 키워드 검색 MapAPI
+        //주소로 x,y 좌표 구하는 MapAPI
         function getMapByUrl(missingLocation) {
+            console.log("X,Y 좌표 구하기 시작-----------------------------------------------------------")
             return fetch("https://dapi.kakao.com/v2/local/search/keyword.json?query='" + missingLocation + "'",
                 {
                     method: 'get',
@@ -435,60 +370,131 @@
                     },
                 })
                 .then(res => {
-
+                    console.log("X,Y 좌표 구한 결과-------------------------------------------------------------")
                     if (!res.ok) {
                         console.log("=========== throws ==========")
                         throw new Error(res);
                     }
-                    console.log("=========== fetch ==========")
+                    //console.log("=========== fetch ==========" + missingLocation)
 
-                    console.log("res====================================================================")
                     // var obj = res.json();
                     // console.log(obj);
-                    console.log(1);
+                    //console.log(1 + missingLocation);
                     return res.json();
 
                 }).catch(res => {
                     console.log("============ catch ===============");
                     return res;
                 })
-        }  // 키워드 검색 MapAPI END
+        }  //주소로 x,y 좌표 구하는 MapAPI END
 
-        var resultList = [];
+        //1.MAP MARKER 만들기
+        for (var i = 0 ; i < size; i++) {
+            console.log("Marker Maker 시작====================================================")
+            var result = makeResult(JSON.parse(dtoList[i]), 0);
+            console.log("3 : " + JSON.parse(dtoList[i]).missingLocation); //-------------------------------- 3
+            console.log("=====================================================================")
 
+            if(i == (size-1)) {
+                console.log("res");
+                console.log(result);
+            }
 
-        // MAP MARKER 만들기 실행
-        for (var dto of dtoList) {
-            var result = makeResult(dto, 0);
+        }//MAP MARKER 만들기 END
 
-            result.then(res => {
-                console.log(3);
-            })
-        }
+        //2.MAP MARKER 만들기
+        function makeResult(animalDTO, count) {
 
+            var maxCount = 10;
+            //animalDTO.missingLocation로 x,y 좌표 구하기
+            var result = getMapByUrl(animalDTO.missingLocation); //--------------------- 1
 
+            return result.then(res => {
+
+                console.log("2 : " + animalDTO.missingLocation)//---------------------------- 2
+
+                var val = res.documents;
+                var missingLoc = animalDTO.missingLocation;
+
+                //재검색
+                if (0 == val.length) {
+
+                    var index = missingLoc.lastIndexOf(" ");
+                    if (-1 == index) {
+                        console.log("결과 없음... 검색 완료" + missingLoc);
+                    }
+
+                    missingLoc = missingLoc.substring(0, index);
+                    animalDTO.missingLocation = missingLoc;
+
+                    if (count >= maxCount) {
+                        console.log("결과 없음... 검색 완료" + missingLoc);
+                        return;
+                    }
+
+                    ++count;
+                    console.log("결과 없음... 재검색 시작 =>" + missingLoc);
+                    makeResult(animalDTO, count)
+                    return;
+
+                }//재검색 END
+
+                //재검색이 끝나면 Marker 생성
+                if (typeof (val[0]) != "undefined") {
+
+                    console.log("Marker 생성!!")
+                    var animalNum = animalDTO.animalNumber;
+                    var coords = new kakao.maps.LatLng(val[0].y, val[0].x);
+
+                    var marker = new kakao.maps.Marker({
+                        map: map,
+                        position: coords,
+                        title: animalNum
+                    });
+
+                    // 1. animal number가 키를 가지는 map에 넣는다. value는 marker
+                    animalMap.set(animalNum, marker);
+                    console.log("animalMap")
+                    console.log(animalNum)
+                    console.log(animalMap);
+                    console.log(animalMap.get(animalNum));
+
+                    var iwString = '이름: ' + animalDTO.name + '<br/>' + '날짜: ' + animalDTO.missingDate;
+
+                    console.log("iwString : " + iwString);
+
+                    // 2. 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
+                    // 커스텀 오버레이에 표시할 내용입니다
+                    // HTML 문자열 또는 Dom Element 입니다
+                    // console.log("List");
+                    console.log(encodeURIComponent(animalDTO.imageUrlList[0].substring(11)));
+                    //encodeURIComponent(animalDTO.imageUrlList[0].substring(11)) <= animalDTO.imageUrlList
+                    var content = '<div class="maplabel"><div class="sumDiv"><img src="/petdiansAdmin/image/get?file=' + encodeURIComponent(animalDTO.imageUrlList[0].substring(11)) + '"/></div>' +
+                        '<span class="left"></span><span class="center">' + iwString + '</span><span class="right"></span></div>';
+
+                    var position = new kakao.maps.LatLng((val[0].y - 0.00313) , val[0].x);
+
+                    // 커스텀 오버레이를 생성합니다
+                    var customOverlay = new kakao.maps.CustomOverlay({
+                        position: position,
+                        content: content
+                    });
+
+                    // 커스텀 오버레이를 지도에 표시합니다
+                    customOverlay.setMap(map);
+                    map.setCenter(coords);
+
+                    return;
+
+                }//Marker 생성 종료
+
+            });
+
+        }// 결과 생성 END
 
         // ============= End Map ==========
 
-        // ============= INFO WINDOW START ============ //
-        // 1. 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
-        // var iwContent = '<div style="padding:5px;">Hello World!</div>'; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-        // var iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
-        //
-        // // 1. 인포 윈도우를 생성합니다.
-        // var infowindow = new kakao.maps.InfoWindow({
-        //     content: iwContent,
-        //     removable: iwRemoveable
-        // });
-        //
-        // // 1. 마커에 클릭이벤트를 등록합니다
-        // kakao.maps.event.addListener(marker, 'click', function () {
-        //     // 마커 위에 인포윈도우를 표시합니다
-        //     infowindow.open(map, marker);
-        // });
-
-        // ============= INFO WINDOW END ============ //
-
+        //검색
         document.querySelector(".au-btn-filter").addEventListener("click", function (e) {
 
             e.preventDefault();
@@ -520,7 +526,7 @@
 
             var tr = e.target.closest("tr");
             var btn = e.target.closest("button");
-            console.log(btn);
+            //console.log(btn);
             if(btn) {
                 // 버튼을 누른 경우 => 모달창에 정보가 뜬다.
                 var index = tr.getAttribute("data-idx");
@@ -529,16 +535,32 @@
 
             } else if(tr){
                 // 버튼을 누르지 않고 리스트를 누른 경우 => 지도를 이동
-                var animalNumber = tr.getAttribute("data-number");
+                var animalNumber = tr.getAttribute("data-number") * 1;
                 var value = animalMap.get(animalNumber);
                 map.setCenter(value.getPosition());
             }
 
-            console.log(animalInfo);
-
         }, false)
 
+        //페이지네이션 작동
+        document.querySelector(".pagination").addEventListener("click", function(e){
 
+            e.preventDefault();
+            e.stopPropagation();
+
+            const actionForm = document.querySelector(".actionForm");
+            const target = e.target;
+
+            const pageNum = target.getAttribute("href")
+            const select = document.querySelector(".js-select2");
+
+            if(pageNum){
+                actionForm.querySelector("input[name='page']").value = pageNum;
+                actionForm.querySelector("input[name='day']").value = select.options[select.selectedIndex].value;
+                actionForm.submit();
+            }
+
+        }, false);
 
         // 모달창...
         let modalArray = new Array();
@@ -564,7 +586,6 @@
 
             console.log(animalInfo.imageUrlList);
             const imageUrlList = animalInfo.imageUrlList;
-            //let htmlCode = "";
             let idx = 0;
             for (let image of imageUrlList) {
 
@@ -573,7 +594,6 @@
                 image = encodeURIComponent(image.substring(11));
                 console.log(image);
                 modalArray.push(image);
-                //htmlCode += "<div class='image'" + idx + "><img src='/petdiansAdmin/image/get?file=" + image +"'/> </div>";
 
             }//end for
 
@@ -585,9 +605,7 @@
 
         }//end showModal
 
-        document.querySelector(".viewDiv")
-
-        // //모달창 버튼
+        // //모달창 버튼 - Vanilla JS
         // largeModal.get(0).addEventListener("click", function (e) {
         //
         //     e.preventDefault();
@@ -609,14 +627,11 @@
         //
         // }, false);
 
-        // DOC.ready END
-
-        // 페이지를 열면 마지막 동물 정보가 지도에 표시
-
-    })
+    })// DOC.ready END
 
     // }) // kakao.maps.load END
+
 </script>
 
 
-<%@ include file="../includes/footer.jsp" %>
+<%@ include file="../../includes/footer.jsp" %>

@@ -27,14 +27,14 @@ public class AnimalController {
     private final AnimalService service;
     private final ImageService imageService;
 
-    @GetMapping("/petMap")
+    @GetMapping("/petMap/list")
     public void getPetMap(PageDTO dto, Model model) {
 
         log.info("petdians petMap...............");
 
 //        PageDTO dto = new PageDTO();
 //        dto.setDay("7");
-        dto.setPerSheet(1000);
+        dto.setPerSheet(5);
 
         // animalDTO에 파일 이름들을 list로 담는다.
         // ${list.getFileList.
@@ -76,8 +76,8 @@ public class AnimalController {
 
         model.addAttribute("list", list);
         model.addAttribute("jsonList", jsonArray);
-        model.addAttribute("pageMaker", new PageMaker(dto, service.getTotalCount(dto)));
-
+        model.addAttribute("pageMaker", new PageMaker(dto, service.getMissingTotal(dto)));
+        log.info(" TOTAL : " + service.getMissingTotal(dto));
         log.info(" PAGE : " + dto);
         log.info(" SIZE : " + list.size());
     }
