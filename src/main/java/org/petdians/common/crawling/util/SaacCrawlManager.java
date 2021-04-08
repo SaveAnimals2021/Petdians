@@ -1,4 +1,4 @@
-package org.petdians.common.crawling.service;
+package org.petdians.common.crawling.util;
 
 import lombok.extern.log4j.Log4j;
 import org.jsoup.Jsoup;
@@ -13,7 +13,7 @@ import java.util.List;
 
 @Log4j
 // 서울유기동물 입양센터
-public class SaacCrawlService extends CrawlService{
+public class SaacCrawlManager extends CrawlManager {
     private static String baseUrl = "http://saac.kr";
     private static String url = "http://saac.kr/?act=board&bbs_code=sub2_1&page=";
     private static String serviceName = "서울유기동물 입양센터";

@@ -1,4 +1,4 @@
-package org.petdians.common.crawling.service;
+package org.petdians.common.crawling.util;
 
 
 import lombok.extern.log4j.Log4j;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Log4j
-public class KaraCrawlService extends CrawlService {
+public class KaraCrawlManager extends CrawlManager {
 
     private static String baseUrl = "https://www.ekara.org";
     private static String url = "https://www.ekara.org/kams/adopt?species=&sex=&weight=&birth=&activity=&page=";

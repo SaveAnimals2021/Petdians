@@ -89,15 +89,15 @@ public class AnimalController {
 
     }
 
-    @GetMapping("/crawling")
-    public void getStatic(PageDTO pageDTO, Model model) {
-
-        log.info("crawling...............");
-        log.info(pageDTO);
-
-        model.addAttribute("list", service.getPagedList(pageDTO));
-        model.addAttribute("pageMaker", new PageMaker(pageDTO, service.getTotalCount(pageDTO)));
-
-    }
+//    @GetMapping("/crawling")
+//    public void getStatic(PageDTO pageDTO, Model model) {
+//
+//        log.info("crawling...............");
+//        log.info(pageDTO);
+//
+//        model.addAttribute("list", service.getPagedList(pageDTO));
+//        model.addAttribute("pageMaker", new PageMaker(pageDTO, service.getTotalCount(pageDTO)));
+//
+//    }
 
 }

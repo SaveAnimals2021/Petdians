@@ -10,10 +10,10 @@ import org.petdians.animal.dto.MissingAnimalDTO;
 import org.petdians.animal.mapper.AnimalInfoMapper;
 import org.petdians.animal.service.AnimalService;
 import org.petdians.common.config.CommonConfig;
-import org.petdians.common.crawling.service.IJoaCrawlService;
-import org.petdians.common.crawling.service.KaraCrawlService;
-import org.petdians.common.crawling.service.KarmaCrawlService;
-import org.petdians.common.crawling.service.SaacCrawlService;
+import org.petdians.common.crawling.util.IJoaCrawlManager;
+import org.petdians.common.crawling.util.KaraCrawlManager;
+import org.petdians.common.crawling.util.KarmaCrawlManager;
+import org.petdians.common.crawling.util.SaacCrawlManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -26,11 +26,11 @@ import java.util.List;
 @ContextConfiguration(classes={CommonConfig.class, AnimalConfig.class})
 public class CompareTests {
 
-    KaraCrawlService karaservice;
-    SaacCrawlService saacCrawlService;
-    KarmaCrawlService karmaCrawlService;
+    KaraCrawlManager karaservice;
+    SaacCrawlManager saacCrawlService;
+    KarmaCrawlManager karmaCrawlService;
 
-    IJoaCrawlService iJoaCrawlService;
+    IJoaCrawlManager iJoaCrawlService;
 
     @Autowired
     AnimalInfoMapper mapper;
@@ -40,11 +40,11 @@ public class CompareTests {
 
     @Before
     public void setup(){
-        karaservice = new KaraCrawlService();
-        saacCrawlService = new SaacCrawlService();
-        karmaCrawlService = new KarmaCrawlService();
+        karaservice = new KaraCrawlManager();
+        saacCrawlService = new SaacCrawlManager();
+        karmaCrawlService = new KarmaCrawlManager();
 
-        iJoaCrawlService = new IJoaCrawlService();
+        iJoaCrawlService = new IJoaCrawlManager();
     }
 
     @Test
