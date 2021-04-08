@@ -73,7 +73,7 @@ public class APMSCrawlService extends CrawlService {
         main:for (int i = 1; i < size; ++i) {
             ++crawlNumber;
             Document doc = getDocument(newURL + "&seqNo=" + aURL.get(i));
-
+            log.info(doc);
             Elements eles = doc.select("tbody td");
 
             String name = eles.get(0).html();

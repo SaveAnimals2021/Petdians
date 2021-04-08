@@ -52,6 +52,13 @@ public class CrawlServiceTests {
         apmsCrawlService = new APMSCrawlService();
     }
 
+
+    @Test
+    public void testTotalService(){
+        CrawlResultDTO dto = totalService.crawlAll();
+        log.info(dto);
+    }
+
     @Test
     public void testAPMS() {
         try {
@@ -190,9 +197,4 @@ public class CrawlServiceTests {
 //        service.getAllList();
 //    }
 
-    @Test
-    public void testTotalService(){
-        CrawlResultDTO dto = totalService.crawlAll();
-        log.info(dto);
-    }
 }

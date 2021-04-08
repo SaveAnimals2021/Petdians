@@ -8,6 +8,10 @@
 
 <style>
 
+    .maplabel{
+        background-color: #FAF6FE;
+    }
+
     .modal-hidden{
         overflow: hidden;
     }
@@ -307,7 +311,7 @@
         var mapContainer = document.querySelector('.animalMap'), // 지도를 표시할 div
             mapOption = {
                 center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-                level: 5 // 지도의 확대 레벨
+                level: 6 // 지도의 확대 레벨
             };
 
         var map = new kakao.maps.Map(mapContainer, mapOption);
@@ -324,53 +328,74 @@
         var obj = {
             animalNumber: '${item.animalNumber}',
             missingLocation: '${item.missingLocation}',
-            type: '${item.type}'
+            type: '${item.type}',
+            name: '${item.name}',
+            missingDate: '${item.missingDate}'
         }
+        obj.missingDate = obj.missingDate.substring(0, obj.missingDate.lastIndexOf(" "))
         dtoList.push(obj);
         </c:forEach>
         console.log(dtoList);
 
         // 결과 생성...
-        function makeResult(missingLocation, count, animalNumber) {
+        function makeResult(animalDTO, count) {
             var maxCount = 10;
-            var result = getMapByUrl(missingLocation);
+            var result = getMapByUrl(animalDTO.missingLocation);
             var arr = [];
 
             return result.then(res => {
                 var val = res.documents;
-
-                //Marker 생성성
+                var missingLoc = animalDTO.missingLocation;
+                var animalNum = animalDTO.animalNumber;
+                //Marker 생성
                 if (typeof (val[0]) != "undefined") {
-                    // console.log("coords............................................................................")
-                    // console.log(val[0])
 
                     var coords = new kakao.maps.LatLng(val[0].y, val[0].x);
 
                     var marker = new kakao.maps.Marker({
                         map: map,
                         position: coords,
-                        // animal number
-                        title: animalNumber
-
+                        title: animalNum
                     });
 
                     resultList.push(val[0])
                     markerList.push(marker);
 
                     // 1. animal number가 키를 가지는 map에 넣는다. value는 marker
-                    animalMap.set(animalNumber, marker);
+                    animalMap.set(animalNum, marker);
+
+                    var iwString = '이름: ' + animalDTO.name + '<br/>' + '날짜: ' + animalDTO.missingDate;
+
+                    console.log("iwString : " + iwString);
+
+                    // 2. 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
+                    // 커스텀 오버레이에 표시할 내용입니다
+                    // HTML 문자열 또는 Dom Element 입니다
+                    var content = '<div class ="maplabel"><span class="left"></span><span class="center">'+iwString+'</span><span class="right"></span></div>';
+
+                    var position = new kakao.maps.LatLng((val[0].y+0.0005) , val[0].x);
+
+                    // 커스텀 오버레이를 생성합니다
+                    var customOverlay = new kakao.maps.CustomOverlay({
+                        position: position,
+                        content: content
+                    });
+
+                    // 커스텀 오버레이를 지도에 표시합니다
+                    customOverlay.setMap(map);
 
                     return val[0];
                 }
 
                 if (0 == val.length) {
 
-                    var index = missingLocation.lastIndexOf(" ");
+                    var index = missingLoc.lastIndexOf(" ");
                     if (-1 == index) {
                         console.log("결과 없음... 검색 완료");
                     }
 
-                    missingLocation = missingLocation.substring(0, index);
+                    missingLoc = missingLoc.substring(0, index);
+                    animalDTO.missingLocation = missingLoc;
 
                     if (count >= maxCount) {
                         console.log("결과 없음... 검색 완료");
@@ -378,8 +403,8 @@
                     }
 
                     ++count;
-                    console.log("결과 없음... 재검색 시작 =>" + missingLocation);
-                    makeResult(missingLocation, count, animalNumber)
+                    console.log("결과 없음... 재검색 시작 =>" + missingLoc);
+                    makeResult(animalDTO, count)
                     return;
                 }
 
@@ -434,15 +459,13 @@
 
         // MAP MARKER 만들기 실행
         for (var dto of dtoList) {
-            var result = makeResult(dto.missingLocation, 0, dto.animalNumber);
+            var result = makeResult(dto, 0);
 
             result.then(res => {
                 console.log(3);
             })
-            //     .then(
-            //
-            // );
         }
+
 
 
         // ============= End Map ==========
@@ -499,16 +522,23 @@
             var btn = e.target.closest("button");
             console.log(btn);
             if(btn) {
-
+                // 버튼을 누른 경우 => 모달창에 정보가 뜬다.
                 var index = tr.getAttribute("data-idx");
                 var animalInfo = JSON.parse(myList[index]);
                 showModal(animalInfo);
 
+            } else if(tr){
+                // 버튼을 누르지 않고 리스트를 누른 경우 => 지도를 이동
+                var animalNumber = tr.getAttribute("data-number");
+                var value = animalMap.get(animalNumber);
+                map.setCenter(value.getPosition());
             }
 
             console.log(animalInfo);
 
         }, false)
+
+
 
         // 모달창...
         let modalArray = new Array();
@@ -545,7 +575,7 @@
                 modalArray.push(image);
                 //htmlCode += "<div class='image'" + idx + "><img src='/petdiansAdmin/image/get?file=" + image +"'/> </div>";
 
-                }//end for
+            }//end for
 
             image1.innerHTML =
                 "<img class='imageModal' src='/petdiansAdmin/image/get?file=" + modalArray[0] + "'/>";
@@ -553,7 +583,7 @@
 
             largeModal.modal("show");
 
-            }//end showModal
+        }//end showModal
 
         document.querySelector(".viewDiv")
 
@@ -580,6 +610,9 @@
         // }, false);
 
         // DOC.ready END
+
+        // 페이지를 열면 마지막 동물 정보가 지도에 표시
+
     })
 
     // }) // kakao.maps.load END
