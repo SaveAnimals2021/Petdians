@@ -64,4 +64,30 @@ public class MissingAnimalDTO {
         return result;
     }
     private Integer isCompleted;
+
+    public String getRescueStatusString(){
+        String result = "";
+        if(null != rescueStatus){
+
+            switch(rescueStatus){
+                case 0:
+                    result = "실종";
+                    break;
+                case 1:
+                    result = "목격";
+                    break;
+                case 2:
+                    result = "구조";
+                    break;
+                case 3:
+                    result = "입양대기";
+                    break;
+                default:
+                    result = "완료";
+                    break;
+            }
+        }
+
+        return result;
+    }
 }

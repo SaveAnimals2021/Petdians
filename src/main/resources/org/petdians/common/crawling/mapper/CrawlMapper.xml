@@ -55,7 +55,7 @@
 			<when test="day != null">crawlDate BETWEEN DATE_ADD(NOW(),INTERVAL -#{day} DAY ) AND NOW()</when>
 			<otherwise>crawlDate BETWEEN DATE_ADD(NOW(),INTERVAL -1 MONTH ) AND NOW()</otherwise>
 		</choose>
-		order by crawlNumber desc
+		order by crawlDate desc
 	</select>
 
 	<delete id="delete">

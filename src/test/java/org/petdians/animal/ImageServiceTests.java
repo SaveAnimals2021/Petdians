@@ -5,12 +5,15 @@ import lombok.extern.log4j.Log4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.petdians.animal.config.AnimalConfig;
+import org.petdians.animal.dto.ImageDTO;
 import org.petdians.animal.service.ImageService;
 import org.petdians.common.config.CommonConfig;
 import org.petdians.common.crawling.config.CrawlConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 
 @Log4j
@@ -28,6 +31,36 @@ public class ImageServiceTests {
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void changeType() {
+        try {
+             List<ImageDTO> list = service.getAllImages();
+            Integer length = list.size();
+
+            for(int i = 0; i < length; ++i){
+                ImageDTO temp =  list.get(i);
+
+                if(10420 == temp.getAnimalNumber()){
+                    int a = 0;
+                }
+
+                String fileName = temp.getFileName();
+                Integer dotIndex = fileName.lastIndexOf(".");
+                Integer filelength = fileName.length();
+                if(dotIndex == filelength - 4){
+                    String type = fileName.substring(dotIndex + 1);
+                    log.info(temp.getIno() + " : " + type);
+                    temp.setType(type);
+                    service.changeType(temp);
+                }
+            }
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
     }
 
 }

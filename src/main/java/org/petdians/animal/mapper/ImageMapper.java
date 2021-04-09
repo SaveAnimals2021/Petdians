@@ -13,4 +13,6 @@ public interface ImageMapper {
 
 
     List<ImageVO> getAllImages();
+
+    void changeType(ImageVO vo);
 }

@@ -35,7 +35,7 @@
     }
 
     .top-campaign {
-        padding-bottom: 30px;
+        padding-bottom: 24px;
         padding-top: 20px;
         background-color: #E4D2E5;
     }
@@ -47,6 +47,23 @@
     .crawl-between {
         display: flex;
         justify-content: space-between;
+    }
+
+    .crawl-center {
+        display: flex;
+        justify-content: center;
+    }
+
+    .crawl-time {
+        display: flex;
+        justify-content: space-between;
+        padding-right: inherit;
+        padding-left: inherit;
+        margin-bottom: 1em;
+    }
+
+    .dot--gray {
+        background: #BBBBBB;
     }
 
 </style>
@@ -67,7 +84,7 @@
                             <div class="text">
                                 <h2>Missing Pets</h2>
                                 <div class="crawl-between">
-                                    <h2>${list[6].missingCount}</h2>
+                                    <h2>${list[0].missingCount}</h2>
                                     <div class="chart-statis">
 <span class="index decre">
 <i class="zmdi zmdi-long-arrow-down"></i>10%</span>
@@ -91,12 +108,12 @@
                             <div class="text">
                                 <h2>Witnessed Pets</h2>
                                 <div class="crawl-between">
-                                <h2>${list[6].witnessedCount}</h2>
-                                <div class="chart-statis">
+                                    <h2>${list[0].witnessedCount}</h2>
+                                    <div class="chart-statis">
 <span class="index decre">
 <i class="zmdi zmdi-long-arrow-down"></i>10%</span>
+                                    </div>
                                 </div>
-                            </div>
                             </div>
                         </div>
                         <div>
@@ -115,12 +132,12 @@
                             <div class="text">
                                 <h2>Rescued Pets</h2>
                                 <div class="crawl-between">
-                                <h2>${list[6].rescuedCount}</h2>
-                                <div class="chart-statis">
+                                    <h2>${list[0].rescuedCount}</h2>
+                                    <div class="chart-statis">
 <span class="index decre">
 <i class="zmdi zmdi-long-arrow-down"></i>10%</span>
+                                    </div>
                                 </div>
-                            </div>
                             </div>
                         </div>
                         <div>
@@ -139,14 +156,15 @@
                             <div class="text">
                                 <h2>Adopted Pets</h2>
                                 <div class="crawl-between">
-                                <h2>${list[6].adoptedCount}</h2>
-                                <div class="chart-statis">
+                                    <h2>${list[0].adoptedCount}</h2>
+                                    <div class="chart-statis">
 <span class="index decre">
 <i class="zmdi zmdi-long-arrow-down"></i></span>
+                                    </div>
                                 </div>
                             </div>
-                            </div>
                         </div>
+
                         <div>
                             <br/>
                         </div>
@@ -170,6 +188,20 @@
             </div>
         </div>
 
+        <!-- CRAWLTIME -->
+        <div class="row crawl-time">
+            <div>
+                <h2>LAST CRWALING TIME : ${list[0].crawlDate}</h2>
+
+
+            </div>
+            <div class="nextCrawlTime">
+                <h2>NEXT CRWALING TIME : </h2>
+            </div>
+            <div>
+                <button class="au-btn au-btn-load">CHANGE CRAWLING TIME</button>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-lg-6">
@@ -219,7 +251,7 @@
                 </div>
             </div>
 
-            <!-- 그래픽 퍼센트 카드 -->
+            <!-- 퍼센트 카드 -->
             <div class="col-lg-6 ">
 
                 <div class="au-card chart-percent-card ">
@@ -231,12 +263,18 @@
 
                                 <div class="chart-note-wrap">
                                     <div class="chart-note mr-0 d-block">
-                                        <span class="dot dot--blue"></span>
-                                        <span>products</span>
-                                    </div>
-                                    <div class="chart-note mr-0 d-block">
+                                        <span class="dot dot--green"></span>
+                                        <span class="percentChartNote">dogs</span>
+
                                         <span class="dot dot--red"></span>
-                                        <span>services</span>
+                                        <span class="percentChartNote">cats</span>
+
+                                        <span class="dot dot--blue"></span>
+                                        <span class="percentChartNote">etc</span>
+
+                                        <span class="dot dot--gray"></span>
+                                        <span class="percentChartNote">unknown</span>
+
                                     </div>
                                 </div>
 
@@ -252,8 +290,7 @@
                                             <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
                                         </div>
                                     </div>
-                                    <canvas id="percent-chart" height="280" width="268" class="chartjs-render-monitor"
-                                            style="display: block; width: 268px; height: 280px;"></canvas>
+                                    <canvas id="percentChart" height="280" width="408" class="chartjs-render-monitor" style="display: block; width: 408px; height: 280px;"></canvas>
                                 </div>
 
 
@@ -268,29 +305,28 @@
                                             <tbody>
                                             <tr>
                                                 <td>Crawl Try Count</td>
-                                                <td>${list[6].crawlCount}</td>
+                                                <td>${list[0].crawlCount}</td>
                                             </tr>
                                             <tr>
                                                 <td>New Data Count</td>
-                                                <td>${list[6].newDataCount}</td>
+                                                <td>${list[0].newDataCount}</td>
                                             </tr>
                                             <tr>
                                                 <td>Deleted Data Count</td>
-                                                <td>${list[6].modDataCount}</td>
+                                                <td>${list[0].modDataCount}</td>
                                             </tr>
                                             <tr>
                                                 <td>Total Added Data Count</td>
-                                                <td>${list[6].newDataCount - list[6].modDataCount}</td>
+                                                <td>${list[0].newDataCount - list[0].modDataCount}</td>
                                             </tr>
                                             <tr>
                                                 <td>Taking Time</td>
-                                                <td>${list[6].takingTime}</td>
+                                                <td>${list[0].takingTime}</td>
                                             </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-
 
                             </div>
                         </div>
@@ -305,54 +341,93 @@
         <!-- ??? 1 -->
 
 
+        <!-- ??? -->
 
-            <!-- ??? -->
+    </div>
 
+    <div class="row">
+        <div class="col-md-12 crawl-center">
+                <button class="btn btn-success btn-lg listButton">Go To Animals List</button>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="copyright">
-                    <p>Copyright © 2021 Petdians. All rights reserved.</p>
-                </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="copyright">
+                <p>Copyright © 2021 Petdians. All rights reserved.</p>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <script>
 
     $(document).ready(function () {
 
+        //======================
+        // List로 가기 버튼
+        //======================
+        document.querySelector(".listButton").addEventListener("click", function(e){
+            location.href='http://localhost:8080/petdiansAdmin/crawling/list';
+        }, false)
+
         var list = ${jsonlist};
         var resultList = [];
 
 
         //======================//
+        // 다음 크롤링 타임 구하기
+        //======================//
+        function setDigit(time) {
+            var timeStr = '';
+            // 한자리 수 라면
+            if (time < 10) {
+                timeStr = '0' + time;
+            } else {
+                timeStr = time;
+            }
+
+            return timeStr;
+        }
+
+        function setTimeFormat(time) {
+
+            var result = time.getFullYear() + "/"
+            result += setDigit(nextTime.getMonth() + 1) + "/" + setDigit(nextTime.getDate() + 1) + "/" + " 00:00";
+            return result;
+        }
+
+        var nct = document.querySelector(".nextCrawlTime h2");
+        var nextTime = new Date();
+        nct.innerHTML += setTimeFormat(nextTime)
+
+        //======================//
         // 경향 퍼센트 구하기
         //======================//
-        var incre = '<span class="index incre">'+
-            '<i class="zmdi zmdi-long-arrow-down"></i>'+ +'</span>'
-        var decre = '<span class="index decre">'+
-            '<i class="zmdi zmdi-long-arrow-down"></i>'+ +'</span>'
+        var incre = '<span class="index incre">' +
+            '<i class="zmdi zmdi-long-arrow-down"></i>' + +'</span>'
+        var decre = '<span class="index decre">' +
+            '<i class="zmdi zmdi-long-arrow-down"></i>' + +'</span>'
 
         // dom에 들어갈 string
-        function makeDomStr(value, ele){
+        function makeDomStr(value, ele) {
             var increStr1 = '';
             var increStr2 = '';
 
             // 양수 음수 체크, 음수면 양수로 변환
-            if(0 < value){
+            if (0 < value) {
                 increStr1 = 'incre';
                 increStr2 = 'up';
-            } else{
+            } else {
                 value *= -1;
                 increStr1 = 'decre';
                 increStr2 = 'down';
             }
 
             // DOM 객체 만들기
-            var str = '<span class="index '+increStr1+'">'+
-                '<i class="zmdi zmdi-long-arrow-'+increStr2+'"></i>'+ value +' %</span>'
+            var str = '<span class="index ' + increStr1 + '">' +
+                '<i class="zmdi zmdi-long-arrow-' + increStr2 + '"></i>' + value + ' %</span>'
 
             ele.innerHTML = str;
         }
@@ -364,8 +439,8 @@
 
         // 가져온 정보 객체배열로 만들기
         var length = list.length;
-        for(var i = 0; i < length; ++i){
-            resultList.push(JSON.parse(list[i]));
+        for (var i = 0; i < length; ++i) {
+            resultList.push(JSON.parse(list[length - i - 1]));
         }
 
         var today = resultList[length - 1];
@@ -385,16 +460,10 @@
         var eles = document.querySelectorAll(".chart-statis");
 
 
-
-        if(mpercent > 0){
-
-        }
-
-
-        var incre = '<span class="index incre">'+
-            '<i class="zmdi zmdi-long-arrow-down"></i>'+ +'</span>'
-        var decre = '<span class="index decre">'+
-            '<i class="zmdi zmdi-long-arrow-down"></i>'+ +'</span>'
+        var incre = '<span class="index incre">' +
+            '<i class="zmdi zmdi-long-arrow-down"></i>' + +'</span>'
+        var decre = '<span class="index decre">' +
+            '<i class="zmdi zmdi-long-arrow-down"></i>' + +'</span>'
 
         makeDomStr(mpercent, eles[0]);
         makeDomStr(wpercent, eles[1]);
@@ -425,6 +494,8 @@
         // 7일동안의 데이터 넣기
         for (var i = 0; i < 7; ++i) {
             var temp = resultList[i];
+            console.log(i + '번째');
+            console.log(temp);
             data1.push(temp.missingCount)
             data2.push(temp.witnessedCount)
             data3.push(temp.rescuedCount)
@@ -522,7 +593,22 @@
             });
         }
 
+        //==========================
         // Percent Chart
+        //==========================
+        var animalInfo = ${animalInfo};
+
+        console.log(animalInfo);
+
+        // NOTE에 정보 추가
+        var notes = document.querySelectorAll(".percentChartNote");
+        var total = animalInfo.totalCount
+        console.log("total : " + total);
+        notes[0].innerHTML = 'Dogs ' + (parseInt(animalInfo.dogCount / total * 10000))/100 ;
+        notes[1].innerHTML = 'Cats ' + (parseInt(animalInfo.catCount / total * 10000))/100 ;
+        notes[2].innerHTML = 'ETC ' + (parseInt(animalInfo.etcCount / total * 10000))/100 ;
+        notes[3].innerHTML = 'Unknown ' + (parseInt(animalInfo.unknownCount / total * 10000))/100 ;
+
         var ctx = document.getElementById("percentChart");
         if (ctx) {
             ctx.height = 280;
@@ -531,28 +617,33 @@
                 data: {
                     datasets: [
                         {
-                            label: "My First dataset",
-                            data: [60, 40],
+                            label: "Dataset",
+                            data: [animalInfo.dogCount,
+                                animalInfo.catCount,
+                                animalInfo.etcCount,
+                                animalInfo.unknownCount],
                             backgroundColor: [
-                                '#00b5e9',
-                                '#fa4251'
+                                '#00AD5F', '#fa4251', '#00B5E9', '#BBBBBB'
                             ],
                             hoverBackgroundColor: [
-                                '#00b5e9',
-                                '#fa4251'
+                                '#00AD5F', '#fa4251', '#00B5E9', '#BBBBBB'
                             ],
                             borderWidth: [
-                                0, 0
+                                0, 0, 0, 0
                             ],
                             hoverBorderColor: [
+                                'transparent',
+                                'transparent',
                                 'transparent',
                                 'transparent'
                             ]
                         }
                     ],
                     labels: [
-                        'Products',
-                        'Services'
+                        'Dogs',
+                        'Cats',
+                        'Etc',
+                        'Unknown'
                     ]
                 },
                 options: {

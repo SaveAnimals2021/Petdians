@@ -120,7 +120,7 @@ public class APMSICrawlManager extends CrawlManager {
             MissingAnimalDTO info = MissingAnimalDTO.builder().age(age).type("").species(species)
                     .sex(sex).missingDate(missingDate).missingLocation(missingLocation).guardianName(guardianName)
                     .name(name).imageType(fileType).serviceName(serviceName).originURL(baseUrl).special(special)
-                    .imageUrlList(imageList).regDate(regDate)
+                    .imageUrlList(imageList).regDate(regDate).rescueStatus(0)
                     .build();
 
             setAnimalCode(info);

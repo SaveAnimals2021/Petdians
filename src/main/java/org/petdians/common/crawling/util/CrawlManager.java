@@ -23,7 +23,7 @@ public abstract class CrawlManager {
 
     public Integer getCrawlNumber(){return crawlNumber;}
 
-    protected abstract void doCrawl(Integer period) throws Exception;
+    public abstract void doCrawl(Integer period) throws Exception;
 
     protected List<MissingAnimalDTO> animalList;
 

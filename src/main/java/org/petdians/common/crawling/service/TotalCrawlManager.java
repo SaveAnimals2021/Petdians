@@ -1,4 +1,4 @@
-package org.petdians.common.crawling.util;
+package org.petdians.common.crawling.service;
 
 
 import lombok.extern.log4j.Log4j;
@@ -6,6 +6,7 @@ import org.petdians.animal.dto.AnimalInfoDTO;
 import org.petdians.animal.dto.MissingAnimalDTO;
 import org.petdians.animal.service.AnimalService;
 import org.petdians.common.crawling.dto.CrawlResultDTO;
+import org.petdians.common.crawling.util.*;
 import org.petdians.common.dao.AnimalInfoDAO;
 import org.petdians.common.util.DateFormatter;
 import org.petdians.common.util.FileManager;
@@ -24,6 +25,9 @@ public class TotalCrawlManager {
 
     @Autowired
     AnimalService service;
+
+    @Autowired
+    CrawlService crawlService;
 
     List<CrawlManager> sites;
 
@@ -120,19 +124,24 @@ public class TotalCrawlManager {
             MissingAnimalDTO dto = crawlList.get(i);
             service.register(dto);
 
-            switch(dto.getRescueStatus()){
-                case 0:
-                    ++newMissing;
-                    break;
-                case 1:
-                    ++newWit;
-                    break;
-                case 2:
-                    ++newRescued;
-                    break;
-                case 3:
-                    ++newAdopted;
-                    break;
+            Integer rescueStatus = dto.getRescueStatus();
+            if(null != rescueStatus) {
+                switch (rescueStatus) {
+                    case 0:
+                        ++newMissing;
+                        break;
+                    case 1:
+                        ++newWit;
+                        break;
+                    case 2:
+                        ++newRescued;
+                        break;
+                    case 3:
+                        ++newAdopted;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
@@ -154,11 +163,18 @@ public class TotalCrawlManager {
         String timeDif = DateFormatter.calcTimeDiff(crawlDate, finishedTime);
 
         CrawlResultDTO result = CrawlResultDTO.builder()
-                .newDataCount(newDataNumber).modDataCount(modDataNumber).totalDataCount(total)
+                .newDataCount(newDataNumber).modDataCount(modDataNumber).totalDataCount(newDataNumber - modDataNumber)
                 .adoptedCount(newAdopted).missingCount(newMissing).rescuedCount(newRescued).witnessedCount(newWit)
-                .takingTime(timeDif).crawlCount(crawlNumber).period(period)
+                .takingTime(timeDif).crawlCount(crawlNumber).period(period).crawlDate(DateFormatter.fromDateToString(crawlDate))
                 .build();
 
+        try {
+            crawlService.register(result);
+        } catch(Exception e){
+            e.printStackTrace();
+            log.info("===================== CRAWL RESULT 등록 실패 =====================");
+
+        }
 
 
         // 파일로 저장!
@@ -186,7 +202,7 @@ public class TotalCrawlManager {
             FileManager.saveFile(contents.getBytes(StandardCharsets.UTF_8), fileName);
         } catch (Exception e) {
             e.printStackTrace();
-            log.info("파일 저장 실패");
+            log.info("===================== CRAWL RESULT 파일 저장 실패 =====================");
         }
 
         return result;

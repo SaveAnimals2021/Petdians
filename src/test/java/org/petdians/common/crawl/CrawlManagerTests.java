@@ -10,6 +10,7 @@ import org.petdians.animal.service.ImageService;
 import org.petdians.aop.config.AopConfig;
 import org.petdians.common.config.CommonConfig;
 import org.petdians.common.crawling.config.CrawlConfig;
+import org.petdians.common.crawling.service.TotalCrawlManager;
 import org.petdians.common.crawling.util.*;
 import org.petdians.common.dao.AnimalInfoDAO;
 import org.petdians.common.crawling.dto.CrawlResultDTO;

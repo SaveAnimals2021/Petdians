@@ -62,7 +62,7 @@
 		<if test="arr == null">where</if>
 		<choose>
 			<when test="day != null">regDate BETWEEN DATE_ADD(NOW(),INTERVAL -#{day} DAY ) AND NOW()</when>
-			<otherwise>regDate BETWEEN DATE_ADD(NOW(),INTERVAL -1 MONTH ) AND NOW()</otherwise>
+			<otherwise>regDate BETWEEN DATE_ADD(NOW(),INTERVAL -100 MONTH ) AND NOW()</otherwise>
 		</choose>
 		order by animalNumber desc limit #{skip},#{perSheet}
 	</select>
@@ -123,5 +123,57 @@
 		</choose>
 		order by animalNumber desc
 	</select>
+
+	<select id="getAllDogCount" resultType="int">
+		select count(animalNumber) from tbl_animal
+		where type = '개'
+	</select>
+
+	<select id="getAllCatCount" resultType="int">
+		select count(animalNumber) from tbl_animal
+		where type = '고양이'
+	</select>
+
+	<select id="getAllEtcCount" resultType="int">
+		select count(animalNumber) from tbl_animal
+		where type = '기타'
+	</select>
+
+	<select id="getAllUnknownCount" resultType="int">
+		select count(animalNumber) from tbl_animal
+		where type = '기타'
+	</select>
+
+	<select id="getAllCount" resultType="int">
+		select count(animalNumber) from tbl_animal
+	</select>
+
+
+	<select id="getWeekDogCount" resultType="int">
+		select count(animalNumber) from tbl_animal
+		where type = '개'
+		  AND regDate BETWEEN DATE_ADD(NOW(),INTERVAL -7 DAY ) AND NOW()
+	</select>
+
+	<select id="getWeekCatCount" resultType="int">
+		select count(animalNumber) from tbl_animal
+		where type = '고양이'
+		  AND regDate BETWEEN DATE_ADD(NOW(),INTERVAL -7 DAY ) AND NOW()
+	</select>
+
+	<select id="getWeekEtcCount" resultType="int">
+		select count(animalNumber) from tbl_animal
+
+		where type = '기타'
+		AND regDate BETWEEN DATE_ADD(NOW(),INTERVAL -7 DAY ) AND NOW()
+	</select>
+
+	<select id="getWeekUnknownCount" resultType="int">
+		select count(animalNumber) from tbl_animal
+
+		where type = ''
+		  AND regDate BETWEEN DATE_ADD(NOW(),INTERVAL -7 DAY ) AND NOW()
+	</select>
+
 
 </mapper>

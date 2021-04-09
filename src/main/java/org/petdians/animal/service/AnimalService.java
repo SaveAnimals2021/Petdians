@@ -28,6 +28,19 @@ public interface AnimalService {
 
     Integer getMissingTotal(PageDTO pageDTO);
 
+
+
+    Integer getAllDogCount();
+    Integer getAllCatCount();
+    Integer getAllEtcCount();
+    Integer getAllUnknownCount();
+    Integer getAllCount();
+
+    Integer getWeekDogCount();
+    Integer getWeekCatCount();
+    Integer getWeekEtcCount();
+    Integer getWeekUnknownCount();
+
     default MissingAnimalVO toDomain(MissingAnimalDTO dto) throws Exception{
         Date missingDate = SimpleDateFormatter.fromStringToDate(dto.getMissingDate());
         Date rescueDate = SimpleDateFormatter.fromStringToDate(dto.getRescueDate());

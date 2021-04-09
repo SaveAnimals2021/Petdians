@@ -8,6 +8,9 @@
 <%@ include file="../../includes/header.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
+
+<script src="https://use.fontawesome.com/releases/v5.12.0/js/all.js"></script>
+
 <!-- MAIN CONTENT-->
 <div class="main-content" style="padding-top: 30px;">
     <!-- STATISTIC-->
@@ -16,37 +19,38 @@
             <div class="row">
                 <div class="col-md-6 col-lg-3">
                     <div class="statistic__item statistic__item--green">
-                        <h2 class="number">10,368</h2>
-                        <span class="desc">Number of Crawling</span>
-                        <div class="icon">
-                            <i class="zmdi zmdi-account-o"></i>
+                        <h2 class="number">${animalInfo.dogCount}</h2>
+                        <span class="desc">Number of Dogs</span>
+                        <div style="font-size:2em;">
+                            <i class="fas fa-dog"></i>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3">
                     <div class="statistic__item statistic__item--orange">
-                        <h2 class="number">388,688</h2>
-                        <span class="desc">Number of new Data</span>
-                        <div class="icon">
-                            <i class="zmdi zmdi-shopping-cart"></i>
+                        <h2 class="number">${animalInfo.catCount}</h2>
+                        <span class="desc">Number of Cats</span>
+                        <div style="font-size:2em;">
+                            <i class="fas fa-cat"></i>
+                            <!--<i class="zmdi zmdi-shopping-cart"></i>-->
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3">
                     <div class="statistic__item statistic__item--blue">
-                        <h2 class="number">1,086</h2>
-                        <span class="desc">Nuber of modified Data</span>
-                        <div class="icon">
-                            <i class="zmdi zmdi-calendar-note"></i>
+                        <h2 class="number">${animalInfo.etcCount}</h2>
+                        <span class="desc">Number of ETC Animals</span>
+                        <div style="font-size:2em;">
+                            <i class="fas fa-crow"></i>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3">
                     <div class="statistic__item statistic__item--red">
-                        <h2 class="number">${pageMaker.total}</h2>
-                        <span class="desc">Number of total Data</span>
-                        <div class="icon">
-                            <i class="zmdi zmdi-money"></i>
+                        <h2 class="number">${animalInfo.totalCount}</h2>
+                        <span class="desc">Total Animal Count</span>
+                        <div style="font-size:2em;">
+                            <i class="fas fa-paw"></i>
                         </div>
                     </div>
                 </div>
@@ -82,8 +86,7 @@
                                 <div class="dropDownSelect2"></div>
                             </div>
                             <input name="skeyword" <c:out value="" /> placeholder="Enter Keyword">
-                            <button class="au-btn-filter">
-                                <i class="zmdi zmdi-filter-list"></i>filters</button>
+                            <button class="btn btn-info applyButton">Let's apply</button>
                         </div>
                         <div class="table-data__tool-right">
                             <button class="au-btn au-btn-icon au-btn--green au-btn--small">
@@ -110,9 +113,12 @@
                                 </th>
                                 <th style="text-align: center;">ANIMAL NUMBER</th>
                                 <th class="desc" style="text-align: left;">TYPE</th>
-                                <th style="text-align: center;">REGDATE</th>
-                                <th style="text-align: center;">UPDATEDATE</th>
+                                <th style="text-align: center;">NAME</th>
+                                <th class="desc" style="text-align: left;">SPECIES</th>
+                                <th style="text-align: center;">SEX</th>
+                                <th style="text-align: center;">AGE</th>
                                 <th style="text-align: center;">RESCUESTATUS</th>
+                                <th style="text-align: center;">REGDATE</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -128,15 +134,18 @@
                                 <!-- ANIMAL NUMBER -->
                                 <td style="text-align: center;">${animal.animalNumber}</td>
                                 <td>
-                                <!-- TYPE -->
                                     <span class="desc" style="text-align: center;">${animal.type}</span>
                                 </td>
-                                <!-- RESCUDATE -->
-                                <td class="desc" style="text-align: center;">${animal.rescueDate}</td>
-                                <!-- UPDATEDATE -->
-                                <td style="text-align: center;"><p class="status--process" >${animal.updateDate}</p></td>
-                                <!-- RESCUESTATUS -->
-                                <td style="text-align: center;">${animal.rescueStatus}</td>
+                                <td class="desc" style="text-align: center;">${animal.name}</td>
+                                <td>
+                                    <span class="desc" style="text-align: center;">${animal.species}</span>
+                                </td>
+
+                                <td class="desc" style="text-align: center;">${animal.sex}</td>
+
+                                <td style="text-align: center;"><p class="status--process" >${animal.age}</p></td>
+                                <td style="text-align: center;">${animal.rescueStatusString}</td>
+                                <td style="text-align: center;">${animal.regDate}</td>
                                 <td>
                                     <div class="table-data-feature">
                                         <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
@@ -181,7 +190,7 @@
 
                     <!--                    actionForm                      -->
                     <div class="activity">
-                        <form class="actionForm" action="/petdiansAdmin/crawling" method="get">
+                        <form class="actionForm" action="/petdiansAdmin/crawling/list" method="get">
                             <input type="hidden" name="page" value="${pageDTO.page}">
                             <input type="hidden" name="perSheet" value="${pageDTO.perSheet}">
                             <input type="hidden" name="type" value="${pageDTO.type}">
@@ -197,7 +206,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="copyright">
-                        <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+                        <p>Copyright © 2021 Petdians. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
                     </div>
                 </div>
             </div>
@@ -210,6 +219,9 @@
 
 <script>
 
+    //======================
+    // 페이지
+    //======================
     document.querySelector(".pagination").addEventListener("click", function(e){
 
         e.preventDefault();
@@ -236,7 +248,7 @@
 
     }, false)
 
-    document.querySelector(".au-btn-filter").addEventListener("click", function  (e) {
+    document.querySelector(".applyButton").addEventListener("click", function  (e) {
 
         e.preventDefault();
         e.stopPropagation();
@@ -249,6 +261,9 @@
         //keyword
         const keyword = document.querySelector(".table-data__tool-left input[name='skeyword']").value;
         actionForm.querySelector("input[name='keyword']").value = keyword;
+
+        console.log(type);
+        console.log(keyword);
 
         //init page
         actionForm.querySelector("input[name='page']").value = pageNum = 1;

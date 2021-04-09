@@ -25,7 +25,14 @@
 	</select>
 
 	<select id="getAllImages" resultType="org.petdians.animal.domain.ImageVO">
-		select * from tbl_image order by regDate desc limit 0, 1000;
+		select * from tbl_image;
 	</select>
+
+	<update id="changeType">
+      <![CDATA[
+		update tbl_image set type = #{type}
+		where ino = #{ino}
+		]]>
+   </update>
 
 </mapper>

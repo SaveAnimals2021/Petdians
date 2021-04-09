@@ -35,6 +35,14 @@ public class AnimalServiceImpl implements AnimalService{
 
             // 이미지를 DB에 등록한다.
             imageList.forEach(i->{
+
+                String fileName = i.getFileName();
+                Integer dotIndex = fileName.lastIndexOf(".");
+
+                if(dotIndex == fileName.length() - 4){
+                    i.setType(fileName.substring(dotIndex));
+                }
+
                 imageService.register(i);
             });
         } catch (Exception e){
@@ -71,6 +79,51 @@ public class AnimalServiceImpl implements AnimalService{
     @Override
     public Integer getMissingTotal(PageDTO pageDTO) {
         return mapper.getMissingTotal(pageDTO.getArr(), pageDTO.getKeyword(), pageDTO.getDay());
+    }
+
+    @Override
+    public Integer getAllDogCount() {
+        return mapper.getAllDogCount();
+    }
+
+    @Override
+    public Integer getAllCatCount() {
+        return mapper.getAllCatCount();
+    }
+
+    @Override
+    public Integer getAllEtcCount() {
+        return mapper.getAllEtcCount();
+    }
+
+    @Override
+    public Integer getAllUnknownCount() {
+        return mapper.getAllUnknownCount();
+    }
+
+    @Override
+    public Integer getAllCount() {
+        return mapper.getAllCount();
+    }
+
+    @Override
+    public Integer getWeekDogCount() {
+        return mapper.getWeekDogCount();
+    }
+
+    @Override
+    public Integer getWeekCatCount() {
+        return mapper.getWeekCatCount();
+    }
+
+    @Override
+    public Integer getWeekEtcCount() {
+        return mapper.getWeekEtcCount();
+    }
+
+    @Override
+    public Integer getWeekUnknownCount() {
+        return mapper.getWeekUnknownCount();
     }
 
 

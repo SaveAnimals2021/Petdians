@@ -34,6 +34,12 @@ public class ImageServiceImpl implements ImageService{
         return toDTOList( mapper.getAllImages() );
     }
 
+    @Override
+    public void changeType(ImageDTO dto) throws Exception{
+
+        mapper.changeType(toDomain(dto));
+    }
+
     public void downloadAll() throws Exception{
         List<ImageDTO> list = toDTOList( mapper.getAllImages());
 

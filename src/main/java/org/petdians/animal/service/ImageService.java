@@ -17,6 +17,7 @@ public interface ImageService {
 
     List<ImageDTO> getAllImages() throws Exception;
 
+    void changeType(ImageDTO dto) throws Exception;
 
     void downloadAll() throws Exception;
 

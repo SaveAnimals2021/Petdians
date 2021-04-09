@@ -7,14 +7,12 @@ import org.jsoup.select.Elements;
 import org.petdians.animal.dto.MissingAnimalDTO;
 import org.petdians.common.dao.AnimalInfoDAO;
 import org.petdians.common.util.SimpleDateFormatter;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Log4j
-@Service
 public class AngelCrawlManager extends CrawlManager {
 
 
@@ -143,9 +141,11 @@ public class AngelCrawlManager extends CrawlManager {
             List<String> imageList = new ArrayList<>();
 
             for(int j = 0; j < images.size(); ++j){
+
                 String image = images.get(j).attr("src").replace("/upThumb/", "/upImg/");
                 imageList.add(image);
             }
+
 
             // 등록일 설정
             String regDate = date.substring(0,10);
@@ -158,6 +158,9 @@ public class AngelCrawlManager extends CrawlManager {
                     .imageUrlList(imageList).situation(situation).rescueStatus(status).regDate(regDate).rescueLocation(rescueLocation)
                     .rescueDate(rescueDate)
                     .build();
+
+
+
             log.info("INFO :" + info);
             setAnimalCode(info);
             String code = info.getAnimalCode();

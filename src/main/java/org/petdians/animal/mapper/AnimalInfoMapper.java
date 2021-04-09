@@ -31,5 +31,16 @@ public interface AnimalInfoMapper {
     Integer getMissingTotal(@Param("arr") String[] arr,
                           @Param("keyword") String keyword, @Param("day") String day);
 
+    Integer getAllDogCount();
+    Integer getAllCatCount();
+    Integer getAllEtcCount();
+    Integer getAllUnknownCount();
+    Integer getAllCount();
+
+    Integer getWeekDogCount();
+    Integer getWeekCatCount();
+    Integer getWeekEtcCount();
+    Integer getWeekUnknownCount();
+
 
 }
