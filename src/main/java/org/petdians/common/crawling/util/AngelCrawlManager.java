@@ -14,7 +14,6 @@ import java.util.List;
 
 
 @Log4j
-@Service
 public class AngelCrawlManager extends CrawlManager {
 
 

@@ -1,0 +1,26 @@
+org/petdians/common/FileManagerTests.java
+ org.petdians.common.FileManagerTests
+org/petdians/common/crawl/CrawlMapperTests.java
+ org.petdians.common.crawl.CrawlMapperTests
+org/petdians/common/crawl/CrawlServiceTests.java
+ org.petdians.common.crawl.CrawlServiceTests
+org/petdians/animal/AnimalServiceTests.java
+ org.petdians.animal.AnimalServiceTests
+org/petdians/common/GsonTests.java
+ org.petdians.common.GsonTests
+org/petdians/animal/ImageMapperTests.java
+ org.petdians.animal.ImageMapperTests
+org/petdians/common/CompareTests.java
+ org.petdians.common.CompareTests
+org/petdians/animal/AnimalInfoMapperTests.java
+ org.petdians.animal.AnimalInfoMapperTests
+org/petdians/batch/BatchTests.java
+ org.petdians.batch.BatchTests
+org/petdians/common/crawl/CrawlManagerTests.java
+ org.petdians.common.crawl.CrawlManagerTests
+org/petdians/common/mapper/AnimalInfoMapperTests.java
+ org.petdians.common.mapper.AnimalInfoMapperTests
+org/petdians/common/DBTests.java
+ org.petdians.common.DBTests
+org/petdians/animal/ImageServiceTests.java
+ org.petdians.animal.ImageServiceTests

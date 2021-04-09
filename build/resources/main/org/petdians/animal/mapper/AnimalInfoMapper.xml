@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="org.petdians.animal.mapper.AnimalInfoMapper">
+
+	<!-- Search Where -->
+	<sql id="search">
+		<where>
+			<if test="arr != null">
+				<foreach collection="arr" index="index" item="val" separator="OR"  open="(" close=")">
+					<if test="val == 't'.toString">
+						type = #{keyword}
+					</if>
+					<if test="val == 'r'.toString">
+						regdate = #{keyword}
+					</if>
+					<if test="val == 'd'.toString">
+						rescueDate = #{keyword}
+					</if>
+					<if test="val == 's'.toString">
+						rescueStatus = #{keyword}
+					</if>
+				</foreach>
+				AND
+			</if>
+		</where>
+	</sql>
+
+	<!-- INSERT -->
+	<insert id="register" >
+		<![CDATA[
+      insert into tbl_animal (animalCode, serviceName, type, name, species,
+                        sex, age, special, color, situation,
+                        originURL, missingDate, missingLocation, rescueDate,
+                        rescueLocation, phoneNumber, guardianName, bno, rescueStatus)
+
+      values (#{animalCode}, #{serviceName}, #{type}, #{name}, #{species},
+            #{sex}, #{age}, #{special}, #{color}, #{situation},
+            #{originURL}, #{missingDate}, #{missingLocation}, #{rescueDate},
+            #{rescueLocation}, #{phoneNumber}, #{guardianName}, #{bno}, #{rescueStatus})
+      ]]>
+		<selectKey resultType="int" keyProperty="animalNumber" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+	<!-- MODIFY -->
+	<update id="setIsAdopted">
+      <![CDATA[
+		update tbl_animal set updatedate = now(), isCompleted = 1
+		where animalNumber = #{animalNumber}
+		]]>
+   </update>
+
+	<!-- List -->
+	<select id="getPagedList" resultType="org.petdians.animal.domain.MissingAnimalVO">
+		select * from tbl_animal
+		<include refid="search"></include>
+		<if test="arr == null">where</if>
+		<choose>
+			<when test="day != null">regDate BETWEEN DATE_ADD(NOW(),INTERVAL -#{day} DAY ) AND NOW()</when>
+			<otherwise>regDate BETWEEN DATE_ADD(NOW(),INTERVAL -1 MONTH ) AND NOW()</otherwise>
+		</choose>
+		order by animalNumber desc limit #{skip},#{perSheet}
+	</select>
+
+	<!-- MISSING LIST -->
+	<select id="getMissingList" resultType="org.petdians.animal.domain.MissingAnimalVO">
+		select * from tbl_animal
+		where rescueStatus = '0' and
+		<choose>
+			<when test="day != null">missingDate BETWEEN DATE_ADD(NOW(),INTERVAL -#{day} DAY ) AND NOW()</when>
+			<when test='day == "-1"'>missingDate BETWEEN DATE_ADD(NOW(),INTERVAL -1 MONTH ) AND NOW()</when>
+			<otherwise>missingDate BETWEEN DATE_ADD(NOW(),INTERVAL -1 MONTH ) AND NOW()</otherwise>
+		</choose>
+		order by animalNumber desc limit #{skip},#{perSheet}
+	</select>
+
+	<select id="getAllList" resultType="org.petdians.animal.domain.MissingAnimalVO">
+		select * from tbl_animal
+	</select>
+
+	<select id="getUncompletedList" resultType="org.petdians.animal.domain.MissingAnimalVO">
+		select * from tbl_animal where isCompleted = 0
+	</select>
+
+	<!-- ToTal -->
+	<select id="getTotalCount" resultType="Integer">
+		select count(animalNumber) from tbl_animal
+		<include refid="search"></include>
+		<if test="arr == null">where</if>
+		<choose>
+			<when test="day != null">regDate BETWEEN DATE_ADD(NOW(),INTERVAL -#{day} DAY ) AND NOW()</when>
+			<otherwise>regDate BETWEEN DATE_ADD(NOW(),INTERVAL -1 MONTH ) AND NOW()</otherwise>
+		</choose>
+	</select>
+
+	<select id="getMissingTotal" resultType="Integer">
+		select count(animalNumber) from tbl_animal
+		<include refid="search"></include>
+		<if test="arr == null">where</if>
+		<choose>
+			<when test="day != null">missingDate BETWEEN DATE_ADD(NOW(),INTERVAL -#{day} DAY ) AND NOW()</when>
+			<otherwise>missingDate BETWEEN DATE_ADD(NOW(),INTERVAL -1 MONTH ) AND NOW()</otherwise>
+		</choose>
+		and rescueStatus = '0'
+	</select>
+
+
+	<!-- STATISTICS -->
+	<!-- STATISTICS -->
+	<!-- STATISTICS -->
+	<!-- Missing Pets Count -->
+	<select id="getMissingCount" resultType="org.petdians.animal.domain.MissingAnimalVO">
+		select count(animalNumber) from tbl_animal
+		where rescueStatus = '0' and
+		<choose>
+			<when test="day != null">missingDate BETWEEN DATE_ADD(NOW(),INTERVAL -#{day} DAY ) AND NOW()</when>
+			<otherwise>missingDate BETWEEN DATE_ADD(NOW(),INTERVAL -1 MONTH ) AND NOW()</otherwise>
+		</choose>
+		order by animalNumber desc
+	</select>
+
+</mapper>

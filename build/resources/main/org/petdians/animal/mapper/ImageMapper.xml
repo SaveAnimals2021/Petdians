@@ -25,7 +25,7 @@
 	</select>
 
 	<select id="getAllImages" resultType="org.petdians.animal.domain.ImageVO">
-		select * from tbl_image
+		select * from tbl_image order by regDate desc limit 0, 1000;
 	</select>
 
 </mapper>

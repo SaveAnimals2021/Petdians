@@ -21,8 +21,7 @@ public class ImageManager {
 
     private static final String uploadFolder = "C:\\upload";
 
-
-    // MissingAnimalDTO의 정로를 통해 생성한다.
+    // MissingAnimalDTO의 경로를 통해 생성한다.
     public static List<ImageDTO> saveImage(MissingAnimalDTO dto) throws Exception {
         List<String> urlList = dto.getImageUrlList();
         int size = urlList.size();
@@ -34,10 +33,6 @@ public class ImageManager {
 
         for (int i = 0; i < size; ++i) {
             String url = dto.getOriginURL() + urlList.get(i);
-            URL urlObj = new URL(url);
-
-            HttpURLConnection urlCon = (HttpURLConnection) urlObj.openConnection();
-            urlCon.setRequestProperty("User-Agent", CrawlManager.agent);
 
             // 1. 폴더 만들기
             // 파일 이름 뽑기
@@ -47,6 +42,7 @@ public class ImageManager {
             String fileFullName = uuid + "_" + fileName;
 
             String folderPath = dto.getRegDate().replace("-", File.separator); // 2021/03/17
+
             // 최종 폴더 생성
             File uploadPath = new File(uploadFolder, folderPath); // 경로를 설정... (부모 경로), (자식 경로) C:\\upload\\2021\\03\\17
 
@@ -69,7 +65,17 @@ public class ImageManager {
                 last = uploadPath + File.separator + fileFullName.substring(0, lastindex) + "." + dto.getImageType();
             }
 
+            File checkPath = new File(last); // 경로를 설정... (부모 경로), (자식 경로) C:\\upload\\2021\\03\\17
+            if (true == checkPath.exists()) {
+                // 실제 폴더를 생성
+                log.info("중복된 파일입니다.");
+                continue;
+            }
 
+            // CRAWL, SAVE
+            URL urlObj = new URL(url);
+            HttpURLConnection urlCon = (HttpURLConnection) urlObj.openConnection();
+            urlCon.setRequestProperty("User-Agent", CrawlManager.agent);
             // 파일 저장
             saveFile(urlCon, last);
 
@@ -89,9 +95,6 @@ public class ImageManager {
         String url = dto.getUrl();
         URL urlObj = new URL(url);
 
-        HttpURLConnection urlCon = (HttpURLConnection) urlObj.openConnection();
-        urlCon.setRequestProperty("User-Agent", CrawlManager.agent);
-
         // 1. 폴더 만들기
         // 파일 이름 뽑기
         String fileName = url.substring(url.lastIndexOf("/") + 1);
@@ -99,9 +102,18 @@ public class ImageManager {
 
         String fileFullName = uuid + "_" + fileName;
 
-        String folderPath = dto.getRegDate().substring(0, 10).replace("-", File.separator); // 2021/03/17
+        String folderPath = dto.getUploadPath(); // 2021/03/17
+
+//        File testPath = new File(folderPath + File.separator + fileFullName); // 경로를 설정... (부모 경로), (자식 경로) C:\\upload\\2021\\03\\17
+//
+//        if (true == testPath.exists()) {
+//            // 실제 폴더를 생성
+//            log.info("중복된 파일입니다. " + testPath.getPath());
+//            return;
+//        }
+
         // 최종 폴더 생성
-        File uploadPath = new File(uploadFolder, folderPath); // 경로를 설정... (부모 경로), (자식 경로) C:\\upload\\2021\\03\\17
+        File uploadPath = new File(folderPath); // 경로를 설정... (부모 경로), (자식 경로) C:\\upload\\2021\\03\\17
 
         // 있으면 null이 아니다. 없으면 null이다.
         if (false == uploadPath.exists()) {
@@ -117,11 +129,15 @@ public class ImageManager {
         String last = "";
         // .이 없다 = 확장자가 있다.
         if (-1 == lastindex) {
-            last = uploadPath + File.separator + fileFullName + "." + dto.getType();
+            last = folderPath + File.separator + fileFullName + "." + dto.getType();
         } else {
-            last = uploadPath + File.separator + fileFullName.substring(0, lastindex) + "." + dto.getType();
+            last = folderPath + File.separator + fileFullName.substring(0, lastindex) + "." + dto.getType();
         }
 
+        File lastFile = new File(last);
+
+        HttpURLConnection urlCon = (HttpURLConnection) urlObj.openConnection();
+        urlCon.setRequestProperty("User-Agent", CrawlManager.agent);
 
         // 파일 저장
         saveFile(urlCon, last);

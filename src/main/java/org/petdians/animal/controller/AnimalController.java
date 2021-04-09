@@ -34,7 +34,15 @@ public class AnimalController {
 
 //        PageDTO dto = new PageDTO();
 //        dto.setDay("7");
-        dto.setPerSheet(5);
+        dto.setPerSheet(6);
+
+        String day = dto.getDay();
+
+        if (null != day && day.isEmpty()) {
+
+            dto.setDay(null);
+
+        }
 
         // animalDTO에 파일 이름들을 list로 담는다.
         // ${list.getFileList.
