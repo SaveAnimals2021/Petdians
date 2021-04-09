@@ -478,7 +478,7 @@
         //지도 레벨에 따른 커스텀 오버레이 hidden
         kakao.maps.event.addListener(map, 'zoom_changed', function() {
 
-            const customDiv = document.querySelectorAll(".card");
+            const customDiv = document.querySelectorAll(".card-img-top");
             console.log(customDiv)
 
             // 지도의 현재 레벨을 얻어옵니다
@@ -486,11 +486,21 @@
             console.log('현재 지도 레벨은 ' + level + ' 입니다');
             if(level >= 7) {
 
-                customDiv.forEach(a => {a.classList.remove("customOpen"); a.classList.add("customHidden");})
+                customDiv.forEach(a => {
+
+                    const card =  a.closest(".card");
+                    card.classList.remove("customOpen"); card.classList.add("customHidden");
+
+                })
 
             } else {
 
-                customDiv.forEach(a => {a.classList.remove("customHidden"); a.classList.add("customOpen")})
+                customDiv.forEach(a => {
+
+                    const card =  a.closest(".card");
+                    card.classList.remove("customHidden"); card.classList.add("customOpen");
+
+                })
 
             }
 
@@ -539,8 +549,15 @@
 
             } else if(tr){
                 // 버튼을 누르지 않고 리스트를 누른 경우 => 지도를 이동
-                const customDiv = document.querySelectorAll(".card");
-                customDiv.forEach(a => {a.classList.remove("customHidden"); a.classList.add("customOpen")})
+                const customDiv = document.querySelectorAll(".card-img-top");
+                customDiv.forEach(a => {
+
+                    const card =  a.closest(".card");
+                    console.log(card)
+                    card.classList.remove("customHidden"); card.classList.add("customOpen");
+
+                })
+
                 var animalNumber = tr.getAttribute("data-number") * 1;
                 var value = animalMap.get(animalNumber);
                 map.setLevel(3);
