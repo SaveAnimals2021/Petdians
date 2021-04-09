@@ -49,7 +49,7 @@
     .viewDiv {
         width: 100%;
         height: 100%;
-        background-color: gray;
+        background-color: white;
         display: flex;
         flex-direction: row;
 
@@ -64,20 +64,37 @@
     .imageDiv {
         width: 50%;
         background-color: #00a2e3;
-        margin-right: 5%;
-        margin-left: 5%;
 
     }
 
     .imageModal {
         height: 100%;
-        width: 100%;
+        width: 100vh;
     }
 
     .image1{
-
+        max-height: 600px;
         height: 100%;
 
+    }
+
+    .customHidden {
+
+        display: none;
+
+    }
+
+    .customOpen {
+        display: block;
+    }
+
+    .viewModal{
+
+        display: block;
+        width: 5%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
 </style>
@@ -103,7 +120,7 @@
         <div class="table-data__tool-left">
             <div class="rs-select2--light rs-select2--sm">
                 <select class="js-select2" name="day" onchange="change()">
-                    <option value="-1">DAY</option>
+                    <option value="">DAY</option>
                     <option value="0" ${pageDTO.day == '0'?"selected":"" }>Today</option>
                     <option value="3" ${pageDTO.day == '3'?"selected":"" }>3 Days</option>
                     <option value="7" ${pageDTO.day == '7'?"selected":"" }>1 Week</option>
@@ -201,33 +218,33 @@
         <div class="modal-dialog modal-lg" role="document" style="max-width: 70%;">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="largeModalLabel">Large Modal</h5>
+                    <h5 class="modal-title" id="largeModalLabel">More Information</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span class="closex" aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="viewDiv">
-                        <div><i class="fa fa-caret-left" aria-hidden="true"></i></div>
+                        <div class="viewModal left"><i class="fa fa-caret-left" aria-hidden="true" style="font-size: xxx-large; display: none;"></i></div>
                         <div class="imageDiv" style="max-width:45%;">
                             <div class="image1">
 
                             </div>
                         </div>
-                        <div><i class="fa fa-caret-right" aria-hidden="true"></i></div>
+                        <div class="viewModal right"><i class="fa fa-caret-right" aria-hidden="true" style="font-size: xxx-large; display: none;"></i></div>
                         <%--            <div class="col-lg-6">--%>
                         <div class="card" style="width: 55%; margin-bottom: 0px">
-                            <div class="cardName card-header">
-                                <strong>Name</strong>
+                            <div class="cardName card-header" style="background-color: #333333;;">
+                                <strong style="font-size: large; color: white">Name</strong>
                             </div>
-                            <div class="card-body card-block">
+                            <div class="card-body card-block" style="background-color: #ffffff">
                                 <div class="row form-group">
                                     <div class="col col-md-3">
                                         <label class=" form-control-label">Type</label>
                                     </div>
                                     <div class="col-12 col-md-9">
                                         <input type="text" id="text-type" name="text-input" disabled="Disabled"
-                                               class="form-control">
+                                               class="form-control" style="background-color: #ffffff;">
                                     </div>
                                 </div>
 
@@ -237,7 +254,7 @@
                                     </div>
                                     <div class="col-12 col-md-9">
                                         <input type="text" id="text-species" name="text-input" disabled="Disabled"
-                                               class="form-control">
+                                               class="form-control" style="background-color: #ffffff;">
                                     </div>
                                 </div>
 
@@ -247,7 +264,7 @@
                                     </div>
                                     <div class="col-12 col-md-9">
                                         <input type="text" id="text-sex" name="email-input"  disabled="Disabled"
-                                               class="form-control">
+                                               class="form-control" style="background-color: #ffffff;">
                                     </div>
                                 </div>
 
@@ -257,7 +274,7 @@
                                     </div>
                                     <div class="col-12 col-md-9">
                                         <input type="text" id="text-guardian" name="password-input"
-                                               disabled="Disabled" class="form-control">
+                                               disabled="Disabled" class="form-control" style="background-color: #ffffff;">
                                     </div>
                                 </div>
 
@@ -267,7 +284,7 @@
                                     </div>
                                     <div class="col-12 col-md-9">
                                         <input type="text" id="text-date" name="disabled-input" placeholder="Disabled"
-                                               disabled="Disabled" class="form-control">
+                                               disabled="Disabled" class="form-control" style="background-color: #ffffff;">
                                     </div>
                                 </div>
 
@@ -277,7 +294,7 @@
                                     </div>
                                     <div class="col-12 col-md-9">
                                         <textarea type="text" id="text-location" name="disabled-input" rows="2"
-                                               placeholder="Disabled" disabled="" class="form-control"></textarea>
+                                               placeholder="Disabled" disabled="" class="form-control" style="background-color: #ffffff;"></textarea>
                                     </div>
                                 </div>
 
@@ -287,8 +304,8 @@
                                     </div>
                                     <div class="col-12 col-md-9">
                                         <textarea name="textarea-input" id="text-situation" rows="5"
-                                                  placeholder="Disabled" class="form-control"
-                                                  style="height: 90%;"></textarea>
+                                                  placeholder="Disabled" class="form-control" disabled="Disabled"
+                                                  style="height: 90%; background-color: #ffffff;"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -318,6 +335,7 @@
         //day
         const day = document.querySelector("select[name='day']");
         actionForm.querySelector("input[name='day']").value = day[day.selectedIndex].value;
+        actionForm.querySelector("input[name='page']").value = pageNum = 1;
         console.log(day);
         actionForm.submit();
 
@@ -341,26 +359,12 @@
         var markerList = [];
         var animalMap = new Map();
 
-<%--        <c:forEach items = '${list}' var="item">--%>
-<%--        var obj = {--%>
-<%--            animalNumber: '${item.animalNumber}',--%>
-<%--            missingLocation: '${item.missingLocation}',--%>
-<%--            type: '${item.type}',--%>
-<%--            name: '${item.name}',--%>
-<%--            missingDate: '${item.missingDate}'--%>
-<%--        }--%>
-<%--        obj.missingDate = obj.missingDate.substring(0, obj.missingDate.lastIndexOf(" "))--%>
-<%--        dtoList.push(obj);--%>
-<%--        </c:forEach>--%>
-<%--        console.log(${jsonList});--%>
-<%--        console.log(dtoList);--%>
-
         var dtoList = (${jsonList});
         const size = dtoList.length;
 
         //주소로 x,y 좌표 구하는 MapAPI
         function getMapByUrl(missingLocation) {
-            console.log("X,Y 좌표 구하기 시작-----------------------------------------------------------")
+
             return fetch("https://dapi.kakao.com/v2/local/search/keyword.json?query='" + missingLocation + "'",
                 {
                     method: 'get',
@@ -370,16 +374,12 @@
                     },
                 })
                 .then(res => {
-                    console.log("X,Y 좌표 구한 결과-------------------------------------------------------------")
+
                     if (!res.ok) {
                         console.log("=========== throws ==========")
                         throw new Error(res);
                     }
-                    //console.log("=========== fetch ==========" + missingLocation)
 
-                    // var obj = res.json();
-                    // console.log(obj);
-                    //console.log(1 + missingLocation);
                     return res.json();
 
                 }).catch(res => {
@@ -390,15 +390,8 @@
 
         //1.MAP MARKER 만들기
         for (var i = 0 ; i < size; i++) {
-            console.log("Marker Maker 시작====================================================")
-            var result = makeResult(JSON.parse(dtoList[i]), 0);
-            console.log("3 : " + JSON.parse(dtoList[i]).missingLocation); //-------------------------------- 3
-            console.log("=====================================================================")
 
-            if(i == (size-1)) {
-                console.log("res");
-                console.log(result);
-            }
+            makeResult(JSON.parse(dtoList[i]), 0);
 
         }//MAP MARKER 만들기 END
 
@@ -407,11 +400,9 @@
 
             var maxCount = 10;
             //animalDTO.missingLocation로 x,y 좌표 구하기
-            var result = getMapByUrl(animalDTO.missingLocation); //--------------------- 1
+            var result = getMapByUrl(animalDTO.missingLocation);
 
             return result.then(res => {
-
-                console.log("2 : " + animalDTO.missingLocation)//---------------------------- 2
 
                 var val = res.documents;
                 var missingLoc = animalDTO.missingLocation;
@@ -454,25 +445,17 @@
 
                     // 1. animal number가 키를 가지는 map에 넣는다. value는 marker
                     animalMap.set(animalNum, marker);
-                    console.log("animalMap")
-                    console.log(animalNum)
-                    console.log(animalMap);
-                    console.log(animalMap.get(animalNum));
-
-                    var iwString = '이름: ' + animalDTO.name + '<br/>' + '날짜: ' + animalDTO.missingDate;
-
-                    console.log("iwString : " + iwString);
 
                     // 2. 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
                     // 커스텀 오버레이에 표시할 내용입니다
                     // HTML 문자열 또는 Dom Element 입니다
-                    // console.log("List");
-                    console.log(encodeURIComponent(animalDTO.imageUrlList[0].substring(11)));
-                    //encodeURIComponent(animalDTO.imageUrlList[0].substring(11)) <= animalDTO.imageUrlList
-                    var content = '<div class="maplabel"><div class="sumDiv"><img src="/petdiansAdmin/image/get?file=' + encodeURIComponent(animalDTO.imageUrlList[0].substring(11)) + '"/></div>' +
-                        '<span class="left"></span><span class="center">' + iwString + '</span><span class="right"></span></div>';
 
-                    var position = new kakao.maps.LatLng((val[0].y - 0.00313) , val[0].x);
+                    var content = '<div class="col-md-4" style="max-width: 100%;"><div class="card customOpen"><img class="card-img-top" style="max-height: 25vh;"' +
+                        ' src="/petdiansAdmin/image/get?file=' + encodeURIComponent(animalDTO.imageUrlList[0].substring(11)) + '" alt="Card image cap">'+
+                        '<div class="card-body"><h4 class="card-title mb-3" style="margin-bottom: 0rem!important;">이름: ' + animalDTO.name +
+                        '</h4><p class="card-text">날짜: ' + animalDTO.missingDate +'</p></div></div></div>'
+
+                    var position = new kakao.maps.LatLng((val[0].y) , val[0].x - 0.00153);
 
                     // 커스텀 오버레이를 생성합니다
                     var customOverlay = new kakao.maps.CustomOverlay({
@@ -491,6 +474,27 @@
             });
 
         }// 결과 생성 END
+
+        //지도 레벨에 따른 커스텀 오버레이 hidden
+        kakao.maps.event.addListener(map, 'zoom_changed', function() {
+
+            const customDiv = document.querySelectorAll(".card");
+            console.log(customDiv)
+
+            // 지도의 현재 레벨을 얻어옵니다
+            var level = map.getLevel();
+            console.log('현재 지도 레벨은 ' + level + ' 입니다');
+            if(level >= 7) {
+
+                customDiv.forEach(a => {a.classList.remove("customOpen"); a.classList.add("customHidden");})
+
+            } else {
+
+                customDiv.forEach(a => {a.classList.remove("customHidden"); a.classList.add("customOpen")})
+
+            }
+
+        });
 
         // ============= End Map ==========
 
@@ -526,7 +530,7 @@
 
             var tr = e.target.closest("tr");
             var btn = e.target.closest("button");
-            //console.log(btn);
+
             if(btn) {
                 // 버튼을 누른 경우 => 모달창에 정보가 뜬다.
                 var index = tr.getAttribute("data-idx");
@@ -535,8 +539,11 @@
 
             } else if(tr){
                 // 버튼을 누르지 않고 리스트를 누른 경우 => 지도를 이동
+                const customDiv = document.querySelectorAll(".card");
+                customDiv.forEach(a => {a.classList.remove("customHidden"); a.classList.add("customOpen")})
                 var animalNumber = tr.getAttribute("data-number") * 1;
                 var value = animalMap.get(animalNumber);
+                map.setLevel(3);
                 map.setCenter(value.getPosition());
             }
 
@@ -565,15 +572,11 @@
         // 모달창...
         let modalArray = new Array();
         const image1 = document.querySelector(".image1");
+
         function showModal(animalInfo) {
 
             modalArray.length = 0;
-            //largeModal.get(0).classList.add("show");
-            //largeModal.get(0).setAttribute("style","display: block; overflow : hidden;");
-            // document.body.classList.add("modal-hidden");
-            //     //.style.overflow = "hidden";
-            // //("modal-open");
-            // largeModal.get(0).classList.add("show");
+            console.log(modalArray);
 
             document.querySelector("#text-type").value = animalInfo.type;
             document.querySelector("#text-species").value = animalInfo.species;
@@ -584,48 +587,89 @@
             document.querySelector("#text-situation").value = animalInfo.situation;
             document.querySelector(".cardName strong").innerHTML = animalInfo.name;
 
-            console.log(animalInfo.imageUrlList);
             const imageUrlList = animalInfo.imageUrlList;
             let idx = 0;
             for (let image of imageUrlList) {
 
                 ++idx;
-                console.log(image);
+
                 image = encodeURIComponent(image.substring(11));
-                console.log(image);
-                modalArray.push(image);
+
+                modalArray.push("/petdiansAdmin/image/get?file=" + image);
 
             }//end for
 
             image1.innerHTML =
-                "<img class='imageModal' src='/petdiansAdmin/image/get?file=" + modalArray[0] + "'/>";
+                "<img class='imageModal' src='" + modalArray[0] + "'/>";
 
+            document.querySelector(".fa-caret-left").style.display="none";
+            if(modalArray.length > 1) {
+
+                document.querySelector(".fa-caret-right").style.display="block";
+
+            } else {
+
+                document.querySelector(".fa-caret-right").style.display="none";
+
+            }
 
             largeModal.modal("show");
 
         }//end showModal
 
-        // //모달창 버튼 - Vanilla JS
-        // largeModal.get(0).addEventListener("click", function (e) {
-        //
-        //     e.preventDefault();
-        //     e.stopPropagation();
-        //
-        //     const target = e.target;
-        //     console.log(target);
-        //
-        //     if (target.className == 'btn btn-primary') {
-        //
-        //         console.log("btn btn-primary");
-        //         return;
-        //
-        //     } else if (target.className == 'btn btn-secondary' || target.className == "closex"){
-        //
-        //         console.log("close")
-        //
-        //     }
-        //
-        // }, false);
+        //이미지 Next 버튼
+        document.querySelector(".viewDiv").addEventListener("click", function (e) {
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            const target = e.target;
+
+            if(target.className != 'fa fa-caret-left' && target.className != 'fa fa-caret-right') {
+
+                return;
+
+            }
+
+            const imageModal = document.querySelector(".imageModal");
+            let idx = modalArray.indexOf(imageModal.getAttribute("src"));
+            const length = modalArray.length - 1;
+
+            if(target.closest("div").className == 'viewModal left') {
+
+                idx -= 1;
+
+            } else if(target.closest("div").className == 'viewModal right') {
+
+                idx += 1;
+
+            }
+
+            if(idx == 0 && idx != length) {
+
+                document.querySelector(".fa-caret-left").style.display="none";
+                imageModal.setAttribute("src", modalArray[idx])
+
+            }else if(idx != 0 && idx != length) {
+
+                document.querySelector(".fa-caret-left").style.display="block";
+                document.querySelector(".fa-caret-right").style.display="block";
+                imageModal.setAttribute("src", modalArray[idx])
+
+            }
+
+            else if(idx != 0 && idx == length) {
+
+                imageModal.setAttribute("src", modalArray[idx])
+                document.querySelector(".fa-caret-right").style.display="none";
+
+            } else if(lenth == 0 && idx == -1 || index == 0 && length == index) {
+
+                return;
+
+            }
+
+        }, false)
 
     })// DOC.ready END
 
