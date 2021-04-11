@@ -53,15 +53,21 @@ public class PetbotTests {
             for(int i =0; i<length; ++i){
                 Intent intent = list.get(i);
                 List<Intent.TrainingPhrase> tList = intent.getTrainingPhrasesList();
-                Intent.TrainingPhrase temp = intent.getTrainingPhrases(0);
+
 
                 for(int j = 0; j < tList.size(); ++j){
-                    log.info(tList.get(j).getName());
+
+                    log.info("===== TraningPhrase 출력 =====");
+                    log.info(tList.get(j));
+
+                    List<Intent.TrainingPhrase.Part> pList = tList.get(j).getPartsList();
+
+                    for(int k = 0; k < pList.size(); ++k){
+                        log.info("===== TraningPhrase Text 출력 =====");
+                        log.info(pList.get(k).getText());
+                    }
                 }
-
-
             }
-
         } catch(Exception e) {
             e.printStackTrace();
         }

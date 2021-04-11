@@ -8,8 +8,11 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static com.google.cloud.dialogflow.v2beta1.IntentView.INTENT_VIEW_FULL;
 
 
 @Log4j
@@ -24,7 +27,7 @@ public class PetbotServiceImpl implements PetbotService {
     private final String lanCode = "ko-KR";
 
 
-
+    // Text에 대한 Intent를 찾기
     // DialogFlow API Detect Intent sample with text inputs.
     public Map<String, QueryResult> detectIntentTexts(String text)
             throws IOException, ApiException {
@@ -70,23 +73,34 @@ public class PetbotServiceImpl implements PetbotService {
         return queryResults;
     }
 
-
+    // Intent를 모두 불러오기
     public List<Intent> listIntents() throws ApiException, IOException {
 
 
         List<Intent> intents = Lists.newArrayList();
 
-        IntentsSettings intentsSettings = IntentsSettings.newBuilder().setEndpoint(endPoint).build();
-
+        IntentsSettings intentsSettings = IntentsSettings.newBuilder()
+                .setEndpoint(endPoint)
+                .build();
 
         // Instantiates a client
         try (IntentsClient intentsClient = IntentsClient.create(intentsSettings)) {
             // Set the project agent name using the projectID (my-project-id)
             //  .ofProjectLocationSessionName(projectId, locationId, sessionId);
+            
+            // Project가 지역이 us가 아닐 때 추가적인 설정 필요
             AgentName parent = AgentName.ofProjectLocationAgentName(projectID, locationId);
             log.info("Agent Name : " + parent);
+
+            // INTENT에서 TrainingPhrases도 나올 수 있게 하는 설정
+            ListIntentsRequest request = ListIntentsRequest.newBuilder().setIntentView(INTENT_VIEW_FULL)
+                    .setParent(parent.toString())
+                    .build();
+
+            // intentsClient.listIntents(parent).iterateAll();
             // Performs the list intents request
-            for (Intent intent : intentsClient.listIntents(parent).iterateAll()) {
+            for (Intent intent : intentsClient.listIntents(request).iterateAll()) {
+                // 인텐트를 출력
                 System.out.println("====================");
                 System.out.format("Intent name: '%s'\n", intent.getName());
                 System.out.format("Intent display name: '%s'\n", intent.getDisplayName());
@@ -111,4 +125,54 @@ public class PetbotServiceImpl implements PetbotService {
         return intents;
     }
 
+
+
+    /**
+     * Create an intent of the given intent type
+     *
+     * @param displayName The display name of the intent.
+     * @param projectId Project/Agent Id.
+     * @param trainingPhrasesParts Training phrases.
+     * @param messageTexts Message texts for the agent's response when the intent is detected.
+     * @return The created Intent.
+     */
+    public Intent createIntent(
+            String displayName,
+            String projectId,
+            List<String> trainingPhrasesParts,
+            List<String> messageTexts)
+            throws ApiException, IOException {
+        // Instantiates a client
+        try (IntentsClient intentsClient = IntentsClient.create()) {
+            // Set the project agent name using the projectID (my-project-id)
+            AgentName parent = AgentName.of(projectId);
+
+            // Build the trainingPhrases from the trainingPhrasesParts
+            List<Intent.TrainingPhrase> trainingPhrases = new ArrayList<>();
+            for (String trainingPhrase : trainingPhrasesParts) {
+                trainingPhrases.add(
+                        Intent.TrainingPhrase.newBuilder()
+                                .addParts(Intent.TrainingPhrase.Part.newBuilder().setText(trainingPhrase).build())
+                                .build());
+            }
+
+            // Build the message texts for the agent's response
+            Intent.Message message =
+                    Intent.Message.newBuilder().setText(Intent.Message.Text.newBuilder().addAllText(messageTexts).build()).build();
+
+            // Build the intent
+            Intent intent =
+                    Intent.newBuilder()
+                            .setDisplayName(displayName)
+                            .addMessages(message)
+                            .addAllTrainingPhrases(trainingPhrases)
+                            .build();
+
+            // Performs the create intent request
+            Intent response = intentsClient.createIntent(parent, intent);
+            System.out.format("Intent created: %s\n", response);
+
+            return response;
+        }
+    }
 }

@@ -12,7 +12,11 @@ import java.util.Map;
 public interface PetbotService {
 
     Map<String, QueryResult> detectIntentTexts(String texts) throws IOException, ApiException;
+
     List<Intent> listIntents() throws ApiException, IOException ;
 
-
+    Intent createIntent( String displayName,
+                         String projectId,
+                         List<String> trainingPhrasesParts,
+                         List<String> messageTexts)   throws ApiException, IOException ;
 }
