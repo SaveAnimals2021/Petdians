@@ -3,7 +3,6 @@ package org.petdians.common.crawling.service;
 import org.petdians.common.crawling.domain.CrawlResultVO;
 import org.petdians.common.crawling.dto.CrawlResultDTO;
 import org.petdians.common.util.DateFormatter;
-import org.petdians.common.util.SimpleDateFormatter;
 
 import java.util.Date;
 import java.util.List;
@@ -18,7 +17,7 @@ public interface CrawlService {
 
 
     default CrawlResultVO toDomain(CrawlResultDTO dto) throws Exception{
-        Date crawlDate = SimpleDateFormatter.fromStringToDate(dto.getCrawlDate());
+        Date crawlDate = DateFormatter.fromStringToDate(dto.getCrawlDate());
 
         CrawlResultVO vo = new CrawlResultVO();
 
