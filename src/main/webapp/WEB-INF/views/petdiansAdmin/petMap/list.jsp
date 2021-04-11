@@ -617,6 +617,8 @@
 
         }//end showModal
 
+
+
         //이미지 Next 버튼
         document.querySelector(".viewDiv").addEventListener("click", function (e) {
 
