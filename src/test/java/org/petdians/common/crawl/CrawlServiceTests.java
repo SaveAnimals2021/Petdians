@@ -9,10 +9,12 @@ import org.petdians.common.config.CommonConfig;
 import org.petdians.common.crawling.config.CrawlConfig;
 import org.petdians.common.crawling.dto.CrawlResultDTO;
 import org.petdians.common.crawling.service.CrawlService;
+import org.petdians.common.util.DateFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -25,12 +27,19 @@ public class CrawlServiceTests {
     CrawlService service;
 
     @Test
+    public void testDate(){
+        log.info(DateFormatter.fromDateToString(new Date()));
+    }
+
+
+    @Test
     public void testService(){
         CrawlResultDTO dto = new CrawlResultDTO();
+        dto.setCrawlDate(DateFormatter.fromDateToString(new Date()));
 
         try{
             service.register(dto);
-            List<CrawlResultDTO> list = service.getListByDay(1);
+            List<CrawlResultDTO> list = service.getListByDay(7);
             list.forEach(c->log.info(c));
         } catch(Exception e){
             e.printStackTrace();
@@ -41,7 +50,7 @@ public class CrawlServiceTests {
     @Test
     public void testList(){
         try{
-            List<CrawlResultDTO> list = service.getListByDay(1);
+            List<CrawlResultDTO> list = service.getListByDay(7);
             list.forEach(c->log.info(c));
         } catch(Exception e){
             e.printStackTrace();

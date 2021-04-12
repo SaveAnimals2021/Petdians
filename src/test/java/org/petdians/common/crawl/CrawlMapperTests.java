@@ -28,6 +28,7 @@ public class CrawlMapperTests {
     public void testRegister(){
         log.info(mapper);
         CrawlResultVO vo = new CrawlResultVO();
+        vo.setCrawlDate(new Date());
         mapper.register(vo);
     }
 
@@ -41,7 +42,7 @@ public class CrawlMapperTests {
     @Test
     public void testGetList() {
         try {
-            List<CrawlResultVO> list = mapper.getListByDay(1);
+            List<CrawlResultVO> list = mapper.getListByDay(7);
             list.forEach(c->log.info(c));
 
         } catch(Exception e){

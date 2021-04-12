@@ -62,7 +62,7 @@ public class DateFormatter {
         if(null == date){
             return null;
         }
-        return  formatter.format(new Date(date.getTime() - 9 * 1000 * 60 * 60));
+        return  formatter.format(date);
     }
 
 

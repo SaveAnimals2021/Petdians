@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="org.petdians.pet.mapper.PetMapper">
+
+    <!-- Search Where -->
+    <!-- 성별, 타입, 종, 나이 -->
+    <sql id="search">
+        <where>
+            <if test="arr != null">
+                <foreach collection="arr" index="index" item="val" separator="OR"  open="(" close=")">
+                    <if test="val == 't'.toString">
+                        type = #{keyword}
+                    </if>
+                    <if test="val == 's'.toString">
+                        sex = #{keyword}
+                    </if>
+                    <if test="val == 'p'.toString">
+                        species = #{keyword}
+                    </if>
+                    <if test="val == 'a'.toString">
+                        age = #{keyword}
+                    </if>
+                </foreach>
+                AND
+            </if>
+        </where>
+    </sql>
+
+    <!-- INSERT -->
+    <insert id="register" >
+        <![CDATA[
+      insert into tbl_pet (pno, userid, petname, species, sex,
+                           isNeutralized, age, type)
+
+      values (#{pno}, #{userid}, #{petname}, #{species}, #{sex},
+                           #{isNeutralized}, #{age}, #{type})
+      ]]>
+        <selectKey resultType="int" keyProperty="pno" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <!-- MODIFY -->
+    <update id="modify">
+      <![CDATA[
+        update tbl_pet set updatedate = now(), isNeutralized = #{isNeutralized}, petname=#{petname},
+                           age=#{age}
+        where pno = #{pno}
+        ]]>
+   </update>
+
+    <!-- List -->
+    <select id="getPagedList" resultType="org.petdians.animal.domain.MissingAnimalVO">
+        select * from tbl_pet
+        <include refid="search"></include>
+        order by pno desc limit #{skip},#{perSheet}
+    </select>
+
+
+    <!-- ToTal -->
+    <select id="getTotalCount" resultType="Integer">
+        select count(pno) from tbl_pet
+        <include refid="search"></include>
+
+    </select>
+
+
+
+
+
+</mapper>
