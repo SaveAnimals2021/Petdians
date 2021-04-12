@@ -39,6 +39,8 @@ dependencies {
 
     compile group: 'org.springframework', name: 'spring-tx', version: '5.0.7'
     compile group: 'org.springframework.security', name: 'spring-security-config', version: '5.4.2'
+    compile group: 'org.springframework.security', name: 'spring-security-core', version: '5.4.2'
+    compile group: 'org.springframework.security', name: 'spring-security-web', version: '5.4.2'
     compile group: 'org.springframework.security', name: 'spring-security-taglibs', version: '5.4.2'
     compile group: 'org.springframework.security', name: 'spring-security-core', version: '5.4.2'
     compile group: 'org.springframework.security', name: 'spring-security-web', version: '5.4.2'

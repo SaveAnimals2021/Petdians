@@ -1,5 +1,6 @@
 package org.petdians.common.config;
 
+import org.petdians.admin.config.AdminConfig;
 import org.petdians.animal.config.AnimalConfig;
 import org.petdians.aop.config.AopConfig;
 import org.petdians.batch.config.AnimalJobConfig;
@@ -15,7 +16,7 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
     protected Class<?>[] getRootConfigClasses() {
         return new Class[]{
                 CommonConfig.class, AnimalConfig.class, AnimalJobConfig.class, CrawlConfig.class, AopConfig.class
-                , PetbotConfig.class, UserConfig.class, PetConfig.class, SecurityConfig.class
+                , PetbotConfig.class, UserConfig.class, PetConfig.class, SecurityConfig.class, AdminConfig.class
         };
     }
 
