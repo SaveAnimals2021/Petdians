@@ -144,9 +144,9 @@
                 </th>
                 <th style="text-align: center;">ANIMAL NUMBER</th>
                 <th class="desc" style="text-align: left;">ANIMAL TYPE</th>
+                <th style="text-align: center;">ANIMAL NAME</th>
                 <th style="text-align: center;">MISSINGDATE</th>
-                <th style="text-align: center;">REGDATE</th>
-                <th style="text-align: center;">UPDATEDATE</th>
+                <th style="text-align: center;">MISSING LOCATION</th>
                 <th></th>
             </tr>
             </thead>
@@ -165,12 +165,12 @@
                         <!-- TYPE -->
                         <span class="desc" style="text-align: center;">${animal.type}</span>
                     </td>
+                    <!-- NAME -->
+                    <td style="text-align: center;">${animal.name}</td>
                     <!-- MISSINGDATE -->
                     <td class="desc" style="text-align: center;">${animal.missingDate}</td>
-                    <!-- REGDATE -->
-                    <td style="text-align: center;">${animal.regDate}</td>
-                    <!-- UPDATEDATE -->
-                    <td style="text-align: center;"><p class="status--process">${animal.updateDate}</p></td>
+                    <!-- MISSING LOCATION -->
+                    <td style="text-align: center;"><p class="status--process">${animal.missingLocation}</p></td>
                     <td>
                         <div class="table-data-feature">
                             <button class="item view" data-toggle="tooltip" data-placement="top" title="Send">
@@ -391,12 +391,13 @@
         //1.MAP MARKER 만들기
         for (var i = 0 ; i < size; i++) {
 
-            makeResult(JSON.parse(dtoList[i]), 0);
+            const finish =  (i+1) == size? true : false;
+            makeResult(JSON.parse(dtoList[i]), 0, finish);
 
         }//MAP MARKER 만들기 END
 
         //2.MAP MARKER 만들기
-        function makeResult(animalDTO, count) {
+        function makeResult(animalDTO, count, finish) {
 
             var maxCount = 10;
             //animalDTO.missingLocation로 x,y 좌표 구하기
@@ -425,7 +426,7 @@
 
                     ++count;
                     console.log("결과 없음... 재검색 시작 =>" + missingLoc);
-                    makeResult(animalDTO, count)
+                    makeResult(animalDTO, count, finish)
                     return;
 
                 }//재검색 END
@@ -465,7 +466,13 @@
 
                     // 커스텀 오버레이를 지도에 표시합니다
                     customOverlay.setMap(map);
-                    map.setCenter(coords);
+                    console.log(finish)
+                    if(finish ) {
+
+                        map.setCenter(coords);
+                        map.setLevel(3);
+
+                    }
 
                     return;
 
