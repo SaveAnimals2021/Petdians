@@ -26,7 +26,7 @@ import javax.sql.DataSource;
 @Log4j
 @Configuration
 @EnableTransactionManagement
-@Import(AnimalJobConfig.class)
+@Import({AnimalJobConfig.class})
 public class CommonConfig {
 
     @Bean

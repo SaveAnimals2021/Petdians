@@ -355,8 +355,6 @@
 
         // 주소-좌표 변환 객체를 생성합니다
         var geocoder = new kakao.maps.services.Geocoder();
-        var dtoList = [];
-        var markerList = [];
         var animalMap = new Map();
 
         var dtoList = (${jsonList});
@@ -486,7 +484,6 @@
         kakao.maps.event.addListener(map, 'zoom_changed', function() {
 
             const customDiv = document.querySelectorAll(".card-img-top");
-            console.log(customDiv)
 
             // 지도의 현재 레벨을 얻어옵니다
             var level = map.getLevel();
@@ -560,7 +557,6 @@
                 customDiv.forEach(a => {
 
                     const card =  a.closest(".card");
-                    console.log(card)
                     card.classList.remove("customHidden"); card.classList.add("customOpen");
 
                 })
