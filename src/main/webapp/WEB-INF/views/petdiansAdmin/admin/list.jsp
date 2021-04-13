@@ -48,7 +48,7 @@
             </thead>
             <tbody>
 
-            <c:forEach items="${list}" var="admin">
+            <c:forEach items="${list}" var="memberVO">
                 <tr>
                     <td>
                         <label class="au-checkbox">
@@ -56,10 +56,10 @@
                             <span class="au-checkmark"></span>
                         </label>
                     </td>
-                    <td><h5>${admin.adminName}</h5></td>
-                    <td><h5>${admin.adminID}</h5></td>
-                    <td><h5>${admin.regdate}</h5></td>
-                    <td><h5>${admin.updateDate}</h5></td>
+                    <td><h5>${memberVO.adminName}</h5></td>
+                    <td><h5>${memberVO.adminID}</h5></td>
+                    <td><h5>${memberVO.regdate}</h5></td>
+                    <td><h5>${memberVO.updateDate}</h5></td>
                     <td>
                         <button class="btn btn-warning">Modify</button>
                         <button class="btn btn-secondary">Delete</button>
@@ -96,7 +96,7 @@
 </nav>
 
 <!-- ACTION FORM -->
-<form class="actionForm" action="/petdiansAdmin/admin/list" method="get">
+<form class="actionForm" action="/petdiansAdmin/memberVO/list" method="get">
     <input type="hidden" name="page" value="${pageDTO.page}">
     <input type="hidden" name="perSheet" value="${pageDTO.perSheet}">
 </form>

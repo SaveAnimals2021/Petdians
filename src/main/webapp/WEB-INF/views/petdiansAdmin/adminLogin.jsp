@@ -56,10 +56,10 @@
                         </a>
                     </div>
                     <div class="login-form">
-                        <form action="" method="post">
+                        <form action="/login" method="post">
                             <div class="form-group">
                                 <label>Admin ID</label>
-                                <input class="au-input au-input--full" type="id" name="id" placeholder="ID">
+                                <input class="au-input au-input--full" type="text" name="username" placeholder="ID">
                             </div>
                             <div class="form-group">
                                 <label>Password</label>
@@ -73,13 +73,14 @@
                                     <a href="#">Forgotten Password?</a>
                                 </label>
                             </div>
-                            <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">sign in</button>
+                            <button class="au-btn au-btn--block au-btn--green m-b-20 signinButton" type="submit">sign in</button>
                             <div class="social-login-content">
                                 <div class="social-button">
                                     <button class="au-btn au-btn--block au-btn--blue m-b-20">sign in with facebook</button>
                                     <button class="au-btn au-btn--block au-btn--blue2">sign in with twitter</button>
                                 </div>
                             </div>
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         </form>
                         <div class="register-link">
                             <p>
@@ -120,8 +121,11 @@
 
 <script>
 
-    const loginBtn = document.querySelector(".au-btn.au-btn--block.au-btn--green.m-b-20");
-    console.log(loginBtn);
+    const loginBtn = document.querySelector(".signinButton");
+    loginBtn.addEventListener("click", function(e){
+
+    })
+
 
 </script>
 

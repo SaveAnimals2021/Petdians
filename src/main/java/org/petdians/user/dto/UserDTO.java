@@ -4,10 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.petdians.animal.dto.ImageDTO;
+import org.petdians.security.domain.AuthVO;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -24,5 +23,5 @@ public class UserDTO {
     Timestamp regdate;
     Timestamp updatedate;
 
-
+    private List<AuthVO> authList;
 }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.petdians.member.mapper.MemberMapper">
+
+    <resultMap id="memberMap" type="org.petdians.member.domain.MemberVO">
+
+        <id property="memberID" column="memberid"/>
+        <result property="memberID" column="memberid" />
+        <result property="memberPW" column="memberpw" />
+        <result property="memberName" column="membername" />
+        <result property="memberEmail" column="memberemail" />
+        <result property="memberPhone" column="memberphone" />
+        <result property="regdate" column="regdate" />
+        <result property="updateDate" column="updatedate" />
+        <collection property="authList" resultMap="authMap"></collection>
+
+    </resultMap>
+
+    <resultMap id="authMap" type="org.petdians.security.domain.AuthVO">
+
+        <result property="memberID" column="memberid"/>
+        <result property="authority" column="authority" />
+
+    </resultMap>
+
+    <select id="read" resultMap="memberMap">
+        select mem.memberid, memberpw, membername, memberemail, memberphone,
+               regdate, updatedate, authority
+        from tbl_member mem LEFT OUTER join tbl_auth auth on mem.memberid = auth.id
+        where mem.memberid = #{memberID}
+    </select>
+
+    <select id="selectAll" resultType="org.petdians.member.domain.MemberVO">
+        select * from tbl_member
+        order by memberID limit #{skip}, #{perSheet}
+    </select>
+
+    <insert id="insert">
+    insert into tbl_member (memberID, memberPW, memberName) values(#{memberID}, #{memberPW}, #{memberName})
+    </insert>
+
+    <select id="selectOne" resultType="org.petdians.member.domain.MemberVO">
+    select * from tbl_member where memberID = #{memberID}
+    </select>
+
+    <update id="update">
+    update tbl_member set memberPW = #{memberPW}, memberName = #{memberName}, updatedate = now() where memberID = #{memberID}
+    </update>
+
+    <delete id="delete">
+    delete from tbl_member where memberID = #{memberID}
+    </delete>
+
+    <!-- ToTal -->
+    <select id="getTotalCount" resultType="Integer">
+        select count(memberID) from tbl_member
+    </select>
+
+</mapper>

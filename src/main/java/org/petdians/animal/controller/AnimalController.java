@@ -10,6 +10,7 @@ import org.petdians.animal.service.AnimalService;
 import org.petdians.animal.service.ImageService;
 import org.petdians.common.dto.PageDTO;
 import org.petdians.common.dto.PageMaker;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,7 @@ public class AnimalController {
     private final AnimalService service;
     private final ImageService imageService;
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/petMap/list")
     public void getPetMap(PageDTO dto, Model model) {
 
@@ -90,6 +92,7 @@ public class AnimalController {
         log.info(" SIZE : " + list.size());
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/home")
     public void getHome() {
 

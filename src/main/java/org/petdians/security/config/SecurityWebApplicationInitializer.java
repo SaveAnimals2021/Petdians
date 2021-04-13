@@ -1,4 +1,4 @@
-package org.petdians.common.config;
+package org.petdians.security.config;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

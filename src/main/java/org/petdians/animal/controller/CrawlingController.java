@@ -29,6 +29,7 @@ public class CrawlingController {
     private final CrawlService crawlService;
     private final ImageService imageService;
 
+
     @GetMapping("/statistics")
     public void getStastics(Integer day, Model model) {
 
@@ -81,6 +82,7 @@ public class CrawlingController {
         model.addAttribute("animalInfo", json);
 
     }
+
 
     @GetMapping("/list")
     public void getList(PageDTO pageDTO, Model model) {

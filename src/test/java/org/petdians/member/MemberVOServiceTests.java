@@ -1,12 +1,11 @@
-package org.petdians.admin;
+package org.petdians.member;
 
 import lombok.extern.log4j.Log4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.petdians.admin.config.AdminConfig;
-import org.petdians.admin.domain.Admin;
-import org.petdians.admin.mapper.AdminMapper;
-import org.petdians.animal.config.AnimalConfig;
+import org.petdians.member.config.MemberConfig;
+import org.petdians.member.dto.MemberDTO;
+import org.petdians.member.service.MemberService;
 import org.petdians.common.config.CommonConfig;
 import org.petdians.common.dto.PageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,26 +14,26 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={CommonConfig.class, AdminConfig.class})
-public class AdminMapperTests {
+@ContextConfiguration(classes = {CommonConfig.class, MemberConfig.class})
+public class MemberVOServiceTests {
 
     @Autowired
-    AdminMapper mapper;
+    MemberService service;
 
     @Test
     public void testInsert() {
 
         for (int i = 0; i < 10; i++) {
 
-            Admin admin = Admin.builder()
-                    .adminID("mw" + i)
-                    .adminPW("mw" + i)
-                    .adminName("mw" + i)
+            MemberDTO memberDTO = MemberDTO.builder()
+                    .memberID("mw" + i)
+                    .memberPW("mw" + i)
+                    .memberName("mw" + i)
                     .build();
 
-            mapper.insert(admin);
+            service.register(memberDTO);
 
-            log.info(admin);
+            log.info(memberDTO);
 
         }
 
@@ -45,7 +44,7 @@ public class AdminMapperTests {
     public void testSelectOne() {
 
         String id = "mw";
-        log.info(mapper.selectOne(id));
+        log.info(service.readOne(id));
 
     }
 
@@ -53,22 +52,22 @@ public class AdminMapperTests {
     public void testSelectAll() {
 
         PageDTO pageDTO = new PageDTO();
-        mapper.selectAll(pageDTO.getSkip(), pageDTO.getPerSheet()).forEach(admin -> log.info(admin));
+        service.listAll(pageDTO).forEach(admin -> log.info(admin));
 
     }
 
     @Test
     public void testUpdate() {
 
-        Admin admin = Admin.builder()
-                .adminID("mw")
-                .adminPW("mw")
-                .adminName("mw")
+        MemberDTO memberDTO = MemberDTO.builder()
+                .memberID("mw")
+                .memberPW("mw")
+                .memberName("mw")
                 .build();
 
-        mapper.update(admin);
+        service.modify(memberDTO);
 
-        log.info(admin);
+        log.info(memberDTO);
 
     }
 
@@ -76,7 +75,7 @@ public class AdminMapperTests {
     public void testDelete() {
 
         String id = "mw";
-        mapper.delete(id);
+        service.remove(id);
 
         log.info(id);
 
@@ -85,7 +84,7 @@ public class AdminMapperTests {
     @Test
     public void testGetToTalCount() {
 
-        log.info(mapper.getTotalCount());
+        log.info(service.getTotalCount());
 
     }
 

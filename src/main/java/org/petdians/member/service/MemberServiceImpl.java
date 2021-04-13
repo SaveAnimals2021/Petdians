@@ -1,8 +1,7 @@
-package org.petdians.admin.service;
+package org.petdians.member.service;
 
-import org.petdians.admin.domain.Admin;
-import org.petdians.admin.dto.AdminDTO;
-import org.petdians.admin.mapper.AdminMapper;
+import org.petdians.member.dto.MemberDTO;
+import org.petdians.member.mapper.MemberMapper;
 import org.petdians.common.dto.PageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,20 +10,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class AdminServiceImpl implements AdminService{
+public class MemberServiceImpl implements MemberService {
 
     @Autowired
-    AdminMapper mapper;
+    MemberMapper mapper;
 
     @Override
-    public void register(AdminDTO adminDTO) {
+    public void register(MemberDTO memberDTO) {
 
-        mapper.insert(toDomain(adminDTO));
+        mapper.insert(toDomain(memberDTO));
 
     }
 
     @Override
-    public List<AdminDTO> listAll(PageDTO pageDTO) {
+    public List<MemberDTO> listAll(PageDTO pageDTO) {
 
         return mapper.selectAll(pageDTO.getSkip(), pageDTO.getPerSheet())
                 .stream()
@@ -33,13 +32,13 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
-    public AdminDTO readOne(String adminID) {
+    public MemberDTO readOne(String adminID) {
         return toDTO(mapper.selectOne(adminID));
     }
 
     @Override
-    public void modify(AdminDTO adminDTO) {
-        mapper.update(toDomain(adminDTO));
+    public void modify(MemberDTO memberDTO) {
+        mapper.update(toDomain(memberDTO));
     }
 
     @Override

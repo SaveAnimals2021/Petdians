@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.petdians.security.domain.AuthVO;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 @Builder
@@ -20,4 +22,6 @@ public class UserVO {
     String userphone;
     Timestamp regdate;
     Timestamp updatedate;
+
+    private List<AuthVO> authList;
 }
