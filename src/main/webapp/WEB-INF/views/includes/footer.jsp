@@ -5,7 +5,7 @@
   Time: 오후 3:34
   To change this template use File | Settings | File Templates.
 --%>
-
+</div>
 <!-- Jquery JS-->
 <script src="../../resources/vendor/jquery-3.2.1.min.js"></script>
 <script src="../../resources/vendor/bootstrap-4.1/popper.min.js"></script>

@@ -36,7 +36,7 @@
 </head>
 
 <body class="animsition">
-<div class="page-wrapper" style="padding-bottom: 0;">
+<div class="page-wrapper" style="padding-bottom: 0; background-color: white">
     <!-- HEADER DESKTOP-->
     <header class="header-desktop3 d-none d-lg-block">
         <div class="section__content section__content--p35">
@@ -491,4 +491,3 @@
         </div>
     </div>
     <!-- END HEADER MOBILE -->
-</div>
