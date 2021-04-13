@@ -142,10 +142,10 @@
                         <span class="au-checkmark"></span>
                     </label>
                 </th>
-                <th style="text-align: center;">ANIMAL NUMBER</th>
-                <th class="desc" style="text-align: left;">ANIMAL TYPE</th>
+<%--                <th style="text-align: center;">ANIMAL NUMBER</th>--%>
+                <th class="desc" style="text-align: center;">ANIMAL TYPE</th>
                 <th style="text-align: center;">ANIMAL NAME</th>
-                <th style="text-align: center;">MISSINGDATE</th>
+                <th style="text-align: center;">MISSING DATE</th>
                 <th style="text-align: center;">MISSING LOCATION</th>
                 <th></th>
             </tr>
@@ -159,8 +159,8 @@
                             <span class="au-checkmark"></span>
                         </label>
                     </td>
-                    <!-- ANIMAL NUMBER -->
-                    <td style="text-align: center;">${animal.animalNumber}</td>
+<%--                    <!-- ANIMAL NUMBER -->--%>
+<%--                    <td style="text-align: center;">${animal.animalNumber}</td>--%>
                     <td>
                         <!-- TYPE -->
                         <span class="desc" style="text-align: center;">${animal.type}</span>
@@ -170,7 +170,7 @@
                     <!-- MISSINGDATE -->
                     <td class="desc" style="text-align: center;">${animal.missingDate}</td>
                     <!-- MISSING LOCATION -->
-                    <td style="text-align: center;"><p class="status--process">${animal.missingLocation}</p></td>
+                    <td style="text-align: center;"><p class="status--process" style="max-height: 5vh; overflow: auto;">${animal.missingLocation}</p></td>
                     <td>
                         <div class="table-data-feature">
                             <button class="item view" data-toggle="tooltip" data-placement="top" title="Send">

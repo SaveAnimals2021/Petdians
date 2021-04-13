@@ -76,7 +76,7 @@
 			<when test='day == "-1"'>missingDate BETWEEN DATE_ADD(NOW(),INTERVAL -1 MONTH ) AND NOW()</when>
 			<otherwise>missingDate BETWEEN DATE_ADD(NOW(),INTERVAL -1 MONTH ) AND NOW()</otherwise>
 		</choose>
-		order by animalNumber desc limit #{skip},#{perSheet}
+		order by missingDate desc, animalNumber desc limit #{skip},#{perSheet}
 	</select>
 
 	<select id="getAllList" resultType="org.petdians.animal.domain.MissingAnimalVO">
