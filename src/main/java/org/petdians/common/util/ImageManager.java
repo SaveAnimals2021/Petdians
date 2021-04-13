@@ -3,7 +3,7 @@ package org.petdians.common.util;
 import lombok.extern.log4j.Log4j;
 import org.petdians.animal.dto.ImageDTO;
 import org.petdians.animal.dto.MissingAnimalDTO;
-import org.petdians.common.crawling.util.CrawlManager;
+import org.petdians.crawling.util.CrawlManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -102,7 +102,7 @@ public class ImageManager {
 
         String fileFullName = uuid + "_" + fileName;
 
-        String folderPath = dto.getUploadPath(); // 2021/03/17
+        String folderPath = dto.getUploadPath();  // 2021/03/17
 
 //        File testPath = new File(folderPath + File.separator + fileFullName); // 경로를 설정... (부모 경로), (자식 경로) C:\\upload\\2021\\03\\17
 //
@@ -135,6 +135,11 @@ public class ImageManager {
         }
 
         File lastFile = new File(last);
+
+        if(lastFile.exists()){
+            log.info("중복된 파일입니다.");
+            return;
+        }
 
         HttpURLConnection urlCon = (HttpURLConnection) urlObj.openConnection();
         urlCon.setRequestProperty("User-Agent", CrawlManager.agent);

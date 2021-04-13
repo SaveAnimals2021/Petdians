@@ -8,7 +8,7 @@ import org.petdians.animal.config.AnimalConfig;
 import org.petdians.animal.domain.ImageVO;
 import org.petdians.animal.mapper.ImageMapper;
 import org.petdians.common.config.CommonConfig;
-import org.petdians.common.crawling.config.CrawlConfig;
+import org.petdians.crawling.config.CrawlConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;

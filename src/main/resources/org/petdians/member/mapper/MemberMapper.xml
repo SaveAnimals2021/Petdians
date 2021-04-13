@@ -13,7 +13,7 @@
         <result property="memberName" column="membername" />
         <result property="memberEmail" column="memberemail" />
         <result property="memberPhone" column="memberphone" />
-        <result property="regdate" column="regdate" />
+        <result property="regDate" column="regdate" />
         <result property="updateDate" column="updatedate" />
         <collection property="authList" resultMap="authMap"></collection>
 

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class CrawlAdvice {
 
     // 2. doA만 거는 방법
-	@Before(value="execution(* org.petdians.common.crawling.service.*.crawlView(..))")
+	@Before(value="execution(* org.petdians.crawling.service.*.crawlView(..))")
 	public void logBefore() {
 		log.info("========== BEFORE Crawl ==========");
 	}

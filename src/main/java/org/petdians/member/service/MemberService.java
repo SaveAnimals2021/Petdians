@@ -12,6 +12,8 @@ public interface MemberService {
 
     List<MemberDTO> listAll(PageDTO pageDTO);
 
+    List<MemberDTO> readAll(PageDTO pageDTO);
+
     MemberDTO readOne(String adminID);
 
     void modify(MemberDTO memberDTO);
@@ -26,8 +28,9 @@ public interface MemberService {
                 memberID(memberVO.getMemberID())
                 .memberPW(memberVO.getMemberPW())
                 .memberName(memberVO.getMemberName())
-                .regdate(memberVO.getRegdate())
+                .regDate(memberVO.getRegDate())
                 .updateDate(memberVO.getUpdateDate())
+                .authList(memberVO.getAuthList())
                 .build();
 
     }
@@ -38,8 +41,9 @@ public interface MemberService {
                 memberID(memberDTO.getMemberID())
                 .memberPW(memberDTO.getMemberPW())
                 .memberName(memberDTO.getMemberName())
-                .regdate(memberDTO.getRegdate())
+                .regDate(memberDTO.getRegDate())
                 .updateDate(memberDTO.getUpdateDate())
+                .authList(memberDTO.getAuthList())
                 .build();
 
     }

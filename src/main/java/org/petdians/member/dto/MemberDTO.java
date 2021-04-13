@@ -16,7 +16,7 @@ public class MemberDTO {
     private String memberName;
     private String memberEmail;
     private String memberPhone;
-    private Timestamp regdate;
+    private Timestamp regDate;
     private Timestamp updateDate;
 
     private List<AuthVO> authList;

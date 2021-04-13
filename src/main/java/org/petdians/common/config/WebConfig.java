@@ -4,7 +4,7 @@ import org.petdians.member.config.MemberConfig;
 import org.petdians.animal.config.AnimalConfig;
 import org.petdians.aop.config.AopConfig;
 import org.petdians.batch.config.AnimalJobConfig;
-import org.petdians.common.crawling.config.CrawlConfig;
+import org.petdians.crawling.config.CrawlConfig;
 import org.petdians.pet.config.PetConfig;
 import org.petdians.petbot.config.PetbotConfig;
 import org.petdians.security.config.SecurityConfig;

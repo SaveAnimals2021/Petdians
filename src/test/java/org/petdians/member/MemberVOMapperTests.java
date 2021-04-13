@@ -52,6 +52,7 @@ public class MemberVOMapperTests {
 
         String id = "mw";
         log.info(mapper.selectOne(id));
+        log.info(mapper.read(id));
 
     }
 

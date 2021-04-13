@@ -32,6 +32,17 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public List<MemberDTO> readAll(PageDTO pageDTO) {
+        return mapper.selectAll(pageDTO.getSkip(), pageDTO.getPerSheet())
+                .stream()
+                .map(admin -> {
+                    admin = mapper.read(admin.getMemberID());
+                    return toDTO(admin);
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public MemberDTO readOne(String adminID) {
         return toDTO(mapper.selectOne(adminID));
     }
