@@ -37,7 +37,7 @@ public class AnimalServiceImpl implements AnimalService{
             imageList.forEach(i->{
 
                 String fileName = i.getFileName();
-                Integer dotIndex = fileName.lastIndexOf(".");
+                Integer dotIndex = fileName.lastIndexOf(".") + 1;
 
                 if(dotIndex == fileName.length() - 4){
                     i.setType(fileName.substring(dotIndex));

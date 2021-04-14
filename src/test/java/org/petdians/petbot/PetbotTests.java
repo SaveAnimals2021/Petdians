@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.petdians.animal.config.AnimalConfig;
 import org.petdians.common.config.CommonConfig;
 import org.petdians.petbot.config.PetbotConfig;
+import org.petdians.petbot.dto.PetbotDTO;
 import org.petdians.petbot.service.PetbotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -36,7 +37,10 @@ public class PetbotTests {
 
             list.forEach(e->{
                 log.info(e);
+
             });
+
+            log.info(list.size());
 
         } catch(Exception e) {
             e.printStackTrace();
@@ -47,27 +51,61 @@ public class PetbotTests {
     public void testTrainingPhraseList() throws Exception{
         try {
             List<Intent> list = service.listIntents();
+            List<PetbotDTO> dtoList = new ArrayList<>();
 
             int length = list.size();
+            List<String> resultList = new ArrayList<>();
 
             for(int i =0; i<length; ++i){
                 Intent intent = list.get(i);
                 List<Intent.TrainingPhrase> tList = intent.getTrainingPhrasesList();
 
-
                 for(int j = 0; j < tList.size(); ++j){
-
-                    log.info("===== TraningPhrase 출력 =====");
-                    log.info(tList.get(j));
-
                     List<Intent.TrainingPhrase.Part> pList = tList.get(j).getPartsList();
+                    String result ="";
 
                     for(int k = 0; k < pList.size(); ++k){
-                        log.info("===== TraningPhrase Text 출력 =====");
-                        log.info(pList.get(k).getText());
+                        result += pList.get(k).getText();
                     }
+
+                    resultList.add(result);
+
+                }
+
+                PetbotDTO dto = new PetbotDTO();
+
+                dto.setPhrasesList(resultList);
+                dto.setName(intent.getDisplayName());
+                dto.setPhrasesCount(intent.getTrainingPhrasesCount());
+                dtoList.add(dto);
+            }
+
+            log.info(dtoList);
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testMessageList() throws Exception{
+        try {
+            List<Intent> list = service.listIntents();
+
+            int length = list.size();
+
+            for(int i =0; i<length; ++i){
+                Intent intent = list.get(i);
+                List<Intent.Message> messages = intent.getMessagesList();
+
+                for(int j = 0; j < messages.size(); ++j){
+                    Intent.Message.Text text = messages.get(j).getText();
+                    String temp = text.getTextList().toString();
+                    log.info(temp);
                 }
             }
+
+
         } catch(Exception e) {
             e.printStackTrace();
         }

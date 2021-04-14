@@ -5,6 +5,7 @@ import com.google.api.client.util.Maps;
 import com.google.api.gax.rpc.ApiException;
 import com.google.cloud.dialogflow.v2beta1.*;
 import lombok.extern.log4j.Log4j;
+import org.petdians.petbot.dto.PetbotDTO;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -47,27 +48,27 @@ public class PetbotServiceImpl implements PetbotService {
 
             // Detect intents for each text input
 
-                // Set the text (hello) and language code (en-US) for the query
-                TextInput.Builder textInput =
-                        TextInput.newBuilder().setText(text).setLanguageCode(lanCode);
+            // Set the text (hello) and language code (en-US) for the query
+            TextInput.Builder textInput =
+                    TextInput.newBuilder().setText(text).setLanguageCode(lanCode);
 
-                // Build the query with the TextInput
-                QueryInput queryInput = QueryInput.newBuilder().setText(textInput).build();
+            // Build the query with the TextInput
+            QueryInput queryInput = QueryInput.newBuilder().setText(textInput).build();
 
-                // Performs the detect intent request
-                DetectIntentResponse response = sessionsClient.detectIntent(session, queryInput);
+            // Performs the detect intent request
+            DetectIntentResponse response = sessionsClient.detectIntent(session, queryInput);
 
-                // Display the query result
-                QueryResult queryResult = response.getQueryResult();
+            // Display the query result
+            QueryResult queryResult = response.getQueryResult();
 
-                System.out.println("====================");
-                System.out.format("Query Text: '%s'\n", queryResult.getQueryText());
-                System.out.format(
-                        "Detected Intent: %s (confidence: %f)\n",
-                        queryResult.getIntent().getDisplayName(), queryResult.getIntentDetectionConfidence());
-                System.out.format("Fulfillment Text: '%s'\n", queryResult.getFulfillmentText());
+            System.out.println("====================");
+            System.out.format("Query Text: '%s'\n", queryResult.getQueryText());
+            System.out.format(
+                    "Detected Intent: %s (confidence: %f)\n",
+                    queryResult.getIntent().getDisplayName(), queryResult.getIntentDetectionConfidence());
+            System.out.format("Fulfillment Text: '%s'\n", queryResult.getFulfillmentText());
 
-                queryResults.put(text, queryResult);
+            queryResults.put(text, queryResult);
 
         }
         return queryResults;
@@ -87,7 +88,7 @@ public class PetbotServiceImpl implements PetbotService {
         try (IntentsClient intentsClient = IntentsClient.create(intentsSettings)) {
             // Set the project agent name using the projectID (my-project-id)
             //  .ofProjectLocationSessionName(projectId, locationId, sessionId);
-            
+
             // Project가 지역이 us가 아닐 때 추가적인 설정 필요
             AgentName parent = AgentName.ofProjectLocationAgentName(projectID, locationId);
             log.info("Agent Name : " + parent);
@@ -119,21 +120,20 @@ public class PetbotServiceImpl implements PetbotService {
 
                 intents.add(intent);
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return intents;
     }
 
 
-
     /**
      * Create an intent of the given intent type
      *
-     * @param displayName The display name of the intent.
-     * @param projectId Project/Agent Id.
+     * @param displayName          The display name of the intent.
+     * @param projectId            Project/Agent Id.
      * @param trainingPhrasesParts Training phrases.
-     * @param messageTexts Message texts for the agent's response when the intent is detected.
+     * @param messageTexts         Message texts for the agent's response when the intent is detected.
      * @return The created Intent.
      */
     public Intent createIntent(
@@ -174,5 +174,73 @@ public class PetbotServiceImpl implements PetbotService {
 
             return response;
         }
+    }
+
+
+
+
+    public Intent createIntentByName(String displayName)
+            throws ApiException, IOException {
+
+
+        IntentsSettings intentsSettings = IntentsSettings.newBuilder()
+                .setEndpoint(endPoint)
+                .build();
+        // Instantiates a client
+        try (IntentsClient intentsClient = IntentsClient.create(intentsSettings)) {
+            // Project가 지역이 us가 아닐 때 추가적인 설정 필요
+            AgentName parent = AgentName.ofProjectLocationAgentName(projectID, locationId);
+
+            // Build the intent
+            Intent intent =
+                    Intent.newBuilder()
+                            .setDisplayName(displayName)
+                            .build();
+
+            // Performs the create intent request
+            Intent response = intentsClient.createIntent(parent, intent);
+            System.out.format("Intent created: %s\n", response);
+
+            return response;
+        }
+    }
+
+    @Override
+    public List<PetbotDTO> getPetbotDTOList() throws Exception {
+
+        List<PetbotDTO> dtoList = new ArrayList<>();
+        List<Intent> list = listIntents();
+
+        int length = list.size();
+        List<String> resultList = new ArrayList<>();
+
+        for (int i = 0; i < length; ++i) {
+            Intent intent = list.get(i);
+            List<Intent.TrainingPhrase> tList = intent.getTrainingPhrasesList();
+
+            for (int j = 0; j < tList.size(); ++j) {
+                List<Intent.TrainingPhrase.Part> pList = tList.get(j).getPartsList();
+                String result = "";
+
+                for (int k = 0; k < pList.size(); ++k) {
+                    result += pList.get(k).getText();
+                }
+
+                resultList.add(result);
+
+            }
+
+            PetbotDTO dto = new PetbotDTO();
+
+            dto.setPhrasesList(resultList);
+            dto.setName(intent.getDisplayName());
+            dto.setPhrasesCount(intent.getTrainingPhrasesCount());
+            dtoList.add(dto);
+        }
+
+        log.info(dtoList);
+
+
+        return dtoList;
     }
 }

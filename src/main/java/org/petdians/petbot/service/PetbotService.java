@@ -3,6 +3,7 @@ package org.petdians.petbot.service;
 import com.google.api.gax.rpc.ApiException;
 import com.google.cloud.dialogflow.v2beta1.Intent;
 import com.google.cloud.dialogflow.v2beta1.QueryResult;
+import org.petdians.petbot.dto.PetbotDTO;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,4 +20,8 @@ public interface PetbotService {
                          String projectId,
                          List<String> trainingPhrasesParts,
                          List<String> messageTexts)   throws ApiException, IOException ;
+
+    List<PetbotDTO> getPetbotDTOList() throws Exception;
+
+    Intent createIntentByName(String displayName) throws ApiException, IOException;
 }
