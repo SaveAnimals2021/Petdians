@@ -456,6 +456,13 @@
 
                     var position = new kakao.maps.LatLng((val[0].y) , val[0].x - 0.00153);
 
+                    //Marker 클릭 이벤트
+                    kakao.maps.event.addListener(marker, 'click', function() {
+
+                        map.setCenter(marker.getPosition());
+                        map.setLevel(3);
+                    });
+
                     // 커스텀 오버레이를 생성합니다
                     var customOverlay = new kakao.maps.CustomOverlay({
                         position: position,
@@ -464,7 +471,7 @@
 
                     // 커스텀 오버레이를 지도에 표시합니다
                     customOverlay.setMap(map);
-                    console.log(finish)
+
                     if(finish ) {
 
                         map.setCenter(coords);
@@ -489,6 +496,8 @@
             var level = map.getLevel();
             console.log('현재 지도 레벨은 ' + level + ' 입니다');
             if(level >= 7) {
+
+                console.log(kakao.maps.CustomOverlay);
 
                 customDiv.forEach(a => {
 
