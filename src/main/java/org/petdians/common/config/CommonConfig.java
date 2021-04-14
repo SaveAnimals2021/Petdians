@@ -30,6 +30,7 @@ import javax.sql.DataSource;
 public class CommonConfig {
 
     @Bean
+    @Primary
     public DataSource dataSource() {
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setDriverClassName("com.mysql.cj.jdbc.Driver");
@@ -55,7 +56,6 @@ public class CommonConfig {
     }
 
     @Bean
-    @Primary
     public DataSource batchEmbeddedDatasource() {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
 

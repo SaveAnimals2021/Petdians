@@ -10,7 +10,8 @@ import org.springframework.web.servlet.view.JstlView;
 
 @EnableWebMvc
 @ComponentScan(basePackages = {"org.petdians.common.controller", "org.petdians.animal.controller"
-        , "org.petdians.member.controller","org.petdians.security.controller","org.petdians.crawling.controller"}
+        , "org.petdians.member.controller","org.petdians.security.controller","org.petdians.crawling.controller"
+        ,"org.petdians.petbot.controller"}
 )
 public class ServletConfig implements WebMvcConfigurer {
 

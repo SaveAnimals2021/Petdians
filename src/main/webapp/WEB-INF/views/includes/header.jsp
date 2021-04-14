@@ -241,8 +241,10 @@
                                     </div>
                                 </div>
                                 <div class="account-dropdown__footer">
-                                    <a href="#">
-                                        <i class="zmdi zmdi-power"></i>Logout</a>
+                                    <form action="/logout" method="post">
+                                    <a href="#" class="logoutBtn"><i class="zmdi zmdi-power"></i>Logout</a>
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -491,3 +493,14 @@
         </div>
     </div>
     <!-- END HEADER MOBILE -->
+    <script>
+        document.querySelector(".logoutBtn").addEventListener("click", function (e) {
+
+            const target = e.target;
+            target.closest("form").submit();
+
+        }, false)
+    </script>
+
+
+

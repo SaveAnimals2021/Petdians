@@ -95,6 +95,10 @@ public class ImageManager {
         String url = dto.getUrl();
         URL urlObj = new URL(url);
 
+        if(10715 == dto.getAnimalNumber()){
+            int a = 0;
+        }
+
         // 1. 폴더 만들기
         // 파일 이름 뽑기
         String fileName = url.substring(url.lastIndexOf("/") + 1);
