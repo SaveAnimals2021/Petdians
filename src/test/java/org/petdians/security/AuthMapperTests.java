@@ -25,15 +25,15 @@ public class AuthMapperTests {
     @Test
     public void testReg(){
         log.info(mapper);
-        for (int i = 0; i<10 ;i++) {
+
 
             AuthVO vo = AuthVO.builder()
-                    .memberID("mw0" + i).authority("ROLE_ADMIN")
+                    .id("mk").authority("ROLE_USER")
                     .build();
 
             mapper.register(vo);
 
-        }
+
 
     }
 }

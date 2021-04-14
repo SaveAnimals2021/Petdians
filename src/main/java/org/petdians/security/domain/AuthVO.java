@@ -6,10 +6,11 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
 @ToString
 public class AuthVO {
 
-    private String memberID;
+    private String id;
     private String authority;
 
 }

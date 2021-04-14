@@ -21,7 +21,7 @@
 
     <resultMap id="authMap" type="org.petdians.security.domain.AuthVO">
 
-        <result property="memberID" column="memberid"/>
+        <result property="id" column="memberid"/>
         <result property="authority" column="authority" />
 
     </resultMap>
@@ -30,7 +30,7 @@
         select mem.memberid, memberpw, membername, memberemail, memberphone,
                regdate, updatedate, authority
         from tbl_member mem LEFT OUTER join tbl_auth auth on mem.memberid = auth.id
-        where mem.memberid = #{memberID}
+        where mem.memberid = #{id}
     </select>
 
     <select id="selectAll" resultType="org.petdians.member.domain.MemberVO">

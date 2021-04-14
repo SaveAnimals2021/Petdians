@@ -34,10 +34,7 @@ public class MemberVOServiceTests {
             service.register(memberDTO);
 
             log.info(memberDTO);
-
         }
-
-
     }
 
     @Test
