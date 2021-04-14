@@ -41,10 +41,10 @@
     <header class="header-desktop3 d-none d-lg-block">
         <div class="section__content section__content--p35">
             <div class="header3-wrap">
-                <div class="header__logo">
+                <div class="header__logo" style="max-width: 22%">
                     <a href="#">
                         <img src="/resources/images/icon/petdians-finish.png" alt="PetdiansAdmin"
-                             style="max-width: 30%; max-height: 20vh;"/>
+                             style="max-width: 60%; max-height: 20vh;"/>
                     </a>
                 </div>
                 <div class="header__navbar">
@@ -56,17 +56,17 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/petdiansAdmin/statistics">
+                            <a href="/petdiansAdmin/member/list">
                                 <i class="fas fa-user"></i>
-                                <span class="bot-line"></span>USER</a>
+                                <span class="bot-line"></span>MEMBER</a>
                         </li>
                         <li>
-                            <a href="/petdiansAdmin/statistics">
+                            <a href="/petdiansAdmin/crawling/statistics">
                                 <i class="fas fa-chart-bar"></i>
                                 <span class="bot-line"></span>STATISTICS</a>
                         </li>
                         <li>
-                            <a href="/petdiansAdmin/crawling">
+                            <a href="/petdiansAdmin/crawling/list">
                                 <i class="fas fa-search"></i>
                                 <span class="bot-line"></span>CRAWLING</a>
                         </li>

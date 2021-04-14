@@ -352,9 +352,8 @@
             };
 
         var map = new kakao.maps.Map(mapContainer, mapOption);
+            map.setMinLevel(3);
 
-        // 주소-좌표 변환 객체를 생성합니다
-        var geocoder = new kakao.maps.services.Geocoder();
         var animalMap = new Map();
 
         var dtoList = (${jsonList});
@@ -456,28 +455,55 @@
 
                     var position = new kakao.maps.LatLng((val[0].y) , val[0].x - 0.00153);
 
-                    //Marker 클릭 이벤트
-                    kakao.maps.event.addListener(marker, 'click', function() {
-
-                        map.setCenter(marker.getPosition());
-                        map.setLevel(3);
-                    });
-
                     // 커스텀 오버레이를 생성합니다
                     var customOverlay = new kakao.maps.CustomOverlay({
                         position: position,
                         content: content
                     });
 
+                    //커스텀 오버레이 클릭 시 Hidden
+                    // kakao.maps.event.addListener(customOverlay, 'click', function (){
+                    //
+                    //     customOverlay.setVisible(false);
+                    //
+                    // }, false);
+
                     // 커스텀 오버레이를 지도에 표시합니다
                     customOverlay.setMap(map);
-
-                    if(finish ) {
+                    //마지막 좌표로 맵 중심 이동
+                    if(finish) {
 
                         map.setCenter(coords);
                         map.setLevel(3);
 
                     }
+
+                    //Marker 클릭 이벤트
+                    kakao.maps.event.addListener(marker, 'click', function() {
+
+                        map.setCenter(marker.getPosition());
+                        //customOverlay.setVisible(true);
+                        map.setLevel(3);
+                    });
+
+                    //지도 레벨에 따른 커스텀 오버레이 hidden
+                    kakao.maps.event.addListener(map, 'zoom_changed', function() {
+
+                        // 지도의 현재 레벨을 얻어옵니다
+                        var level = map.getLevel();
+                        //console.log('현재 지도 레벨은 ' + level + ' 입니다');
+                        if(level >= 7) {
+
+                            //console.log("커스텀 Hidden")
+                            customOverlay.setVisible(false);
+
+                        } else {
+
+                            customOverlay.setVisible(true);
+
+                        }
+
+                    });
 
                     return;
 
@@ -486,38 +512,6 @@
             });
 
         }// 결과 생성 END
-
-        //지도 레벨에 따른 커스텀 오버레이 hidden
-        kakao.maps.event.addListener(map, 'zoom_changed', function() {
-
-            const customDiv = document.querySelectorAll(".card-img-top");
-
-            // 지도의 현재 레벨을 얻어옵니다
-            var level = map.getLevel();
-            console.log('현재 지도 레벨은 ' + level + ' 입니다');
-            if(level >= 7) {
-
-                console.log(kakao.maps.CustomOverlay);
-
-                customDiv.forEach(a => {
-
-                    const card =  a.closest(".card");
-                    card.classList.remove("customOpen"); card.classList.add("customHidden");
-
-                })
-
-            } else {
-
-                customDiv.forEach(a => {
-
-                    const card =  a.closest(".card");
-                    card.classList.remove("customHidden"); card.classList.add("customOpen");
-
-                })
-
-            }
-
-        });
 
         // ============= End Map ==========
 
