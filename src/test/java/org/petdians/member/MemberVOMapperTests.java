@@ -18,7 +18,7 @@ import java.util.List;
 
 @Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={CommonConfig.class, MemberConfig.class, SecurityConfig.class})
+@ContextConfiguration(classes = {CommonConfig.class, MemberConfig.class, SecurityConfig.class})
 public class MemberVOMapperTests {
 
     @Autowired
@@ -30,19 +30,16 @@ public class MemberVOMapperTests {
     @Test
     public void testInsert() {
 
-        for (int i = 0; i < 10; i++) {
 
-            MemberVO memberVO = MemberVO.builder()
-                    .memberID("mw" + i)
-                    .memberPW("mw" + i)
-                    .memberName("mw" + i)
-                    .build();
+        MemberVO memberVO = MemberVO.builder()
+                .memberID("mk")
+                .memberPW("mk")
+                .memberName("Mingyu Sang")
+                .build();
 
-            mapper.insert(memberVO);
+        mapper.insert(memberVO);
 
-            log.info(memberVO);
-
-        }
+        log.info(memberVO);
 
 
     }
@@ -51,9 +48,11 @@ public class MemberVOMapperTests {
     public void testSelectOne() {
 
         String id = "mw";
-        log.info(mapper.selectOne(id));
-        log.info(mapper.read(id));
-
+        MemberVO temp = mapper.selectOne(id);
+        // log.info(mapper.read(id));
+        String pw = pwEncoder.encode("mw");
+        temp.changePW(pw);
+        mapper.update(temp);
     }
 
     @Test
@@ -62,9 +61,9 @@ public class MemberVOMapperTests {
         PageDTO pageDTO = new PageDTO();
         List<MemberVO> list = mapper.selectAll(pageDTO.getSkip(), 100);
 
-        for(int i = 0; i < list.size(); ++i){
+        for (int i = 0; i < list.size(); ++i) {
             MemberVO temp = list.get(i);
-            String pw = pwEncoder.encode( temp.getMemberPW() );
+            String pw = pwEncoder.encode(temp.getMemberPW());
             temp.changePW(pw);
             log.info(pw);
             mapper.update(temp);
@@ -74,7 +73,6 @@ public class MemberVOMapperTests {
 
     @Test
     public void testUpdate() {
-
 
 
         MemberVO memberVO = MemberVO.builder()

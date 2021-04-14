@@ -121,10 +121,10 @@
 
 <script>
 
-    const loginBtn = document.querySelector(".signinButton");
-    loginBtn.addEventListener("click", function(e){
-
-    })
+    // const loginBtn = document.querySelector(".signinButton");
+    // loginBtn.addEventListener("click", function(e){
+    //
+    // })
 
 
 </script>

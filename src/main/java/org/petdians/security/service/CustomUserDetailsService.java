@@ -19,12 +19,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     private MemberMapper memberMapper;
 
     @Override
-    public UserDetails loadUserByUsername(String memberid) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
 
-        log.info("LOAD USER BY Admin : " + memberid);
+        log.info("LOAD USER BY Admin : " + id);
 
         // username == userid
-        MemberVO vo = memberMapper.read(memberid);
+        MemberVO vo = memberMapper.read(id);
 
         log.info("queried by MemberMapper : " + vo);
 

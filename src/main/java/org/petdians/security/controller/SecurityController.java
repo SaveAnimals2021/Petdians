@@ -19,15 +19,19 @@ public class SecurityController {
         log.info("Error : " + error);
         log.info("Logout : " + logout);
 
-        if(null != error){
-
-        }
+//        if(null != error){
+//            model.addAttribute("error", "Login Error... Please check your ID");
+//        }
+//
+//        if(null != logout){
+//            model.addAttribute("logout", "Logout...");
+//        }
     }
 
     @GetMapping("/accessError")
     public void accessDenied(Authentication auth, Model model){
         log.info("access Denied : " + auth);
-        model.addAttribute("msg", "Access Denied");
+        model.addAttribute("message", "Access Denied");
     }
 
 }
