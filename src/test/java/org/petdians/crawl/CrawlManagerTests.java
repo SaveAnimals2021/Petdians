@@ -53,7 +53,6 @@ public class CrawlManagerTests {
         apmsCrawlService = new APMSICrawlManager();
     }
 
-
     @Test
     public void testTotalService(){
         CrawlResultDTO dto = totalService.crawlAll();

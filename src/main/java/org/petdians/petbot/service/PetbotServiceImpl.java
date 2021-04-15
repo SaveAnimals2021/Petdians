@@ -4,6 +4,7 @@ import com.google.api.client.util.Lists;
 import com.google.api.client.util.Maps;
 import com.google.api.gax.rpc.ApiException;
 import com.google.cloud.dialogflow.v2beta1.*;
+import com.google.protobuf.ProtocolStringList;
 import lombok.extern.log4j.Log4j;
 import org.petdians.petbot.dto.PetbotDTO;
 import org.springframework.stereotype.Service;
@@ -61,12 +62,12 @@ public class PetbotServiceImpl implements PetbotService {
             // Display the query result
             QueryResult queryResult = response.getQueryResult();
 
-            System.out.println("====================");
-            System.out.format("Query Text: '%s'\n", queryResult.getQueryText());
-            System.out.format(
-                    "Detected Intent: %s (confidence: %f)\n",
-                    queryResult.getIntent().getDisplayName(), queryResult.getIntentDetectionConfidence());
-            System.out.format("Fulfillment Text: '%s'\n", queryResult.getFulfillmentText());
+//            System.out.println("====================");
+//            System.out.format("Query Text: '%s'\n", queryResult.getQueryText());
+//            System.out.format(
+//                    "Detected Intent: %s (confidence: %f)\n",
+//                    queryResult.getIntent().getDisplayName(), queryResult.getIntentDetectionConfidence());
+//            System.out.format("Fulfillment Text: '%s'\n", queryResult.getFulfillmentText());
 
             queryResults.put(text, queryResult);
 
@@ -102,21 +103,21 @@ public class PetbotServiceImpl implements PetbotService {
             // Performs the list intents request
             for (Intent intent : intentsClient.listIntents(request).iterateAll()) {
                 // 인텐트를 출력
-                System.out.println("====================");
-                System.out.format("Intent name: '%s'\n", intent.getName());
-                System.out.format("Intent display name: '%s'\n", intent.getDisplayName());
-                System.out.format("Action: '%s'\n", intent.getAction());
-                System.out.format("Root followup intent: '%s'\n", intent.getRootFollowupIntentName());
-                System.out.format("Parent followup intent: '%s'\n", intent.getParentFollowupIntentName());
+//                System.out.println("====================");
+//                System.out.format("Intent name: '%s'\n", intent.getName());
+//                System.out.format("Intent display name: '%s'\n", intent.getDisplayName());
+//                System.out.format("Action: '%s'\n", intent.getAction());
+//                System.out.format("Root followup intent: '%s'\n", intent.getRootFollowupIntentName());
+//                System.out.format("Parent followup intent: '%s'\n", intent.getParentFollowupIntentName());
 
-                System.out.format("Input contexts:\n");
-                for (String inputContextName : intent.getInputContextNamesList()) {
-                    System.out.format("\tName: %s\n", inputContextName);
-                }
-                System.out.format("Output contexts:\n");
-                for (Context outputContext : intent.getOutputContextsList()) {
-                    System.out.format("\tName: %s\n", outputContext.getName());
-                }
+//                System.out.format("Input contexts:\n");
+//                for (String inputContextName : intent.getInputContextNamesList()) {
+//                    System.out.format("\tName: %s\n", inputContextName);
+//                }
+//                System.out.format("Output contexts:\n");
+//                for (Context outputContext : intent.getOutputContextsList()) {
+//                    System.out.format("\tName: %s\n", outputContext.getName());
+//                }
 
                 intents.add(intent);
             }
@@ -172,11 +173,10 @@ public class PetbotServiceImpl implements PetbotService {
             Intent response = intentsClient.createIntent(parent, intent);
             System.out.format("Intent created: %s\n", response);
 
+
             return response;
         }
     }
-
-
 
 
     public Intent createIntentByName(String displayName)
@@ -212,15 +212,23 @@ public class PetbotServiceImpl implements PetbotService {
         List<Intent> list = listIntents();
 
         int length = list.size();
-        List<String> resultList = new ArrayList<>();
 
         for (int i = 0; i < length; ++i) {
             Intent intent = list.get(i);
             List<Intent.TrainingPhrase> tList = intent.getTrainingPhrasesList();
+            List<String> resultList = new ArrayList<>();
+            List<String> messageList = new ArrayList<>();
+            List<Intent.Message> intentMessagesList = intent.getMessagesList();
+
+            for (int j = 0; j < intentMessagesList.size(); ++j) {
+                Intent.Message.Text text = intentMessagesList.get(j).getText();
+                text.getTextList().forEach(t -> messageList.add(t));
+            }
 
             for (int j = 0; j < tList.size(); ++j) {
                 List<Intent.TrainingPhrase.Part> pList = tList.get(j).getPartsList();
                 String result = "";
+
 
                 for (int k = 0; k < pList.size(); ++k) {
                     result += pList.get(k).getText();
@@ -234,8 +242,11 @@ public class PetbotServiceImpl implements PetbotService {
 
             dto.setPhrasesList(resultList);
             dto.setName(intent.getDisplayName());
+            dto.setId(intent.getName());
             dto.setPhrasesCount(intent.getTrainingPhrasesCount());
+            dto.setMessageList(messageList);
             dtoList.add(dto);
+
         }
 
         log.info(dtoList);
@@ -243,4 +254,116 @@ public class PetbotServiceImpl implements PetbotService {
 
         return dtoList;
     }
+
+    /**
+     * Delete intent with the given intent type and intent value
+     */
+    public void deleteIntent(String name)
+            throws ApiException, IOException {
+        // Instantiates a client
+        IntentsSettings intentsSettings = IntentsSettings.newBuilder()
+                .setEndpoint(endPoint)
+                .build();
+        // Instantiates a client
+        try (IntentsClient intentsClient = IntentsClient.create(intentsSettings)) {
+
+            // Performs the delete intent request
+            intentsClient.deleteIntent(name);
+        }
+    }
+
+
+    public Intent addPhrase(String phrase, String id) throws Exception {
+        // Instantiates a client
+        IntentsSettings intentsSettings = IntentsSettings.newBuilder()
+                .setEndpoint(endPoint)
+                .build();
+
+        log.info(phrase);
+        log.info(id);
+
+        // Instantiates a client
+        try (IntentsClient intentsClient = IntentsClient.create(intentsSettings)) {
+
+            AgentName parent = AgentName.ofProjectLocationAgentName(projectID, locationId);
+
+            GetIntentRequest intentRequest = GetIntentRequest.newBuilder().setIntentView(INTENT_VIEW_FULL).setName(id).build();
+
+            Intent intent = intentsClient.getIntent(intentRequest);
+
+            //
+            List<Intent.TrainingPhrase> list = intent.getTrainingPhrasesList();
+            List<Intent.TrainingPhrase> newlist = new ArrayList<>();
+            log.info(list);
+
+            list.forEach(t->{
+                newlist.add(t);
+            });
+
+            Intent.TrainingPhrase newPhrase = Intent.TrainingPhrase.newBuilder()
+                    .addParts(  Intent.TrainingPhrase.Part.newBuilder().setText(phrase).build()  )
+                    .build();
+
+            newlist.add(newPhrase);
+
+            Intent result = intentsClient.updateIntent(intent.toBuilder().addAllTrainingPhrases(newlist).build());
+
+            return result;
+        }
+    }
+
+    //Add Response
+    public Intent addResponse(String response, String id) throws Exception {
+        // Instantiates a client
+        IntentsSettings intentsSettings = IntentsSettings.newBuilder()
+                .setEndpoint(endPoint)
+                .build();
+
+//        log.info(response);
+//        log.info(id);
+
+
+        // Instantiates a client
+        try (IntentsClient intentsClient = IntentsClient.create(intentsSettings)) {
+
+            AgentName parent = AgentName.ofProjectLocationAgentName(projectID, locationId);
+
+            GetIntentRequest intentRequest = GetIntentRequest.newBuilder().setIntentView(INTENT_VIEW_FULL).setName(id).build();
+
+            Intent intent = intentsClient.getIntent(intentRequest);
+
+            List<Intent.Message> intentMessagesList = intent.getMessagesList();
+
+            // RESPONSE가 비어 있는 경우
+            if(0 == intentMessagesList.size()){
+                Intent.Message message =
+                        Intent.Message.newBuilder().setText(Intent.Message.Text.newBuilder().addText(response).build()).build();
+                Intent result = intentsClient.updateIntent(intent.toBuilder().addMessages(message).build());
+                return result;
+            }
+
+            List<String> newList = new ArrayList<>();
+
+            for(int i = 0; i < intentMessagesList.size(); ++i){
+
+                ProtocolStringList list = intentMessagesList.get(i).getText().getTextList();
+
+                for(int j = 0; j < list.size(); ++j){
+                    newList.add(list.get(j));
+                }
+            }
+
+            newList.add(response);
+            newList.forEach(s->log.info(s));
+
+            // Build the message texts for the agent's response
+            Intent.Message message =
+                    Intent.Message.newBuilder().setText(Intent.Message.Text.newBuilder().addAllText(newList).build()).build();
+
+            Intent result = intentsClient.updateIntent(intent.toBuilder().setMessages(0, message).build());
+
+            return result;
+        }
+    }
 }
+

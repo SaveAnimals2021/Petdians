@@ -3,6 +3,8 @@ package org.petdians.petbot;
 
 import com.google.cloud.dialogflow.v2beta1.Intent;
 import com.google.cloud.dialogflow.v2beta1.QueryResult;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import lombok.extern.log4j.Log4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -58,6 +60,7 @@ public class PetbotTests {
 
             for(int i =0; i<length; ++i){
                 Intent intent = list.get(i);
+
                 List<Intent.TrainingPhrase> tList = intent.getTrainingPhrasesList();
 
                 for(int j = 0; j < tList.size(); ++j){
@@ -98,13 +101,13 @@ public class PetbotTests {
                 Intent intent = list.get(i);
                 List<Intent.Message> messages = intent.getMessagesList();
 
+                // log.info("message : " + messages);
+
                 for(int j = 0; j < messages.size(); ++j){
                     Intent.Message.Text text = messages.get(j).getText();
-                    String temp = text.getTextList().toString();
-                    log.info(temp);
+                    text.getTextList().forEach(t -> log.info(t));
                 }
             }
-
 
         } catch(Exception e) {
             e.printStackTrace();
@@ -153,4 +156,69 @@ public class PetbotTests {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void testDtoList(){
+        JsonArray jsonlist = new JsonArray();
+
+        try {
+            List<PetbotDTO> list = service.getPetbotDTOList();
+            JsonArray tempJsonlist = new JsonArray();
+
+            list.forEach(intent -> {
+                Gson gson = new Gson();
+                String json = gson.toJson(intent);
+                tempJsonlist.add(json);
+            });
+
+            jsonlist.add(tempJsonlist);
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testDelete(){
+        String id = "projects/focused-elysium-308503/locations/asia-northeast1/agent/intents/9463f29e-e7ea-4104-9264-9ddaafc54d77";
+        String id2 = "test";
+
+        try {
+            service.deleteIntent(id);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testAddPhrase(){
+        String id = "projects/focused-elysium-308503/locations/asia-northeast1/agent/intents/048e24d9-7be4-404d-8e36-35fa5247da3d";
+        String id2 = "projects/focused-elysium-308503/locations/asia-northeast1/agent/intents/d87dd77d-3be3-438b-a209-891d4cda1db1";
+        String phrase = "테스트";
+        String name = "사냥 질문";
+
+        try {
+            service.addPhrase(phrase, id2);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
+    public void testAddResponse() {
+
+        String id = "projects/focused-elysium-308503/locations/asia-northeast1/agent/intents/048e24d9-7be4-404d-8e36-35fa5247da3d";
+        String id2 = "projects/focused-elysium-308503/locations/asia-northeast1/agent/intents/d87dd77d-3be3-438b-a209-891d4cda1db1";
+        String response = "테스트13";
+        String name = "사냥 질문";
+
+        try {
+            service.addResponse(response, id2);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
 }

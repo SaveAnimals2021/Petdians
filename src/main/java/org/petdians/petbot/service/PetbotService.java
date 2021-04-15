@@ -24,4 +24,10 @@ public interface PetbotService {
     List<PetbotDTO> getPetbotDTOList() throws Exception;
 
     Intent createIntentByName(String displayName) throws ApiException, IOException;
+
+    void deleteIntent(String intentId) throws ApiException, IOException;
+
+    Intent addPhrase(String phrase, String id) throws Exception;
+
+    Intent addResponse(String response, String id) throws Exception;
 }
