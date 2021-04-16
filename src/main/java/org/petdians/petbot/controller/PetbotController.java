@@ -148,6 +148,28 @@ public class PetbotController {
         }
     }
 
+    @PostMapping(value = "/removePhrase",  produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> removePhrase(@RequestBody PhraseDTO dto) {
+
+        Map<String, Object> messageMap = new HashMap();
+
+        log.info(dto.getId());
+        log.info(dto.getIndex());
+
+        try {
+            Intent temp = service.removePhrase(dto.getIndex(), dto.getId());
+            messageMap.put("message", "success");
+            messageMap.put("intent", temp.getTrainingPhrasesList());
+            return new ResponseEntity(messageMap, HttpStatus.OK);
+
+        } catch(Exception e){
+            e.printStackTrace();
+            messageMap.put("message", "fail");
+            return new ResponseEntity(messageMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @RequestMapping(value = "/addResponse",  produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseEntity<Map<String, Object>> addResponse(@RequestBody PhraseDTO dto) {

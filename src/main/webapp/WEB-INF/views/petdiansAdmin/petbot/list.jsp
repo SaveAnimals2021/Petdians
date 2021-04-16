@@ -202,7 +202,7 @@
                             <div class="table-responsive">
                                 <div class="intent phrase"><input name="training-phrase" value="" placeholder="Add Training phrase"
                                                                   style="min-width: 95%; background: gainsboro; padding: 10px;"/>
-                                    <button class="phraseBtn" style="margin-left: 1vh;"><i class="zmdi zmdi-plus" style="color: blue"></i></button></div>
+                                    <button class="pCreateBtn" style="margin-left: 1vh;"><i class="zmdi zmdi-plus" style="color: blue"></i></button></div>
                                 <table class="table table-top-campaign">
                                     <tbody class="phrasesBody">
 
@@ -214,7 +214,7 @@
                             <div class="table-responsive">
                                 <div class="intent response"><input name="response" value="" placeholder="Add response"
                                                                     style="min-width: 95%; background: gainsboro; padding: 10px;"/>
-                                    <button class="responseBtn" style="margin-left: 1vh;"><i class="zmdi zmdi-plus" style="color: blue"></i></button></div>
+                                    <button class="rCreateBtn" style="margin-left: 1vh;"><i class="zmdi zmdi-plus" style="color: blue"></i></button></div>
                                 <table class="table table-top-campaign">
                                     <tbody class="responseBody">
 
@@ -378,20 +378,23 @@
             var phrases = jsonlist['phrasesList'];
 
             var inner = '';
+            var index = 0;
             phrases.forEach(p => {
-                inner = '<tr><td class="phrase"><p class="phrase-text"><i class="fa ng-scope fa-quote-right" ></i>&nbsp;&nbsp;&nbsp;&nbsp;' + p + '</p>' +
-                    '<button class="phraseBtn"><i class="zmdi zmdi-minus" style="margin-left: 5px; color: red"></i></button></td></tr>' + inner;
+                inner = '<tr><td class="phrase"><p class="phrase-text" data-idx="' + index +'"><i class="fa ng-scope fa-quote-right" ></i>&nbsp;&nbsp;&nbsp;&nbsp;' + p + '</p>' +
+                    '<button class="pDeleteBtn"><i class="zmdi zmdi-minus" style="margin-left: 5px; color: red"></i></button></td></tr>' + inner;
+                index++;
             })
             phrasesBody.innerHTML = inner;
 
             inner = '';
+            index = 0;
             var messages = jsonlist['messageList'];
 
             console.log(messages);
-
             messages.forEach(m => {
-                inner = '<tr><td class="response"><p class="response-text"><i class="fa ng-scope fa-quote-right" ></i>&nbsp;&nbsp;&nbsp;&nbsp;' + m + '</p>' +
-                    '<button class="phraseBtn"><i class="zmdi zmdi-minus" style="margin-left: 5px; color: red""></i></button></td></tr>' + inner;
+                inner = '<tr><td class="response"><p class="response-text" data-idx="' + index +'"><i class="fa ng-scope fa-quote-right" ></i>&nbsp;&nbsp;&nbsp;&nbsp;' + m + '</p>' +
+                    '<button class="rDeleteBtn"><i class="zmdi zmdi-minus" style="margin-left: 5px; color: red""></i></button></td></tr>' + inner;
+                index++;
             })
             responseBody.innerHTML = inner;
 
@@ -425,13 +428,16 @@
             })
 
             //Phrase Register
-            document.querySelector(".phraseBtn").addEventListener("click", function (e){
-                console.log("phraseBtn");
+            document.querySelector(".pCreateBtn").addEventListener("click", function (e){
+
+                console.log("pCreateBtn");
                 const target = e.target;
-                const phrase = {id: jsonlist['id'] , phrase : target.closest("div").querySelector("input").value}
-                console.log(phrase);
+                const phraseInput = target.closest("div").querySelector("input");
+                const id = jsonlist['id'];
+                const phrase = {id: id , phrase : phraseInput.value}
                 const url = "/petdiansAdmin/petbot/addPhrase";
                 const result = register(url, phrase);
+                phraseInput.value = "";
 
                 result.then(res => {
                     console.log(res);
@@ -440,7 +446,41 @@
                         console.log(phrase.phrase);
                         const phrasesBody = document.querySelector(".phrasesBody");
                         const innerTemp = phrasesBody.innerHTML
-                        let valuePhrase = '<tr><td><p><i class="fa ng-scope fa-quote-right" ></i>&nbsp;&nbsp;&nbsp;&nbsp;' + phrase.phrase + '</p></td></tr>'
+                        const index = phrasesBody.childElementCount;
+                        let valuePhrase = '<tr><td class="phrase"><p class="phrase-text" data-idx="' + index +'">' +
+                            '<i class="fa ng-scope fa-quote-right" ></i>&nbsp;&nbsp;&nbsp;&nbsp;' + phrase.phrase + '</p>' +
+                            '<button class="phraseBtn"><i class="zmdi zmdi-minus" style="margin-left: 5px; color: red"></i></button></td></tr>';
+                        valuePhrase += innerTemp;
+                        phrasesBody.innerHTML = valuePhrase;
+                    }
+
+                })
+
+            }, false)
+
+            //Phrase Delete
+            document.querySelector(".pDeleteBtn").addEventListener("click", function (e){
+
+                console.log("pDeleteBtn");
+                const target = e.target;
+                const index = target.closest("p").getAttribute("data-idx");
+                const phrase = {id: id , index:index}
+                const url = "/petdiansAdmin/petbot/removePhrase";
+                const result = register(url, phrase);
+
+                result.then(res => {
+                    console.log(res);
+
+                    if( res['message'] == "success") {
+
+                        //중간값을 지울 경우가 있기 때문에 for 문 돌려야한다
+                        console.log(phrase.phrase);
+                        const phrasesBody = document.querySelector(".phrasesBody");
+                        const innerTemp = phrasesBody.innerHTML
+                        const index = phrasesBody.childElementCount;
+                        let valuePhrase = '<tr><td class="phrase"><p class="phrase-text" data-idx="' + index +'">' +
+                            '<i class="fa ng-scope fa-quote-right" ></i>&nbsp;&nbsp;&nbsp;&nbsp;' + phrase.phrase + '</p>' +
+                            '<button class="phraseBtn"><i class="zmdi zmdi-minus" style="margin-left: 5px; color: red"></i></button></td></tr>';
                         valuePhrase += innerTemp;
                         phrasesBody.innerHTML = valuePhrase;
                     }
@@ -450,28 +490,30 @@
             }, false)
 
             // Response Message Register
-            document.querySelector(".responseBtn").addEventListener("click", function (e){
+            document.querySelector(".rCreateBtn").addEventListener("click", function (e){
 
-                console.log("responseBtn");
+                console.log("rCreateBtn");
                 const target = e.target;
-                console.log(target);
-                var id = jsonlist['id'];
-                var resp = target.closest("div").querySelector("input").value;
-                const response = {id: id , response : resp}
-                console.log(response);
+                const responseInput = target.closest("div").querySelector("input");
+                const id = jsonlist['id'];
+                const response = {id: id , response : responseInput.value}
                 const url = "/petdiansAdmin/petbot/addResponse";
                 const result = register(url, response);
+                responseInput.value = "";
 
                 result.then(res => {
                     console.log(res);
 
                     if( res['message'] == "success") {
                         console.log(response.response);
-                        const phrasesBody = document.querySelector(".responseBody");
-                        const innerTemp = phrasesBody.innerHTML
-                        let valuePhrase = '<tr><td><p><i class="fa ng-scope fa-quote-right" ></i>&nbsp;&nbsp;&nbsp;&nbsp;' + response.response + '</p></td></tr>'
-                        valuePhrase += innerTemp;
-                        phrasesBody.innerHTML = valuePhrase;
+                        const responseBody = document.querySelector(".responseBody");
+                        const innerTemp = responseBody.innerHTML
+                        const index = responseBody.childElementCount;
+                        let valueResponse = '<tr><td class="response"><p class="response-text" data-idx="' + index +'">' +
+                            '<i class="fa ng-scope fa-quote-right" ></i>&nbsp;&nbsp;&nbsp;&nbsp;' + response.response + '</p>' +
+                            '<button class="responseBtn"><i class="zmdi zmdi-minus" style="margin-left: 5px; color: red""></i></button></td></tr>';
+                        valueResponse += innerTemp;
+                        responseBody.innerHTML = valueResponse;
                     }
 
                 })

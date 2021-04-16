@@ -291,7 +291,7 @@ public class PetbotServiceImpl implements PetbotService {
 
             Intent intent = intentsClient.getIntent(intentRequest);
 
-            //
+            //Phrase List
             List<Intent.TrainingPhrase> list = intent.getTrainingPhrasesList();
             List<Intent.TrainingPhrase> newlist = new ArrayList<>();
             log.info(list);
@@ -307,6 +307,55 @@ public class PetbotServiceImpl implements PetbotService {
             newlist.add(newPhrase);
 
             Intent result = intentsClient.updateIntent(intent.toBuilder().addAllTrainingPhrases(newlist).build());
+
+            return result;
+        }
+    }
+
+    //Remove Phrase
+    public Intent removePhrase(int index, String id) throws Exception {
+        // Instantiates a client
+        IntentsSettings intentsSettings = IntentsSettings.newBuilder()
+                .setEndpoint(endPoint)
+                .build();
+
+        log.info("index : " + index);
+        log.info(id);
+
+        // Instantiates a client
+        try (IntentsClient intentsClient = IntentsClient.create(intentsSettings)) {
+
+            AgentName parent = AgentName.ofProjectLocationAgentName(projectID, locationId);
+
+            //특정 Intent 가져오기
+            GetIntentRequest intentRequest = GetIntentRequest.newBuilder().setIntentView(INTENT_VIEW_FULL).setName(id).build();
+
+            Intent intent = intentsClient.getIntent(intentRequest);
+
+            //Phrase List
+            List<Intent.TrainingPhrase> list = intent.getTrainingPhrasesList();
+            List<Intent.TrainingPhrase> newlist = new ArrayList<>();
+//            list.forEach(trainingPhrase -> newlist.add(trainingPhrase));
+            list.forEach(trainingPhrase -> {
+
+                if(list.indexOf(trainingPhrase) != index) {
+
+                    newlist.add(trainingPhrase);
+
+                }
+
+            });
+            log.info("Before NewList Size: " + newlist.size());
+            log.info("Remove Target: " + list.get(index));
+            newlist.forEach(trainingPhrase -> log.info(newlist.indexOf(trainingPhrase)));
+//            newlist.remove(index);
+            log.info("After NewList Size: " + newlist.size());
+//            UpdateIntentRequest updateIntentRequest = UpdateIntentRequest.newBuilder().setIntent(intent.toBuilder().addAllTrainingPhrases(newlist)).build();
+//            Intent result = intentsClient.updateIntent(updateIntentRequest);
+//            newlist.forEach(trainingPhrase -> log.info(trainingPhrase));
+//
+            Intent result = intentsClient.updateIntent(intent.toBuilder().addAllTrainingPhrases(newlist).build());
+//            log.info(result);
 
             return result;
         }

@@ -217,6 +217,23 @@ public class PetbotTests {
     }
 
     @Test
+    public void testRemovePhrase(){
+        String id = "projects/focused-elysium-308503/locations/asia-northeast1/agent/intents/048e24d9-7be4-404d-8e36-35fa5247da3d";
+        //사냥 질문
+        String id2 = "projects/focused-elysium-308503/locations/asia-northeast1/agent/intents/d87dd77d-3be3-438b-a209-891d4cda1db1";
+        String phrase = "테스트";
+        String name = "사냥 질문";
+        int index = 12;
+
+        try {
+            service.removePhrase(index, id2);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
     public void testAddResponse() {
 
         String id = "projects/focused-elysium-308503/locations/asia-northeast1/agent/intents/048e24d9-7be4-404d-8e36-35fa5247da3d";
