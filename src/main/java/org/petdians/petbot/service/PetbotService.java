@@ -30,4 +30,6 @@ public interface PetbotService {
     Intent addPhrase(String phrase, String id) throws Exception;
 
     Intent addResponse(String response, String id) throws Exception;
+
+    String queryPetbot(String text)  throws Exception;
 }

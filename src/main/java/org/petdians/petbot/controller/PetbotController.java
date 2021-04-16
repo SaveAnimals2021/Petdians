@@ -30,12 +30,36 @@ public class PetbotController {
 
     private final PetbotService service;
 
+    @GetMapping("/test")
+    public void getPetbotTest(){
+
+    }
+
+    @PostMapping(value = "/test", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Map<String, Object>> postPetbotTest(@RequestBody String text){
+        Map<String, Object> messageMap = new HashMap();
+
+        log.info("RESPONSE : "+ text);
+
+        try{
+            String result = service.queryPetbot(text);
+            messageMap.put("message", "success");
+            messageMap.put("response", result);
+            return new ResponseEntity(messageMap, HttpStatus.OK);
+        } catch(Exception e){
+            e.printStackTrace();
+            messageMap.put("message", "fail");
+            return new ResponseEntity(messageMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+
+    }
+
     @GetMapping("/list")
     public void getPetbotList(PageDTO dto, Model model) {
 
         dto.setPerSheet(5);
         log.info("crawling List...............");
-
 
         JsonArray jsonlist = new JsonArray();
 

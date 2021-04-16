@@ -296,12 +296,12 @@ public class PetbotServiceImpl implements PetbotService {
             List<Intent.TrainingPhrase> newlist = new ArrayList<>();
             log.info(list);
 
-            list.forEach(t->{
+            list.forEach(t -> {
                 newlist.add(t);
             });
 
             Intent.TrainingPhrase newPhrase = Intent.TrainingPhrase.newBuilder()
-                    .addParts(  Intent.TrainingPhrase.Part.newBuilder().setText(phrase).build()  )
+                    .addParts(Intent.TrainingPhrase.Part.newBuilder().setText(phrase).build())
                     .build();
 
             newlist.add(newPhrase);
@@ -335,7 +335,7 @@ public class PetbotServiceImpl implements PetbotService {
             List<Intent.Message> intentMessagesList = intent.getMessagesList();
 
             // RESPONSE가 비어 있는 경우
-            if(0 == intentMessagesList.size()){
+            if (0 == intentMessagesList.size()) {
                 Intent.Message message =
                         Intent.Message.newBuilder().setText(Intent.Message.Text.newBuilder().addText(response).build()).build();
                 Intent result = intentsClient.updateIntent(intent.toBuilder().addMessages(message).build());
@@ -344,17 +344,17 @@ public class PetbotServiceImpl implements PetbotService {
 
             List<String> newList = new ArrayList<>();
 
-            for(int i = 0; i < intentMessagesList.size(); ++i){
+            for (int i = 0; i < intentMessagesList.size(); ++i) {
 
                 ProtocolStringList list = intentMessagesList.get(i).getText().getTextList();
 
-                for(int j = 0; j < list.size(); ++j){
+                for (int j = 0; j < list.size(); ++j) {
                     newList.add(list.get(j));
                 }
             }
 
             newList.add(response);
-            newList.forEach(s->log.info(s));
+            newList.forEach(s -> log.info(s));
 
             // Build the message texts for the agent's response
             Intent.Message message =
@@ -364,6 +364,13 @@ public class PetbotServiceImpl implements PetbotService {
 
             return result;
         }
+    }
+
+    @Override
+    public String queryPetbot(String text) throws Exception {
+        Map<String, QueryResult> map = detectIntentTexts(text);
+        QueryResult result1 = map.get(text);
+        return result1.getFulfillmentText();
     }
 }
 
