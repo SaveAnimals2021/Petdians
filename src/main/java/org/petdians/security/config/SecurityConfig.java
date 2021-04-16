@@ -51,7 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/petdiansAdmin/crawling/*").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/petdiansAdmin/petMap/*").access("hasRole('ROLE_ADMIN')")
-                .antMatchers("/petdiansAdmin/member/*").access("hasRole('ROLE_ADMIN')");
+                .antMatchers("/petdiansAdmin/member/*").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/petdiansAdmin/petbot/*").access("hasRole('ROLE_ADMIN')");
 
         http.exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
 

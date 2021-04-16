@@ -115,6 +115,17 @@ public class PetbotTests {
     }
 
     @Test
+    public void testChat(){
+        try {
+            String result = service.queryPetbot("사냥터 추천");
+            log.info(result);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
     public void testDetect() {
         try {
             log.info("========= Fulfillment Text 1 ========= : " );
