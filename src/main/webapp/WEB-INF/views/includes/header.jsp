@@ -1,3 +1,4 @@
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: m
@@ -233,16 +234,16 @@
                     <div class="account-wrap">
                         <div class="account-item account-item--style2 clearfix js-item-menu">
                             <div class="image">
-                                <img src="../../resources/images/icon/avatar-01.jpg" alt="John Doe" />
+                                <img src="../../resources/images/profile.png" alt="John Doe" />
                             </div>
                             <div class="content">
-                                <a class="js-acc-btn" href="#">john doe</a>
+                                <a class="js-acc-btn" href="#"><sec:authentication property="principal.member.memberName"/></a>
                             </div>
                             <div class="account-dropdown js-dropdown">
                                 <div class="info clearfix">
                                     <div class="image">
                                         <a href="#">
-                                            <img src="../../resources/images/icon/avatar-01.jpg" alt="John Doe" />
+                                            <img src="../../resources/images/profile.png" alt="John Doe" />
                                         </a>
                                     </div>
                                     <div class="content">
@@ -476,16 +477,16 @@
             <div class="account-wrap">
                 <div class="account-item account-item--style2 clearfix js-item-menu">
                     <div class="image">
-                        <img src="../../resources/images/icon/avatar-01.jpg" alt="John Doe" />
+                        <img src="../../resources/images/profile.png" alt="John Doe" />
                     </div>
                     <div class="content">
-                        <a class="js-acc-btn" href="#">john doe</a>
+                        <a class="js-acc-btn" href="#"><sec:authentication property="principal.member.memberName"/></a>
                     </div>
                     <div class="account-dropdown js-dropdown">
                         <div class="info clearfix">
                             <div class="image">
                                 <a href="#">
-                                    <img src="../../resources/images/icon/avatar-01.jpg" alt="John Doe" />
+                                    <img src="../../resources/images/profile.png" alt="John Doe" />
                                 </a>
                             </div>
                             <div class="content">
