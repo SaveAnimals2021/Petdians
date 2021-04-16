@@ -339,7 +339,7 @@
                 })
                 .catch(res=>{
                     console.log("=============== CATCH ==================");
-                    console.log(res);
+                    console.dir(res);
                     return res;
                 })
 
@@ -436,7 +436,10 @@
                 e.preventDefault();
                 console.log("responseBtn");
                 const target = e.target;
-                const response = {id: jsonlist['id'] , response : target.closest("div").querySelector("input").value, phrase : ''}
+                console.log(target);
+                var id = jsonlist['id'];
+                var resp = target.closest("div").querySelector("input").value;
+                const response = {id: id , response : resp}
                 console.log(response);
                 const url = "/petdiansAdmin/petbot/addResponse";
                 const result = register(url, response);
@@ -489,29 +492,7 @@
 
 
 
-        //Response Register
-        document.querySelector(".responseBtn").addEventListener("click", function (e){
 
-            const target = e.target;
-            const response = target.closest("div").querySelector("input").value;
-            const url = "/petdiansAdmin/petbot/addResponse";
-            const result = register(url, response);
-
-            result.then(res => {
-
-                if(res == "success") {
-
-                    const responseBody = document.querySelector(".responseBody");
-                    const innerTemp = responseBody.innerHTM
-                    let valueResponse = '<tr><td><p><i class="fa ng-scope fa-quote-right" ></i>&nbsp;&nbsp;&nbsp;&nbsp;' + response + '</p></td></tr>'
-                    valueResponse += innerTemp;
-                    responseBody.innerHTM = valueResponse;
-
-                }
-
-            })
-
-        }, false)
 
     </script>
 
