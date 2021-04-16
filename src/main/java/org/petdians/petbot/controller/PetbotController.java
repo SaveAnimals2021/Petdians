@@ -39,11 +39,13 @@ public class PetbotController {
     public ResponseEntity<Map<String, Object>> postPetbotTest(@RequestBody String text){
         Map<String, Object> messageMap = new HashMap();
 
-        log.info("RESPONSE : "+ text);
+        log.info("REQUEST : "+ text);
 
         try{
             String result = service.queryPetbot(text);
+
             messageMap.put("message", "success");
+            log.info("RESULT : "+ result);
             messageMap.put("response", result);
             return new ResponseEntity(messageMap, HttpStatus.OK);
         } catch(Exception e){

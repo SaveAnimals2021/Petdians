@@ -14598,6 +14598,11 @@ section {
     background: rgba(49, 89, 253, 0.9);
 }
 
+.bg-overlay--purple {
+
+    background: rgba(250, 246, 254, 0.9);
+}
+
 .bg-c1 {
     background: #00ad5f;
 }

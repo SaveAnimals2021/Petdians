@@ -154,7 +154,7 @@ public class AngelCrawlManager extends CrawlManager {
 
             MissingAnimalDTO info = MissingAnimalDTO.builder().age(age).type(type).species(species)
                     .sex(sex).missingDate(missingDate).missingLocation(missingLocation).guardianName(guardianName)
-                    .name(name).imageType("jpg").serviceName(serviceName).originURL(baseUrl).special(special)
+                    .name(name).serviceName(serviceName).originURL(baseUrl).special(special)
                     .imageUrlList(imageList).situation(situation).rescueStatus(status).regDate(regDate).rescueLocation(rescueLocation)
                     .rescueDate(rescueDate)
                     .build();
