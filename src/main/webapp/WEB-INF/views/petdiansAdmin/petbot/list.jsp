@@ -14,6 +14,22 @@
 
 <style>
 
+    .phrase, .response{
+
+        display: flex;
+        flex-direction: row;
+
+    }
+
+    .phrase-text, .response-text{
+
+        min-width: 97%;
+        max-width: 97%;
+
+    }
+
+
+
     .top-campaign{
 
         margin: 5px;
@@ -52,6 +68,7 @@
     }
 
     .au-chat__content {
+        padding-top: 0;
         height: 700px;
         display: flex;
         flex-direction: row;
@@ -63,15 +80,15 @@
     }
 
     .statistic-chart-1, .top-campaign, .chart-percent-2 {
-        padding-top: 0px;
+        padding-top: 3vh;
     }
 </style>
 
 <!-- MAIN CONTENT-->
 <div class="petbotCenter">
     <div class="col-lg-6">
-        <div class="au-card au-card--no-shadow au-card--no-pad m-b-40">
-            <div class="au-card-title" style="background-image:url('images/bg-title-02.jpg');">
+        <div class="au-card au-card--no-shadow au-card--no-pad m-b-40" style="margin-top: 3vh;">
+            <div class="au-card-title">
                 <div class="bg-overlay bg-overlay--blue"></div>
                 <h3 class="backToList">
                     <i class="zmdi zmdi-comment-text"></i>Dialogflow Intent List</h3>
@@ -177,15 +194,15 @@
                 <div class="au-chat">
                     <div class="au-chat__title">
                         <div class="au-chat-info">
-                            <span class="nick">Intent Name</span>
+                            <span class="nick" style="font-weight: bolder">Intent Name</span>
                         </div>
                     </div>
                     <div class="au-chat__content">
                         <div class="top-campaign">
                             <div class="table-responsive">
                                 <div class="intent phrase"><input name="training-phrase" value="" placeholder="Add Training phrase"
-                                                                  style="min-width: 96%; background: gainsboro; padding: 10px;"/>
-                                    <button class="phraseBtn"><i class="zmdi zmdi-plus" style="margin-left: 5px;"></i></button></div>
+                                                                  style="min-width: 95%; background: gainsboro; padding: 10px;"/>
+                                    <button class="phraseBtn" style="margin-left: 1vh;"><i class="zmdi zmdi-plus" style="color: blue"></i></button></div>
                                 <table class="table table-top-campaign">
                                     <tbody class="phrasesBody">
 
@@ -196,8 +213,8 @@
                         <div class="top-campaign">
                             <div class="table-responsive">
                                 <div class="intent response"><input name="response" value="" placeholder="Add response"
-                                                                    style="min-width: 96%; background: gainsboro; padding: 10px;"/>
-                                    <button class="responseBtn"><i class="zmdi zmdi-plus" style="margin-left: 5px;"></i></button></div>
+                                                                    style="min-width: 95%; background: gainsboro; padding: 10px;"/>
+                                    <button class="responseBtn" style="margin-left: 1vh;"><i class="zmdi zmdi-plus" style="color: blue"></i></button></div>
                                 <table class="table table-top-campaign">
                                     <tbody class="responseBody">
 
@@ -362,7 +379,8 @@
 
             var inner = '';
             phrases.forEach(p => {
-                inner += '<tr><td><p><i class="fa ng-scope fa-quote-right" ></i>&nbsp;&nbsp;&nbsp;&nbsp;' + p + '</p></td></tr>'
+                inner = '<tr><td class="phrase"><p class="phrase-text"><i class="fa ng-scope fa-quote-right" ></i>&nbsp;&nbsp;&nbsp;&nbsp;' + p + '</p>' +
+                    '<button class="phraseBtn"><i class="zmdi zmdi-minus" style="margin-left: 5px; color: red"></i></button></td></tr>' + inner;
             })
             phrasesBody.innerHTML = inner;
 
@@ -372,7 +390,8 @@
             console.log(messages);
 
             messages.forEach(m => {
-                inner += '<tr><td><p><i class="fa ng-scope fa-quote-right" ></i>&nbsp;&nbsp;&nbsp;&nbsp;' + m + '</p></td></tr>'
+                inner = '<tr><td class="response"><p class="response-text"><i class="fa ng-scope fa-quote-right" ></i>&nbsp;&nbsp;&nbsp;&nbsp;' + m + '</p>' +
+                    '<button class="phraseBtn"><i class="zmdi zmdi-minus" style="margin-left: 5px; color: red""></i></button></td></tr>' + inner;
             })
             responseBody.innerHTML = inner;
 
@@ -432,8 +451,7 @@
 
             // Response Message Register
             document.querySelector(".responseBtn").addEventListener("click", function (e){
-                e.stopPropagation();
-                e.preventDefault();
+
                 console.log("responseBtn");
                 const target = e.target;
                 console.log(target);

@@ -55,20 +55,46 @@
                                 <span class="bot-line"></span>
                             </a>
                         </li>
-                        <li>
-                            <a href="/petdiansAdmin/member/list">
+                        <li class="has-sub">
+                            <a href="#">
                                 <i class="fas fa-user"></i>
                                 <span class="bot-line"></span>MEMBER</a>
+                                <ul class="header3-sub-list list-unstyled">
+                                    <li>
+                                        <a href="/petdiansAdmin/member/list">Intent List</a>
+                                    </li>
+                                </ul>
                         </li>
-                        <li>
-                            <a href="/petdiansAdmin/crawling/statistics">
-                                <i class="fas fa-chart-bar"></i>
-                                <span class="bot-line"></span>STATISTICS</a>
-                        </li>
-                        <li>
-                            <a href="/petdiansAdmin/crawling/list">
+<%--                        <li>--%>
+<%--                            <a href="/petdiansAdmin/crawling/statistics">--%>
+<%--                                <i class="fas fa-chart-bar"></i>--%>
+<%--                                <span class="bot-line"></span>STATISTICS</a>--%>
+<%--                        </li>--%>
+                        <li class="has-sub">
+                            <a href="#">
                                 <i class="fas fa-search"></i>
                                 <span class="bot-line"></span>CRAWLING</a>
+                            <ul class="header3-sub-list list-unstyled">
+                                <li>
+                                    <a href="/petdiansAdmin/crawling/statistics">Statistics</a>
+                                </li>
+                                <li>
+                                    <a href="/petdiansAdmin/crawling/list">List</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="has-sub">
+                            <a href="#">
+                                <i class="fas fa-comment-dots"></i>
+                                <span class="bot-line"></span>PET BOT</a>
+                            <ul class="header3-sub-list list-unstyled">
+                                <li>
+                                    <a href="/petdiansAdmin/petbot/list">Intent List</a>
+                                </li>
+                                <li>
+                                    <a href="#">Chatting Test</a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="has-sub">
                             <a href="#">
