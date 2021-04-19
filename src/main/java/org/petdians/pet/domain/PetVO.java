@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 @Builder
@@ -23,5 +24,7 @@ public class PetVO {
     Boolean isNeutralized;
     Integer age;
     String type;
+
+    String fullPath;
 
 }

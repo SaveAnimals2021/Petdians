@@ -3,8 +3,45 @@
         PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-
 <mapper namespace="org.petdians.pet.mapper.PetMapper">
+
+    <resultMap type="org.petdians.pet.domain.PetVO" id="petMap">
+        <id property="pno" column="pno"/>
+        <result property="pno" column="pno"/>
+        <result property="userid" column="userid"/>
+        <result property="petname" column="petname"/>
+        <result property="species" column="species"/>
+        <result property="sex" column="sex"/>
+        <result property="isNeutralized" column="isNeutralized"/>
+        <result property="age" column="age"/>
+        <result property="type" column="type"/>
+        <result property="regDate" column="regDate"/>
+        <result property="updateDate" column="updateDate"/>
+        <collection property="fullPath" resultMap="imageMap">
+        </collection>
+    </resultMap>
+
+    <resultMap type="org.petdians.pet.domain.PetImageVO" id="imageMap">
+        <id property="pino" column="pino"/>
+        <result property="pino" column="pino"/>
+        <result property="pno" column="pno"/>
+        <result property="uuid" column="uuid"/>
+        <result property="uploadPath" column="uploadPath"/>
+        <result property="fileName" column="fileName"/>
+        <result property="type" column="type"/>
+        <result property="regDate" column="regDate"/>
+        <result property="updateDate" column="updateDate"/>
+    </resultMap>
+
+    <select id="selectOne" resultType="org.petdians.pet.domain.PetVO">
+        SELECT
+            pet.pno, userid, petname, species, sex,
+               isNeutralized, age, pet.type, pet.regdate, pet.updatedate,
+               fullPath
+        FROM
+            tbl_pet pet LEFT OUTER JOIN tbl_petimage image on pet.pno = image.pno
+        WHERE pet.pno = #{pno}
+    </select>
 
     <!-- Search Where -->
     <!-- 성별, 타입, 종, 나이 -->
@@ -43,33 +80,6 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
     </insert>
-
-    <!-- MODIFY -->
-    <update id="modify">
-      <![CDATA[
-        update tbl_pet set updatedate = now(), isNeutralized = #{isNeutralized}, petname=#{petname},
-                           age=#{age}
-        where pno = #{pno}
-        ]]>
-   </update>
-
-    <!-- List -->
-    <select id="getPagedList" resultType="org.petdians.animal.domain.MissingAnimalVO">
-        select * from tbl_pet
-        <include refid="search"></include>
-        order by pno desc limit #{skip},#{perSheet}
-    </select>
-
-
-    <!-- ToTal -->
-    <select id="getTotalCount" resultType="Integer">
-        select count(pno) from tbl_pet
-        <include refid="search"></include>
-
-    </select>
-
-
-
 
 
 </mapper>

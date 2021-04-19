@@ -108,14 +108,14 @@
 </nav>
 
 <!-- ACTION FORM -->
-<form class="actionForm" action="/petdiansAdmin/user/list" method="get">
+<form class="actionForm" action="/petdiansAdmin/member/list" method="get">
     <input type="hidden" name="page" value="${pageDTO.page}">
     <input type="hidden" name="perSheet" value="${pageDTO.perSheet}">
     <input type="hidden" name="type" value="${pageDTO.type}">
     <input type="hidden" name="keyword" value="${pageDTO.keyword}">
 </form>
 
-
+<button class="testBtn">Test</button>
 <script>
 
     //======================
@@ -142,9 +142,6 @@
 
     var eles = document.querySelectorAll(".role");
 
-
-
-
     //======================
     // 페이지
     //======================
@@ -165,37 +162,37 @@
 
     }, false);
 
-    document.querySelector("select[name='day']").addEventListener("change", function (e) {
+    // document.querySelector("select[name='day']").addEventListener("change", function (e) {
+    //
+    //     const actionForm = document.querySelector(".actionForm");
+    //     const day = document.querySelector("select[name='day']");
+    //     actionForm.querySelector("input[name='day']").value = day[day.selectedIndex].value;
+    //     actionForm.submit();
+    //
+    // }, false)
 
-        const actionForm = document.querySelector(".actionForm");
-        const day = document.querySelector("select[name='day']");
-        actionForm.querySelector("input[name='day']").value = day[day.selectedIndex].value;
-        actionForm.submit();
-
-    }, false)
-
-    document.querySelector(".applyButton").addEventListener("click", function (e) {
-
-        e.preventDefault();
-        e.stopPropagation();
-
-        const actionForm = document.querySelector(".actionForm");
-        //type
-        const type = document.querySelector("select[name='property']");
-        actionForm.querySelector("input[name='type']").value = type[type.selectedIndex].value;
-
-        //keyword
-        const keyword = document.querySelector(".table-data__tool-left input[name='skeyword']").value;
-        actionForm.querySelector("input[name='keyword']").value = keyword;
-
-        console.log(type);
-        console.log(keyword);
-
-        //init page
-        actionForm.querySelector("input[name='page']").value = pageNum = 1;
-        actionForm.submit();
-
-    }, false)
+    // document.querySelector(".applyButton").addEventListener("click", function (e) {
+    //
+    //     e.preventDefault();
+    //     e.stopPropagation();
+    //
+    //     const actionForm = document.querySelector(".actionForm");
+    //     //type
+    //     const type = document.querySelector("select[name='property']");
+    //     actionForm.querySelector("input[name='type']").value = type[type.selectedIndex].value;
+    //
+    //     //keyword
+    //     const keyword = document.querySelector(".table-data__tool-left input[name='skeyword']").value;
+    //     actionForm.querySelector("input[name='keyword']").value = keyword;
+    //
+    //     console.log(type);
+    //     console.log(keyword);
+    //
+    //     //init page
+    //     actionForm.querySelector("input[name='page']").value = pageNum = 1;
+    //     actionForm.submit();
+    //
+    // }, false)
 
     //day
     function change() {
@@ -206,6 +203,27 @@
         actionForm.querySelector("input[name='page']").value = pageNum = 1;
         actionForm.submit();
 
+    }
+
+    document.querySelector(".testBtn").addEventListener("click", function (e) {
+
+        test().then(res => console.log(res));
+
+    }, false)
+
+    const csrfToeknValue = "${_csrf.token}";
+
+    function test() {
+        return fetch("http://localhost:8080/petdiansAdmin/pet/read?pno=2",{
+
+            method:"get",
+            headers : {'X-CSRF-TOKEN':csrfToeknValue}
+
+        }).then(res => {
+
+            return res.json();
+
+        });
     }
 
 </script>

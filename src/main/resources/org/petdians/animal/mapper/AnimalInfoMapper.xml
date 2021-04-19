@@ -70,7 +70,7 @@
 	<!-- MISSING LIST -->
 	<select id="getMissingList" resultType="org.petdians.animal.domain.MissingAnimalVO">
 		select * from tbl_animal
-		where rescueStatus = '0' and
+		where rescueStatus = '0' and isCompleted = '0' and
 		<choose>
 			<when test="day != null">missingDate BETWEEN DATE_ADD(NOW(),INTERVAL -#{day} DAY ) AND NOW()</when>
 			<when test='day == "-1"'>missingDate BETWEEN DATE_ADD(NOW(),INTERVAL -1 MONTH ) AND NOW()</when>

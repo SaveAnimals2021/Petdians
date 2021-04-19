@@ -62,7 +62,7 @@
                                 <span class="bot-line"></span>MEMBER</a>
                                 <ul class="header3-sub-list list-unstyled">
                                     <li>
-                                        <a href="/petdiansAdmin/member/list">Intent List</a>
+                                        <a href="/petdiansAdmin/member/list">Member List</a>
                                     </li>
                                 </ul>
                         </li>

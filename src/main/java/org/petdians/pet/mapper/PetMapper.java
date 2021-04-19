@@ -21,4 +21,6 @@ public interface PetMapper {
 
     Integer getTotalCount();
 
+    PetVO selectOne(Integer pno);
+
 }

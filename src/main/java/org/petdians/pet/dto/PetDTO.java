@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 import org.petdians.animal.dto.ImageDTO;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Data
@@ -29,7 +27,6 @@ public class PetDTO {
     Integer age;
     String type;
 
-    @Builder.Default
-    private List<ImageDTO> imageList = new ArrayList<>();
+    String fullPath;
 
 }

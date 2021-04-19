@@ -65,11 +65,11 @@ public class AnimalController {
 
                 d.setImageUrlList(urlList);
 
-
                 // JSON
                 Gson gson = new Gson();
                 String json = gson.toJson(d);
                 jsonArray.add(json);
+
             } catch(Exception e){
                 e.printStackTrace();
             }
@@ -78,9 +78,6 @@ public class AnimalController {
 //        String json = gson.toJson(1);
 //        JsonArray jsonArray = new JsonArray();
 //        jsonArray.add(json);
-
-
-
 
         model.addAttribute("list", list);
         model.addAttribute("jsonList", jsonArray);

@@ -24,10 +24,17 @@ public class PetMapperTests {
     @Test
     public void testRegister(){
         PetVO dto = PetVO.builder()
-                .age(5).sex(0).isNeutralized(true).petname("나르").species("푸들").type("강아지")
-                .userid("TESTUSER")
+                .age(5).sex(0).isNeutralized(true).petname("나르").species("비글").type("강아지")
+                .userid("mw")
                 .build();
 
         mapper.register(dto);
+    }
+
+    @Test
+    public void testSelectOne() {
+
+        log.info(mapper.selectOne(2));
+
     }
 }
