@@ -108,7 +108,7 @@
 </nav>
 
 <!-- ACTION FORM -->
-<form class="actionForm" action="/petdiansAdmin/user/list" method="get">
+<form class="actionForm" action="/petdiansAdmin/member/list" method="get">
     <input type="hidden" name="page" value="${pageDTO.page}">
     <input type="hidden" name="perSheet" value="${pageDTO.perSheet}">
     <input type="hidden" name="type" value="${pageDTO.type}">
@@ -134,6 +134,14 @@
         console.log(auth);
 
         eles[i].innerHTML = auth;
+
+        if(auth == "ADMIN"){
+            eles[i].setAttribute("class", "role admin");
+        } else{
+            eles[i].setAttribute("class", "role user");
+        }
+
+
     }
 
 
