@@ -15,10 +15,10 @@
 
 <style>
 
-    .au-chat-textfield{
-        padding:2em;
-        padding-top:1em;
-        padding-bottom:1em;
+    .au-chat-textfield {
+        padding: 2em;
+        padding-top: 1em;
+        padding-bottom: 1em;
     }
 
     .table-data {
@@ -34,7 +34,7 @@
         -ms-flex: 0 0 70%;
         flex: 0 0 80%;
         max-width: 70%;
-        padding-top:2em;
+        padding-top: 2em;
     }
 
     .petbotCenter {
@@ -71,28 +71,60 @@
     }
 
     .send-mess-wrap {
-        margin-top : 0px;
+        margin-top: 0px;
         width: 100%;
     }
+
     .recei-mess-list {
         /* width: -webkit-calc(100% - 42px); */
         width: -moz-calc(100%);
         width: calc(100%);
     }
+
     .leftMessage {
         display: flex;
         justify-content: left;
+        position:relative;
     }
 
     .rightMessage {
         display: flex;
         justify-content: right;
+        position:relative;
     }
 
     .bg-overlay--purple {
 
         background: rgba(125, 102, 239, 0.9);
     }
+
+    .petbotAvatar{
+        margin-left:0.5em;
+    }
+
+    .userAvatar{
+        margin-right:0.5em;
+    }
+    .chatTime{
+        position:absolute;
+
+        bottom:0px;
+        left:-6.5em;
+
+    }
+    .userChatTime{
+
+        position:absolute;
+        margin-right:0.3em;
+        bottom:0px;
+    }
+    .avatar::after{
+        background-color: #63C76A;
+    }
+    .inChatButton{
+        margin-top:0.5em;
+    }
+
 </style>
 
 <!-- MAIN CONTENT-->
@@ -110,31 +142,23 @@
                     <div class="au-message__noti">
                         <p>You Have
                             <span>2</span>
-
                             new messages
                         </p>
                     </div>
                 </div>
 
                 <div class="au-chat">
-                    <div class="au-chat__title">
 
+                    <div class="au-chat__title">
                     </div>
+
                     <div class="au-chat__content">
                         <div class="send-mess-wrap petbotColumn">
-<%--                            <span class="mess-time">30 Sec ago</span>--%>
-
                             <div class="send-mess__inner ">
-                                <div class="send-mess-list rightMessage">
-                                    <div class="send-mess">안녕하세요? 펫봇입니다. 무엇을 도와드릴까요?
-                                    </div>
-                                </div>
                             </div>
-
-
-
                         </div>
                     </div>
+
                     <div class="au-chat-textfield" style="background-color: #7D66EF">
                         <form class="au-form-icon chatForm">
                             <input class="au-input au-input--full au-input--h65 chatInput" type="text"
@@ -158,6 +182,23 @@
     var chatList = document.querySelector(".send-mess-wrap");
     var chatContent = document.querySelector(".au-chat__content");
 
+    function getDateFormat(date){
+        var year = date.getFullYear() + '';
+        year = year.substring(2,4);
+        var month = date.getMonth() + 1;
+        month = month >= 10 ? month : '0' + month
+        var day = date.getDate();
+        day = day >= 10 ? day : '0' + day
+        var hour = date.getHours();
+        var minutes = date.getMinutes();
+        minutes = minutes >= 10 ? minutes : '0' + minutes
+
+        var result = year + '/' + month + '/' + day + '   ' + hour + ':' + minutes;
+        return result;
+    }
+
+
+
     function getPetbotMessage(text) {
         return fetch("/petdiansAdmin/petbot/test", {
             method: 'post',
@@ -180,18 +221,70 @@
     }
 
     function addChat(text) {
-        chatList.innerHTML += '  <div class="send-mess__inner "><div class="recei-mess-list leftMessage">' +
-            '<div class="recei-mess">' +
-            text +
-            '</div></div></div>';
+        console.log("ADD CHAT");
+
+        text = text.replaceAll("\n", "</br>")
+
+        chatList.innerHTML +=
+            '<div class="send-mess__inner "><div class="recei-mess-list leftMessage">' +
+            '<div class="avatar--small userAvatar"><img src="../../resources/images/petbot.jpg" alt="John Smith"></div>' +
+            '<div class="recei-mess">' + text +
+            '</div>' +'<span class="mess-time userChatTime">'+ getDateFormat(new Date())+'</span>' + '</div>'+
+            '</div>';
 
         chatContent.scrollTop = chatContent.scrollHeight;
+
+        var messes = document.querySelectorAll(".recei-mess");
+
+        console.log(messes);
+        var length = messes.length;
+        var mess = messes[length-1];
+        var width= mess.offsetWidth;
+        mess.nextSibling.style.left = width + 60 + 'px';
+        console.log(mess.nextSibling.style.left)
     }
+
+    //https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-14-1589363766.jpg
+    function addPhoto(text){
+        console.log("ADD CHAT");
+
+        text = text.replaceAll("\n", "</br>")
+
+        chatList.innerHTML +=
+            '<div class="send-mess__inner "><div class="recei-mess-list leftMessage">' +
+            '<div class="avatar--small userAvatar"><img src="../../resources/images/petbot.jpg" alt="John Smith"></div>' +
+            '<div class="recei-mess">' + '<img src="https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-14-1589363766.jpg">' +
+            text +
+            '</div>' +'<span class="mess-time userChatTime">'+ getDateFormat(new Date())+'</span>' + '</div>'+
+            '</div>';
+
+        chatContent.scrollTop = chatContent.scrollHeight;
+
+        var messes = document.querySelectorAll(".recei-mess");
+
+        console.log(messes);
+        var length = messes.length;
+        var mess = messes[length-1];
+        var width= mess.offsetWidth;
+        mess.nextSibling.style.left =450 + 'px';
+        console.log(mess.nextSibling.style.left)
+    }
+
+
+
+
+    addChat("안녕하세요? 펫봇입니다. 무엇을 도와드릴까요? <button class='au-btn inChatButton' style='background-color: #7D66EF'>1. 내 반려동물 정보</button>" +
+        "<button class='au-btn inChatButton' style='background-color: #7D66EF'>2. 일반 반려동물 정보</button>" +
+        "<button class='au-btn inChatButton' style='background-color: #7D66EF'>3. 주변 동물병원 검색</button>");
+
+    addPhoto("내 반려동물 정보");
 
     function addPetbotChat(text) {
         chatList.innerHTML += '  <div class="send-mess__inner "><div class="send-mess-list rightMessage">' +
+            '<span class="mess-time chatTime">'+ getDateFormat(new Date())+'</span>' +
             '<div class="send-mess">' +
             text +
+            '</div><div class="avatar avatar--small petbotAvatar"><img src="../../resources/images/profile.png" alt="John Smith">' +
             '</div></div></div>';
 
         chatContent.scrollTop = chatContent.scrollHeight;
@@ -202,14 +295,14 @@
         console.log("CHAT ENTER");
 
         var userText = chatInput.value;
-        addChat(userText, 'left');
+        addPetbotChat(userText, 'left');
         console.log(userText);
         var result = getPetbotMessage(userText);
 
-        result.then(r=>{
+        result.then(r => {
             var petbotTest = r['response'];
             console.log(petbotTest);
-            addPetbotChat(petbotTest);
+            addChat(petbotTest);
         })
 
         chatInput.value = '';

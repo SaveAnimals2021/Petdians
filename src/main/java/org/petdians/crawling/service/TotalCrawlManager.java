@@ -97,6 +97,7 @@ public class TotalCrawlManager {
             for (int j = 0; j < dbList.size(); ++j) {
                 MissingAnimalDTO ddto = dbList.get(j);
 
+                // 중복 검사...
                 if (cdto.getAnimalCode().equals(ddto.getAnimalCode())) {
                     // 중복인 상황
                     crawlList.remove(i);

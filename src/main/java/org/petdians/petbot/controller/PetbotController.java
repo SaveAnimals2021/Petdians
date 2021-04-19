@@ -44,6 +44,11 @@ public class PetbotController {
         try{
             String result = service.queryPetbot(text);
 
+            if(result.isEmpty()){
+                result = "무슨 말인지 이해하지 못했습니다. 다시 한번 말씀해주세요.";
+            }
+
+
             messageMap.put("message", "success");
             log.info("RESULT : "+ result);
             messageMap.put("response", result);

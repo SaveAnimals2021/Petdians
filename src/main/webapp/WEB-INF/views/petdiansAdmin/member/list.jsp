@@ -134,6 +134,14 @@
         console.log(auth);
 
         eles[i].innerHTML = auth;
+
+        if(auth == "ADMIN"){
+            eles[i].setAttribute("class", "role admin");
+        } else{
+            eles[i].setAttribute("class", "role user");
+        }
+
+
     }
 
 
