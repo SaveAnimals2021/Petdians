@@ -28,9 +28,7 @@ public class PetController {
         PetVO vo = service.readOne(pno);
 
         if (vo.equals(null)) {
-
             return new ResponseEntity(null, HttpStatus.INTERNAL_SERVER_ERROR);
-
         }
 
         return new ResponseEntity(vo, HttpStatus.OK);

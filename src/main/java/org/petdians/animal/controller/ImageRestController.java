@@ -30,10 +30,11 @@ public class ImageRestController {
     @GetMapping(value="/get")
     public ResponseEntity<byte[]> getImage(String file) {
         log.info("REST -> get Image......");
+        log.info(file);
         ResponseEntity<byte[]> res = null;
 
         try {
-            String deStr = URLDecoder.decode(file, "UTF-8").replace("#", ".");
+            String deStr = URLDecoder.decode(file, "UTF-8").replace("#", ".").replace("/", File.separator);
             log.info(deStr);
 
             File targetFile = new File("C:\\upload\\" + deStr);

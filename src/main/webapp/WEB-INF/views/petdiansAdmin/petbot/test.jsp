@@ -84,13 +84,13 @@
     .leftMessage {
         display: flex;
         justify-content: left;
-        position:relative;
+        position: relative;
     }
 
     .rightMessage {
         display: flex;
         justify-content: right;
-        position:relative;
+        position: relative;
     }
 
     .bg-overlay--purple {
@@ -98,31 +98,35 @@
         background: rgba(125, 102, 239, 0.9);
     }
 
-    .petbotAvatar{
-        margin-left:0.5em;
+    .petbotAvatar {
+        margin-left: 0.5em;
     }
 
-    .userAvatar{
-        margin-right:0.5em;
+    .userAvatar {
+        margin-right: 0.5em;
     }
-    .chatTime{
-        position:absolute;
 
-        bottom:0px;
-        left:-6.5em;
+    .chatTime {
+        position: absolute;
+
+        bottom: 0px;
+        left: -6.5em;
 
     }
-    .userChatTime{
 
-        position:absolute;
-        margin-right:0.3em;
-        bottom:0px;
+    .userChatTime {
+
+        position: absolute;
+        margin-right: 0.3em;
+        bottom: 0px;
     }
-    .avatar::after{
+
+    .avatar::after {
         background-color: #63C76A;
     }
-    .inChatButton{
-        margin-top:0.5em;
+
+    .inChatButton {
+        margin-top: 0.5em;
     }
 
 </style>
@@ -182,9 +186,23 @@
     var chatList = document.querySelector(".send-mess-wrap");
     var chatContent = document.querySelector(".au-chat__content");
 
-    function getDateFormat(date){
+    // AJAX
+    function getPetImage() {
+        return fetch("http://localhost:8080/petdiansAdmin/pet/read?pno=2", {
+
+            method: "get",
+            headers: {'X-CSRF-TOKEN': csrfTokenValue}
+
+        }).then(res => {
+
+            return res.json();
+
+        });
+    }
+
+    function getDateFormat(date) {
         var year = date.getFullYear() + '';
-        year = year.substring(2,4);
+        year = year.substring(2, 4);
         var month = date.getMonth() + 1;
         month = month >= 10 ? month : '0' + month
         var day = date.getDate();
@@ -196,7 +214,6 @@
         var result = year + '/' + month + '/' + day + '   ' + hour + ':' + minutes;
         return result;
     }
-
 
 
     function getPetbotMessage(text) {
@@ -229,66 +246,102 @@
             '<div class="send-mess__inner "><div class="recei-mess-list leftMessage">' +
             '<div class="avatar--small userAvatar"><img src="../../resources/images/petbot.jpg" alt="John Smith"></div>' +
             '<div class="recei-mess">' + text +
-            '</div>' +'<span class="mess-time userChatTime">'+ getDateFormat(new Date())+'</span>' + '</div>'+
+            '</div>' + '<span class="mess-time userChatTime">' + getDateFormat(new Date()) + '</span>' + '</div>' +
             '</div>';
 
-        chatContent.scrollTop = chatContent.scrollHeight;
 
         var messes = document.querySelectorAll(".recei-mess");
 
         console.log(messes);
         var length = messes.length;
-        var mess = messes[length-1];
-        var width= mess.offsetWidth;
+        var mess = messes[length - 1];
+        var width = mess.offsetWidth;
         mess.nextSibling.style.left = width + 60 + 'px';
         console.log(mess.nextSibling.style.left)
+
+        chatContent.scrollTop = chatContent.scrollHeight;
+        // console.log("chatContent.scrollTop");
+        // console.log(chatContent.scrollTop);
     }
 
     //https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-14-1589363766.jpg
-    function addPhoto(text){
-        console.log("ADD CHAT");
+    function addPhoto(text, src) {
+        console.log("ADD PHOTO");
 
         text = text.replaceAll("\n", "</br>")
 
+        //var temp = encodeURIComponent(src.substring(10));
+        var temp = src.substring(10).replaceAll("\\", "/")
         chatList.innerHTML +=
             '<div class="send-mess__inner "><div class="recei-mess-list leftMessage">' +
             '<div class="avatar--small userAvatar"><img src="../../resources/images/petbot.jpg" alt="John Smith"></div>' +
-            '<div class="recei-mess">' + '<img src="https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-14-1589363766.jpg">' +
+            '<div class="recei-mess">' + '<img src="/petdiansAdmin/image/get?file=' + temp + '">' +
             text +
-            '</div>' +'<span class="mess-time userChatTime">'+ getDateFormat(new Date())+'</span>' + '</div>'+
-            '</div>';
+            '</div>' + '<span class="mess-time userChatTime">' + getDateFormat(new Date()) + '</span></div></div>';
+        //
+        // chatList.innerHTML +=
+        //     '<div class="send-mess__inner "><div class="recei-mess-list leftMessage">' +
+        //     '<div class="avatar--small userAvatar"><img src="../../resources/images/petbot.jpg" alt="John Smith"></div>' +
+        //     '<div class="recei-mess">' + '<img src="http://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg">' +
+        //     text +
+        //     '</div>' + '<span class="mess-time userChatTime">' + getDateFormat(new Date()) + '</span></div></div>';
 
-        chatContent.scrollTop = chatContent.scrollHeight;
 
         var messes = document.querySelectorAll(".recei-mess");
 
         console.log(messes);
         var length = messes.length;
-        var mess = messes[length-1];
-        var width= mess.offsetWidth;
-        mess.nextSibling.style.left =450 + 'px';
+        var mess = messes[length - 1];
+        var width = mess.offsetWidth;
+        mess.nextSibling.style.left = 450 + 'px';
         console.log(mess.nextSibling.style.left)
+        //
+        chatContent.scrollTop = chatContent.scrollHeight;
+        console.log("chatContent.scrollTop");
+        console.log(chatContent.scrollTop);
+        console.log(chatContent.scrollHeight);
     }
-
-
 
 
     addChat("안녕하세요? 펫봇입니다. 무엇을 도와드릴까요? <button class='au-btn inChatButton' style='background-color: #7D66EF'>1. 내 반려동물 정보</button>" +
         "<button class='au-btn inChatButton' style='background-color: #7D66EF'>2. 일반 반려동물 정보</button>" +
         "<button class='au-btn inChatButton' style='background-color: #7D66EF'>3. 주변 동물병원 검색</button>");
 
-    addPhoto("내 반려동물 정보");
+    // addChat("안녕하세요? 펫봇입니다. 무엇을 도와드릴까요?");
+
+    // addPhoto("내 반려동물 정보");
 
     function addPetbotChat(text) {
         chatList.innerHTML += '  <div class="send-mess__inner "><div class="send-mess-list rightMessage">' +
-            '<span class="mess-time chatTime">'+ getDateFormat(new Date())+'</span>' +
+            '<span class="mess-time chatTime">' + getDateFormat(new Date()) + '</span>' +
             '<div class="send-mess">' +
             text +
             '</div><div class="avatar avatar--small petbotAvatar"><img src="../../resources/images/profile.png" alt="John Smith">' +
             '</div></div></div>';
 
         chatContent.scrollTop = chatContent.scrollHeight;
+        // console.log("chatContent.scrollTop");
+        // console.log(chatContent.scrollTop);
     }
+
+
+    // 1. 내 반려동물 조회
+    document.querySelectorAll(".inChatButton")[0].addEventListener("click", function (e) {
+        e.preventDefault();
+        console.log("===== IN CHAT BUTTON ON =====")
+        getPetImage().then(res => {
+
+                console.log("===== GET IMAGE =====");
+
+                var temp = "이름 : " + res['petname'] + "(나이 : " + res['age'] + ")</br>종류 : " + res['type'] + "(성별 : " + res['sex'] + "</br>종 : " + res['species']
+                var fullPath = res['fullPath'];
+                console.log(fullPath);
+
+               addPhoto(temp, fullPath);
+            }
+        )
+    }, false)
+
 
     document.querySelector(".chatButton").addEventListener("click", function (e) {
         e.preventDefault();
