@@ -93,7 +93,7 @@
                                     <a href="/petdiansAdmin/petbot/list">Intent List</a>
                                 </li>
                                 <li>
-                                    <a href="#">Chatting Test</a>
+                                    <a href="/petdiansAdmin/petbot/test">Chatting Test</a>
                                 </li>
                             </ul>
                         </li>

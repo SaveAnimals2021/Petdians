@@ -41,6 +41,7 @@
         display: flex;
         justify-content: center;
         height: 100%;
+        background-color: #e8e8e8;
     }
 
     .petbotRow {
@@ -132,7 +133,7 @@
 </style>
 
 <!-- MAIN CONTENT-->
-<div class="petbotCenter" style="background-color: #CCCCCC">
+<div class="petbotCenter">
     <div class="col-lg-6" style="max-width: 50%;">
         <div class="au-card au-card--no-shadow au-card--no-pad m-b-40">
             <div class="au-card-title" style="background-image:url('/resources/images/animal.jpg');">
@@ -178,13 +179,16 @@
     </div>
 </div>
 
+<button class="testBtn">Test</button>
 
 <script>
+
     var csrfTokenValue = "${_csrf.token}";
     var chatForm = document.querySelector(".chatForm");
     var chatInput = document.querySelector(".chatInput");
     var chatList = document.querySelector(".send-mess-wrap");
     var chatContent = document.querySelector(".au-chat__content");
+    var petbotColumn = document.querySelector(".send-mess-wrap.petbotColumn");
 
     // AJAX
     function getPetImage() {
@@ -237,17 +241,26 @@
 
     }
 
+    function moveScroll() {
+
+        chatContent.scrollTop = chatContent.scrollHeight;
+        console.log("1: " + chatContent.scrollTop);
+        console.log("1: " + chatContent.scrollHeight);
+
+    }
+
     function addChat(text) {
         console.log("ADD CHAT");
 
         text = text.replaceAll("\n", "</br>")
 
-        chatList.innerHTML +=
-            '<div class="send-mess__inner "><div class="recei-mess-list leftMessage">' +
+        var textTag = '<div class="send-mess__inner "><div class="recei-mess-list leftMessage">' +
             '<div class="avatar--small userAvatar"><img src="../../resources/images/petbot.jpg" alt="John Smith"></div>' +
             '<div class="recei-mess">' + text +
             '</div>' + '<span class="mess-time userChatTime">' + getDateFormat(new Date()) + '</span>' + '</div>' +
             '</div>';
+
+        petbotColumn.insertAdjacentHTML("beforeend", textTag);
 
 
         var messes = document.querySelectorAll(".recei-mess");
@@ -259,9 +272,12 @@
         mess.nextSibling.style.left = width + 60 + 'px';
         console.log(mess.nextSibling.style.left)
 
+
+        console.log("Add Chat Scroll");
         chatContent.scrollTop = chatContent.scrollHeight;
-        // console.log("chatContent.scrollTop");
-        // console.log(chatContent.scrollTop);
+        console.log(chatContent.scrollTop);
+        console.log(chatContent.scrollHeight);
+
     }
 
     //https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/pjimage-14-1589363766.jpg
@@ -272,20 +288,12 @@
 
         //var temp = encodeURIComponent(src.substring(10));
         var temp = src.substring(10).replaceAll("\\", "/")
-        chatList.innerHTML +=
-            '<div class="send-mess__inner "><div class="recei-mess-list leftMessage">' +
+        var imgTag = '<div class="send-mess__inner "><div class="recei-mess-list leftMessage">' +
             '<div class="avatar--small userAvatar"><img src="../../resources/images/petbot.jpg" alt="John Smith"></div>' +
-            '<div class="recei-mess">' + '<img src="/petdiansAdmin/image/get?file=' + temp + '">' +
+            '<div class="recei-mess">' + '<img class="petImg" src="/petdiansAdmin/image/get?file=' + temp + '">' +
             text +
-            '</div>' + '<span class="mess-time userChatTime">' + getDateFormat(new Date()) + '</span></div></div>';
-        //
-        // chatList.innerHTML +=
-        //     '<div class="send-mess__inner "><div class="recei-mess-list leftMessage">' +
-        //     '<div class="avatar--small userAvatar"><img src="../../resources/images/petbot.jpg" alt="John Smith"></div>' +
-        //     '<div class="recei-mess">' + '<img src="http://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg">' +
-        //     text +
-        //     '</div>' + '<span class="mess-time userChatTime">' + getDateFormat(new Date()) + '</span></div></div>';
-
+            '</div>' + '<span class="mess-time userChatTime">' + getDateFormat(new Date()) + '</span></div></div>'
+        petbotColumn.insertAdjacentHTML("beforeend", imgTag);
 
         var messes = document.querySelectorAll(".recei-mess");
 
@@ -294,14 +302,13 @@
         var mess = messes[length - 1];
         var width = mess.offsetWidth;
         mess.nextSibling.style.left = 450 + 'px';
-        console.log(mess.nextSibling.style.left)
-        //
-        chatContent.scrollTop = chatContent.scrollHeight;
-        console.log("chatContent.scrollTop");
-        console.log(chatContent.scrollTop);
-        console.log(chatContent.scrollHeight);
-    }
+        //console.log(mess.nextSibling.style.left)
+        //console.log(chatContent.scrollHeight);
 
+        console.log("Add Photo Scroll");
+
+        controlScroll()
+    }
 
     addChat("안녕하세요? 펫봇입니다. 무엇을 도와드릴까요? <button class='au-btn inChatButton' style='background-color: #7D66EF'>1. 내 반려동물 정보</button>" +
         "<button class='au-btn inChatButton' style='background-color: #7D66EF'>2. 일반 반려동물 정보</button>" +
@@ -312,18 +319,28 @@
     // addPhoto("내 반려동물 정보");
 
     function addPetbotChat(text) {
-        chatList.innerHTML += '  <div class="send-mess__inner "><div class="send-mess-list rightMessage">' +
+
+        var textTag = '  <div class="send-mess__inner "><div class="send-mess-list rightMessage">' +
             '<span class="mess-time chatTime">' + getDateFormat(new Date()) + '</span>' +
             '<div class="send-mess">' +
             text +
             '</div><div class="avatar avatar--small petbotAvatar"><img src="../../resources/images/profile.png" alt="John Smith">' +
             '</div></div></div>';
+        // chatList.innerHTML += '  <div class="send-mess__inner "><div class="send-mess-list rightMessage">' +
+        //     '<span class="mess-time chatTime">' + getDateFormat(new Date()) + '</span>' +
+        //     '<div class="send-mess">' +
+        //     text +
+        //     '</div><div class="avatar avatar--small petbotAvatar"><img src="../../resources/images/profile.png" alt="John Smith">' +
+        //     '</div></div></div>';
 
+        petbotColumn.insertAdjacentHTML("beforeend", textTag);
+
+        console.log("Add PetBotChat Scroll");
         chatContent.scrollTop = chatContent.scrollHeight;
-        // console.log("chatContent.scrollTop");
-        // console.log(chatContent.scrollTop);
-    }
+        console.log(chatContent.scrollTop);
+        console.log(chatContent.scrollHeight);
 
+    }
 
     // 1. 내 반려동물 조회
     document.querySelectorAll(".inChatButton")[0].addEventListener("click", function (e) {
@@ -337,7 +354,8 @@
                 var fullPath = res['fullPath'];
                 console.log(fullPath);
 
-               addPhoto(temp, fullPath);
+                addPhoto(temp, fullPath);
+
             }
         )
     }, false)
@@ -345,6 +363,7 @@
 
     document.querySelector(".chatButton").addEventListener("click", function (e) {
         e.preventDefault();
+        e.stopPropagation()
         console.log("CHAT ENTER");
 
         var userText = chatInput.value;
@@ -363,6 +382,22 @@
     }, false);
     // 채팅 ㄱㄱ
 
+    // document.querySelector(".testBtn").addEventListener("click", function (e) {
+    //
+    //     console.log(chatContent.scrollTop);
+    //     console.log(chatContent.scrollHeight);
+    //     chatContent.scrollTop = chatContent.scrollHeight
+    //
+    // })
+
+    function controlScroll(){
+        return new Promise(((resolve, reject) => {
+            setTimeout(()=>{
+                chatContent.scrollTop = chatContent.scrollHeight;
+            }, 30)
+        }))
+
+    }
 
 </script>
 

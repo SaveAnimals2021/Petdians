@@ -56,6 +56,7 @@
     .petbotCenter {
         display: flex;
         justify-content: center;
+
     }
 
     .petbotRow {
