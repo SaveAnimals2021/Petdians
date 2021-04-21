@@ -27,8 +27,17 @@ public class CrawlMapperTests {
     @Test
     public void testRegister(){
         log.info(mapper);
-        CrawlResultVO vo = new CrawlResultVO();
-        vo.setCrawlDate(new Date());
+        CrawlResultVO vo = CrawlResultVO.builder()
+                .crawlDate(new Date(new Date().getTime() - - 1000 * 60 * 60 * 24 * 4))
+                .crawlCount(1388)
+                .adoptedCount(17)
+                .missingCount(8)
+                .rescuedCount(2)
+                .modDataCount(19)
+                .newDataCount(40)
+                .witnessedCount(1)
+                .build();
+
         mapper.register(vo);
     }
 

@@ -9,11 +9,11 @@ import org.petdians.animal.service.AnimalService;
 import org.petdians.animal.service.ImageService;
 import org.petdians.aop.config.AopConfig;
 import org.petdians.common.config.CommonConfig;
+import org.petdians.common.dao.AnimalInfoDAO;
 import org.petdians.crawling.config.CrawlConfig;
+import org.petdians.crawling.dto.CrawlResultDTO;
 import org.petdians.crawling.service.TotalCrawlManager;
 import org.petdians.crawling.util.*;
-import org.petdians.common.dao.AnimalInfoDAO;
-import org.petdians.crawling.dto.CrawlResultDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -28,7 +28,7 @@ public class CrawlManagerTests {
     KarmaCrawlManager karmaCrawlService;
     IJoaCrawlManager iJoaCrawlService;
 
-    AngelCrawlManager angelCrawlService;
+    NewAngelCrawlManager newAngelCrawlService;
     APMSICrawlManager apmsCrawlService;
 
     AnimalInfoDAO dao;
@@ -49,7 +49,7 @@ public class CrawlManagerTests {
         karmaCrawlService = new KarmaCrawlManager();
         iJoaCrawlService = new IJoaCrawlManager();
 
-        angelCrawlService = new AngelCrawlManager();
+        newAngelCrawlService = new NewAngelCrawlManager();
         apmsCrawlService = new APMSICrawlManager();
     }
 
@@ -74,10 +74,10 @@ public class CrawlManagerTests {
     @Test
     public void testAngel() {
         try {
-            angelCrawlService.doCrawl(100);
+            newAngelCrawlService.doCrawl(100);
             log.info("CRAWL OVER");
-            angelCrawlService.getAnimalList().forEach(info -> log.info(info));
-            log.info("size : " + angelCrawlService.getAnimalList().size());
+            newAngelCrawlService.getAnimalList().forEach(info -> log.info(info));
+            log.info("size : " + newAngelCrawlService.getAnimalList().size());
         } catch (Exception e) {
             e.printStackTrace();
         }

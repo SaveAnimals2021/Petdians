@@ -1,9 +1,13 @@
+org/petdians/pet/PetMapperTests.java
+ org.petdians.pet.PetMapperTests
 org/petdians/common/FileManagerTests.java
  org.petdians.common.FileManagerTests
-org/petdians/common/crawl/CrawlMapperTests.java
- org.petdians.common.crawl.CrawlMapperTests
-org/petdians/common/crawl/CrawlServiceTests.java
- org.petdians.common.crawl.CrawlServiceTests
+org/petdians/user/UserMapperTests.java
+ org.petdians.user.UserMapperTests
+org/petdians/crawl/CrawlServiceTests.java
+ org.petdians.crawl.CrawlServiceTests
+org/petdians/petbot/PetbotTests.java
+ org.petdians.petbot.PetbotTests
 org/petdians/animal/AnimalServiceTests.java
  org.petdians.animal.AnimalServiceTests
 org/petdians/common/GsonTests.java
@@ -12,15 +16,27 @@ org/petdians/animal/ImageMapperTests.java
  org.petdians.animal.ImageMapperTests
 org/petdians/common/CompareTests.java
  org.petdians.common.CompareTests
+org/petdians/member/MemberVOMapperTests.java
+ org.petdians.member.MemberVOMapperTests
 org/petdians/animal/AnimalInfoMapperTests.java
  org.petdians.animal.AnimalInfoMapperTests
+org/petdians/crawl/CrawlMapperTests.java
+ org.petdians.crawl.CrawlMapperTests
+org/petdians/pet/PetImageMapperTests.java
+ org.petdians.pet.PetImageMapperTests
 org/petdians/batch/BatchTests.java
  org.petdians.batch.BatchTests
-org/petdians/common/crawl/CrawlManagerTests.java
- org.petdians.common.crawl.CrawlManagerTests
+org/petdians/crawl/CrawlManagerTests.java
+ org.petdians.crawl.CrawlManagerTests
 org/petdians/common/mapper/AnimalInfoMapperTests.java
  org.petdians.common.mapper.AnimalInfoMapperTests
+org/petdians/member/MemberVOServiceTests.java
+ org.petdians.member.MemberVOServiceTests
 org/petdians/common/DBTests.java
  org.petdians.common.DBTests
 org/petdians/animal/ImageServiceTests.java
  org.petdians.animal.ImageServiceTests
+org/petdians/security/AuthMapperTests.java
+ org.petdians.security.AuthMapperTests
+org/petdians/user/UserServiceTests.java
+ org.petdians.user.UserServiceTests

@@ -18,11 +18,10 @@ public interface CrawlService {
 
     default CrawlResultVO toDomain(CrawlResultDTO dto) throws Exception{
         Date crawlDate = DateFormatter.fromStringToDate(dto.getCrawlDate());
-
+        crawlDate = new Date(crawlDate.getTime() + 1000 * 60 * 60 * 21);
         CrawlResultVO vo = new CrawlResultVO();
 
         vo.setCrawlCount(dto.getCrawlCount());
-        vo.setCrawlCount(dto.getCrawlNumber());
         vo.setNewDataCount(dto.getNewDataCount());
         vo.setModDataCount(dto.getModDataCount());
         vo.setTotalDataCount(dto.getTotalDataCount());

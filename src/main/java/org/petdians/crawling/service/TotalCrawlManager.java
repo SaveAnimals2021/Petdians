@@ -5,13 +5,14 @@ import lombok.extern.log4j.Log4j;
 import org.petdians.animal.dto.AnimalInfoDTO;
 import org.petdians.animal.dto.MissingAnimalDTO;
 import org.petdians.animal.service.AnimalService;
-import org.petdians.crawling.dto.CrawlResultDTO;
-import org.petdians.crawling.util.*;
 import org.petdians.common.dao.AnimalInfoDAO;
 import org.petdians.common.util.DateFormatter;
 import org.petdians.common.util.FileManager;
+import org.petdians.crawling.dto.CrawlResultDTO;
+import org.petdians.crawling.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
@@ -47,7 +48,7 @@ public class TotalCrawlManager {
         KarmaCrawlManager karmaCrawlService = new KarmaCrawlManager();
         IJoaCrawlManager iJoaCrawlService = new IJoaCrawlManager();
 
-        AngelCrawlManager angelCrawlService = new AngelCrawlManager();
+        NewAngelCrawlManager angelCrawlService = new NewAngelCrawlManager();
         APMSICrawlManager apmsCrawlService = new APMSICrawlManager();
 
         sites = new ArrayList<>();
@@ -63,6 +64,7 @@ public class TotalCrawlManager {
         this.period = period;
     }
 
+    @Transactional
     public CrawlResultDTO crawlAll() {
         // 2. DB를 모두 가져온다.
         // 3. 비교한다.

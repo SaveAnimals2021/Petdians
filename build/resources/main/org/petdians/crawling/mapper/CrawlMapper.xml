@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="org.petdians.crawling.mapper.CrawlMapper">
+
+	<!-- Search Where -->
+	<sql id="search">
+		<where>
+			<if test="arr != null">
+				<foreach collection="arr" index="index" item="val" separator="OR"  open="(" close=")">
+					<if test="val == 't'.toString">
+						type = #{keyword}
+					</if>
+					<if test="val == 'r'.toString">
+						regdate = #{keyword}
+					</if>
+					<if test="val == 'd'.toString">
+						rescueDate = #{keyword}
+					</if>
+					<if test="val == 's'.toString">
+						rescueStatus = #{keyword}
+					</if>
+				</foreach>
+				AND
+			</if>
+			<choose>
+				<when test="day != null">regDate BETWEEN DATE_ADD(NOW(),INTERVAL -#{day} DAY ) AND NOW()</when>
+				<otherwise>regDate BETWEEN DATE_ADD(NOW(),INTERVAL -1 MONTH ) AND NOW()</otherwise>
+			</choose>
+		</where>
+	</sql>
+
+	<!-- INSERT -->
+	<insert id="register" >
+		<![CDATA[
+      insert into tbl_crawl (crawlCount, newDataCount, modDataCount, totalDataCount, missingCount,
+                        witnessedCount, rescuedCount, adoptedCount, takingTime, crawlDate)
+
+      values (#{crawlCount}, #{newDataCount}, #{modDataCount}, #{totalDataCount}, #{missingCount},
+                        #{witnessedCount}, #{rescuedCount}, #{adoptedCount}, #{takingTime}, #{crawlDate})
+      ]]>
+		<selectKey resultType="int" keyProperty="crawlNumber" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	<!-- MISSING LIST -->
+	<select id="getListByDay" resultType="org.petdians.crawling.domain.CrawlResultVO">
+		select * from tbl_crawl where
+		<choose>
+			<when test="day != null">crawlDate BETWEEN DATE_ADD(NOW(),INTERVAL -#{day} DAY ) AND NOW()</when>
+			<otherwise>crawlDate BETWEEN DATE_ADD(NOW(),INTERVAL -1 MONTH ) AND NOW()</otherwise>
+		</choose>
+		order by crawlDate desc
+	</select>
+
+	<delete id="delete">
+		delete from tbl_crawl where crawlNumber = #{cno};
+	</delete>
+
+</mapper>

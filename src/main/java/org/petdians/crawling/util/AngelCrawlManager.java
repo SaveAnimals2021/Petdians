@@ -19,7 +19,7 @@ public class AngelCrawlManager extends CrawlManager {
     private static String baseUrl = "http://www.angel.or.kr/";
     private static String url = "http://www.angel.or.kr/index.php?";
     private static String serviceName = "동물보호센터";
-
+    private static Integer extraCount = 0;
     @Override
     public void doCrawl(Integer period) throws Exception {
         this.period = period;
@@ -28,14 +28,16 @@ public class AngelCrawlManager extends CrawlManager {
 
         String type = "개";
         String typeURL = "code=dog";
+        extraCount = 0;
         crawlType(type, typeURL);
         type = "고양이";
         typeURL = "code=cat";
         crawlType(type, typeURL);
+        extraCount = 0;
         type = "기타";
         typeURL = "code=other";
         crawlType(type, typeURL);
-
+        extraCount = 0;
 
     }
 
@@ -60,7 +62,7 @@ public class AngelCrawlManager extends CrawlManager {
             count = crawlView(hrefList, baseUrl, type, count);
 
             // 마지막 페이지 체크
-            if(10 < count){
+            if(10 < count || 10 < extraCount){
                 log.info(serviceName + "가 끝났습니다...");
                 return;
             }
@@ -70,6 +72,8 @@ public class AngelCrawlManager extends CrawlManager {
     public int crawlView(List<String> aURL, String baseUrl, String type, int count) throws Exception {
 
         int size = aURL.size();
+
+        log.info("size : " + size);
 
         main : for (int i = 0; i < size; ++i) {
             ++crawlNumber;
@@ -83,7 +87,7 @@ public class AngelCrawlManager extends CrawlManager {
             date = date.replace("시 ", ":");
             date = date.replace("분", "");
 
-
+            log.info(date);
             if(false == checkPeriod(date)){
                 --crawlNumber;
                 return ++count;
@@ -175,8 +179,11 @@ public class AngelCrawlManager extends CrawlManager {
 
             animalList.add(info);
             AnimalInfoDAO.add(info);
+
+            extraCount = 0;
         }
 
-        return 0;
+
+        return ++extraCount;
     }
 }

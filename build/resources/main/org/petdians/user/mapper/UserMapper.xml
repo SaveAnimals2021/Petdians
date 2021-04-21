@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="org.petdians.user.mapper.UserMapper">
+
+    <!-- Search Where -->
+
+    <!-- INSERT -->
+    <insert id="register">
+		<![CDATA[
+        insert into tbl_user (username, userid, userpw, useremail,
+                              userphone)
+        values (#{username}, #{userid}, #{userpw}, #{useremail},
+                #{userphone})
+        ]]>
+	</insert>
+
+
+    <!-- MODIFY -->
+    <update id="modify">
+      <![CDATA[
+        update tbl_user
+        set username=#{username},
+            useremail = #{useremail},
+            userphone = #{userphone},
+            updatedate = now()
+        where userid = #{userid}
+        ]]>
+   </update>
+
+    <!-- List -->
+    <select id="getPagedList" resultType="org.petdians.user.domain.UserVO">
+        select *
+        from tbl_user
+        order by userid desc limit #{skip}, #{perSheet}
+    </select>
+
+    <delete id="delete">
+        delete
+        * from tbl_user where userid =
+        #{userid}
+    </delete>
+
+    <select id="getTotalCount" resultType="int">
+		select count(userid) from tbl_user
+    </select>
+
+</mapper>

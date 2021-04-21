@@ -124,13 +124,16 @@ public class IJoaCrawlManager extends CrawlManager {
             //AnimalInfo에 값 추가
             animalInfoDTO.setServiceName(serviceName);
 
-            animalInfoDTO.setType(animalType);
-            animalInfoDTO.setRegDate(date);
-            animalInfoDTO.setSpecies(textList.get(1));
-            animalInfoDTO.setSex(textList.get(2));
-            animalInfoDTO.setName(textList.get(3));
-            animalInfoDTO.setAge(textList.get(5));
-
+            try {
+                animalInfoDTO.setType(animalType);
+                animalInfoDTO.setRegDate(date);
+                animalInfoDTO.setSpecies(textList.get(1));
+                animalInfoDTO.setSex(textList.get(2));
+                animalInfoDTO.setName(textList.get(3));
+                animalInfoDTO.setAge(textList.get(5));
+            }catch(Exception e){
+                e.printStackTrace();
+            }
 
 
             String src = "";
