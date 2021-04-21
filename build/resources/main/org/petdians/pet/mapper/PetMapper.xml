@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.petdians.pet.mapper.PetMapper">
+
+    <resultMap type="org.petdians.pet.domain.PetVO" id="petMap">
+        <id property="pno" column="pno"/>
+        <result property="pno" column="pno"/>
+        <result property="userid" column="userid"/>
+        <result property="petname" column="petname"/>
+        <result property="species" column="species"/>
+        <result property="sex" column="sex"/>
+        <result property="isNeutralized" column="isNeutralized"/>
+        <result property="age" column="age"/>
+        <result property="type" column="type"/>
+        <result property="regDate" column="regDate"/>
+        <result property="updateDate" column="updateDate"/>
+        <collection property="fullPath" resultMap="imageMap">
+        </collection>
+    </resultMap>
+
+    <resultMap type="org.petdians.pet.domain.PetImageVO" id="imageMap">
+        <id property="pino" column="pino"/>
+        <result property="pino" column="pino"/>
+        <result property="pno" column="pno"/>
+        <result property="uuid" column="uuid"/>
+        <result property="uploadPath" column="uploadPath"/>
+        <result property="fileName" column="fileName"/>
+        <result property="type" column="type"/>
+        <result property="regDate" column="regDate"/>
+        <result property="updateDate" column="updateDate"/>
+    </resultMap>
+
+    <select id="selectOne" resultType="org.petdians.pet.domain.PetVO">
+        SELECT
+            pet.pno, userid, petname, species, sex,
+               isNeutralized, age, pet.type, pet.regdate, pet.updatedate,
+               fullPath
+        FROM
+            tbl_pet pet LEFT OUTER JOIN tbl_petimage image on pet.pno = image.pno
+        WHERE pet.pno = #{pno}
+    </select>
+
+    <!-- Search Where -->
+    <!-- 성별, 타입, 종, 나이 -->
+    <sql id="search">
+        <where>
+            <if test="arr != null">
+                <foreach collection="arr" index="index" item="val" separator="OR"  open="(" close=")">
+                    <if test="val == 't'.toString">
+                        type = #{keyword}
+                    </if>
+                    <if test="val == 's'.toString">
+                        sex = #{keyword}
+                    </if>
+                    <if test="val == 'p'.toString">
+                        species = #{keyword}
+                    </if>
+                    <if test="val == 'a'.toString">
+                        age = #{keyword}
+                    </if>
+                </foreach>
+                AND
+            </if>
+        </where>
+    </sql>
+
+    <!-- INSERT -->
+    <insert id="register" >
+        <![CDATA[
+      insert into tbl_pet (pno, userid, petname, species, sex,
+                           isNeutralized, age, type)
+
+      values (#{pno}, #{userid}, #{petname}, #{species}, #{sex},
+                           #{isNeutralized}, #{age}, #{type})
+      ]]>
+        <selectKey resultType="int" keyProperty="pno" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+
+</mapper>

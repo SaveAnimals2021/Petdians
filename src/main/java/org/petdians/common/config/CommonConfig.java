@@ -51,6 +51,7 @@ public class CommonConfig {
     }
 
     @Bean
+    @Primary
     public DataSourceTransactionManager txManager() {
         return new DataSourceTransactionManager(this.dataSource());
     }

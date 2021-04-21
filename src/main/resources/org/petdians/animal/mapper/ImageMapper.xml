@@ -10,9 +10,9 @@
 	<insert id="register" >
 		<![CDATA[
 		insert into tbl_image (url, animalNumber, regDate, uuid,
-		                       uploadPath, fileName, type)
+		                       uploadPath, fileName, type, updateDate)
             values (#{url}, #{animalNumber}, #{regDate}, #{uuid},
-					#{uploadPath}, #{fileName}, #{type})
+					#{uploadPath}, #{fileName}, #{type}, now())
         ]]>
 
 
