@@ -445,7 +445,7 @@
 
                     if( res['message'] == "success") {
                         console.log(phrase.phrase);
-                        const phrasesBody = document.querySelector(".phrasesBody");
+                        //const phrasesBody = document.querySelector(".phrasesBody");
                         const innerTemp = phrasesBody.innerHTML
                         const index = phrasesBody.childElementCount;
                         let valuePhrase = '<tr><td class="phrase"><p class="phrase-text" data-idx="' + index +'">' +
@@ -462,6 +462,12 @@
             //Phrase Delete
             document.querySelector(".pDeleteBtn").addEventListener("click", function (e){
 
+                if(e.target.className != "pDeleteBtn") {
+
+                    console.log("Not pDeleteBtn");
+                    return;
+
+                }
                 console.log("pDeleteBtn");
                 const target = e.target;
                 const index = target.closest("p").getAttribute("data-idx");
@@ -476,7 +482,7 @@
 
                         //중간값을 지울 경우가 있기 때문에 for 문 돌려야한다
                         console.log(phrase.phrase);
-                        const phrasesBody = document.querySelector(".phrasesBody");
+                        //const phrasesBody = document.querySelector(".phrasesBody");
                         const innerTemp = phrasesBody.innerHTML
                         const index = phrasesBody.childElementCount;
                         let valuePhrase = '<tr><td class="phrase"><p class="phrase-text" data-idx="' + index +'">' +

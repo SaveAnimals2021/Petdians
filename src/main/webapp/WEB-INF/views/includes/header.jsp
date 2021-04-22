@@ -45,7 +45,7 @@
                 <div class="header__logo" style="max-width: 22%">
                     <a href="#">
                         <img src="/resources/images/icon/petdians-finish.png" alt="PetdiansAdmin"
-                             style="max-width: 60%; max-height: 20vh;"/>
+                             style="max-width: 60%; max-height: 7vh;"/>
                     </a>
                 </div>
                 <div class="header__navbar">
@@ -288,7 +288,7 @@
             <div class="container-fluid">
                 <div class="header-mobile-inner">
                     <a class="logo" href="index.html" >
-                        <img src="../../resources/images/icon/petdians-finish.png" alt="CoolAdmin" style="max-width: 60%"/>
+                        <img src="../../resources/images/icon/petdians-finish.png" alt="CoolAdmin" style="max-width: 60%; max-height: 7vh"/>
                     </a>
                     <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">
