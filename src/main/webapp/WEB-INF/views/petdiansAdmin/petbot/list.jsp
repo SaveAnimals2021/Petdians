@@ -293,11 +293,12 @@
     </form>
     <script>
 
-        var phrasesBody = document.querySelector(".phrasesBody");
-        var intentName = document.querySelector(".nick");
-        var responseBody = document.querySelector(".responseBody");
+        const body = document.body;
+        const phrasesBody = document.querySelector(".phrasesBody");
+        const intentName = document.querySelector(".nick");
+        const responseBody = document.querySelector(".responseBody");
 
-        var csrfTokenValue = "${_csrf.token}";
+        const csrfTokenValue = "${_csrf.token}";
 
         function registerIntent(data){
             return fetch("/petdiansAdmin/petbot/register", {
@@ -382,7 +383,7 @@
             var index = 0;
             phrases.forEach(p => {
                 inner = '<tr><td class="phrase"><p class="phrase-text" data-idx="' + index +'"><i class="fa ng-scope fa-quote-right" ></i>&nbsp;&nbsp;&nbsp;&nbsp;' + p + '</p>' +
-                    '<button class="pDeleteBtn"><i class="zmdi zmdi-minus" style="margin-left: 5px; color: red"></i></button></td></tr>' + inner;
+                    '<button class="pDeleteBtn"><i class="zmdi zmdi-minus" style="margin-left: 5px; color: #ff0000"></i></button></td></tr>' + inner;
                 index++;
             })
             phrasesBody.innerHTML = inner;
@@ -403,20 +404,31 @@
             intentName.innerHTML = jsonlist['name'];
 
             // Intent 삭제 버튼 추가
-            var minusButton =  document.querySelector(".minusButton");
+            const minusButton =  document.querySelector(".minusButton");
             minusButton.style.display = "block";
             minusButton.setAttribute("data-idx", idx);
 
             // 삭제 버튼
             minusButton.addEventListener("click", function(e){
                 console.log("DELETE BUTTON");
-                const modal = $("#deleteModal");
+                const modal = document.querySelector("#deleteModal");
 
                 // 모달창에 내용 추가
                 document.querySelector(".deleteModalBody").innerHTML = "Would you like to delete '" + jsonlist['name'] + "'?";
 
                 // 모달창 띄우기
-                modal.modal('show');
+                showModal(modal);
+
+                document.querySelector(".modal-footer").addEventListener("click", function (e) {
+
+                    const target = e.target;
+                    if(target.className != "btn.btn-primary.register" || target.className != "btn.btn-secondary") {
+                        return;
+                    }
+
+                    hideModal(modal);
+
+            }, false)
 
                 // 삭제 확인 버튼(최종)
                 document.querySelector(".deleteConfirm").addEventListener("click", function(e) {
@@ -541,16 +553,46 @@
         //Intent Input
         document.querySelector(".au-btn-plus").addEventListener("click", function (e) {
 
-            const modal = $("#smallmodal");
-            modal.modal("show");
+            const modal = document.querySelector("#smallmodal");
+            // 모달창 띄우기
+            showModal(modal);
 
         }, false);
+
+        //모달창 띄우기
+        function showModal(modal) {
+
+            modal.classList.add("show");
+            modal.style.display="block";
+            body.insertAdjacentHTML("beforeend", "<div class='modal-backdrop fade show'/>");
+
+        }
+
+        //모달창 닫기
+        document.querySelectorAll(".btn.btn-secondary").forEach(value => {
+
+            value.addEventListener("click", function (e) {
+
+                const modal = e.target.closest(".modal.fade");
+                hideModal(modal);
+
+            }, false)
+
+        });
+
+        function hideModal(modal) {
+
+            modal.classList.remove("show");
+            modal.style.display="none";
+            body.removeChild(body.lastChild);
+
+        }
 
         //Intent Register
         document.querySelector(".register").addEventListener("click", function (e) {
 
-            const modal = $("#smallmodal");
-            modal.modal("hide");
+            const modal = document.querySelector("#smallmodal");
+            hideModal(modal);
             const data =  modal[0].querySelector(".intentInput").value;
 
             const result = registerIntent(data);

@@ -314,7 +314,7 @@
                     <!-- MODAL BODY END -->
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+<%--                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>--%>
                     <button type="button" class="btn btn-primary">Confirm</button>
                 </div>
             </div>
@@ -325,6 +325,8 @@
 
 
 <script>
+
+    const body = document.body;
 
     function change() {
 
@@ -341,10 +343,8 @@
 
     }
 
-    $(document).ready(function () {
-
-        //      kakao.maps.load(function () {
-        // 지도 생성하기
+        //kakao.maps.load(function () {
+        //지도 생성하기
         var mapContainer = document.querySelector('.animalMap'), // 지도를 표시할 div
             mapOption = {
                 center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -536,7 +536,7 @@
 
         }, false)
 
-        var largeModal = $("#largeModal");
+        const largeModal = document.querySelector("#largeModal");
         var myList = ${jsonList};
 
         // LIST 누르기 => 지도에서 해당 위치로 이동 + View 창에 띄우기
@@ -636,11 +636,19 @@
 
             }
 
-            largeModal.modal("show");
+            largeModal.classList.add("show");
+            largeModal.style.display="block";
+            body.insertAdjacentHTML("beforeend", "<div class='modal-backdrop fade show'/>");
 
         }//end showModal
 
+        document.querySelector(".btn.btn-primary").addEventListener("click", function (e) {
 
+            largeModal.classList.remove("show");
+            largeModal.style.display="none";
+            body.removeChild(body.lastChild);
+
+        }, false)
 
         //이미지 Next 버튼
         document.querySelector(".viewDiv").addEventListener("click", function (e) {
@@ -695,10 +703,6 @@
             }
 
         }, false)
-
-    })// DOC.ready END
-
-    // }) // kakao.maps.load END
 
 </script>
 

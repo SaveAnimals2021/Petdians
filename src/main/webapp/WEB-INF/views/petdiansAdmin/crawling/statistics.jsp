@@ -668,7 +668,6 @@
             });
         }
 
-
         // document.querySelector(".pagination").addEventListener("click", function (e) {
         //
         //     e.preventDefault();
@@ -726,5 +725,6 @@
         //
         // }
     })
+
 </script>
 <%@ include file="/WEB-INF/views/includes/footer.jsp" %>

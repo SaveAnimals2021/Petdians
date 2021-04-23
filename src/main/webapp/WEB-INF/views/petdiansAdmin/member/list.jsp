@@ -69,7 +69,7 @@
                 </td>
                 <td> <h5>${user.memberID}</h5></td>
                 <td> <h5>${user.memberPhone}</h5></td>
-                <td> <h5>${user.regDate}</td>
+                <td> <h5>${user.regDate}</h5></td>
                 <td> <h5>${user.updateDate}  </td>
                 <td> <span class="role admin"></span>      </td>
                 <td>
