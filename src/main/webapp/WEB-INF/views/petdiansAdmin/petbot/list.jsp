@@ -601,7 +601,22 @@
 
 
 
+        //============== GEOLOCATION TEST ================//
+        //============== GEOLOCATION TEST ================//
+        //============== GEOLOCATION TEST ================//
 
+        if('geolocation' in navigator) {
+            /* 위치정보 사용 가능 */
+            console.log("GEOLOCATION ON!!!!!!!!!!!")
+
+        } else {
+            /* 위치정보 사용 불가능 */
+            console.log("GEOLOCATION OFF..............")
+        }
+
+        navigator.geolocation.getCurrentPosition((position) => {
+            console.log(position.coords.latitude, position.coords.longitude);
+        });
 
     </script>
 

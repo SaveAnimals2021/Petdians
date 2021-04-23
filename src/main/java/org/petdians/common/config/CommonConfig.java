@@ -1,5 +1,8 @@
 package org.petdians.common.config;
 
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.log4j.Log4j;
@@ -94,5 +97,18 @@ public class CommonConfig {
 
         return utils;
     }
+
+    @Bean
+    public FirebaseOptions firebaseOptions() throws Exception{
+        FirebaseOptions options = FirebaseOptions.builder()
+                .setCredentials(GoogleCredentials.getApplicationDefault())
+                .setDatabaseUrl("https://mytestproject-b66b1-default-rtdb.firebaseio.com")
+                .build();
+
+        FirebaseApp.initializeApp(options);
+
+        return options;
+    }
+
 
 }
