@@ -25,7 +25,11 @@
 	</select>
 
 	<select id="getAllImages" resultType="org.petdians.animal.domain.ImageVO">
-		select * from tbl_image
+		select ino, url, image.animalNumber, image.regDate, image.updateDate,
+			   uuid, uploadPath, fileName, image.type, pno
+		from tbl_image image
+				 left outer join tbl_animal animal on image.animalNumber = animal.animalNumber
+		where animal.rescueStatus=0 and animal.isCompleted = 0 order by image.regDate desc
 	</select>
 
 	<update id="changeType">

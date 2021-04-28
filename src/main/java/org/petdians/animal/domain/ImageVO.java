@@ -12,6 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ImageVO {
+
     private Integer ino;
     private String url;
     private Integer animalNumber;
@@ -22,4 +23,5 @@ public class ImageVO {
 
     private Date regDate;
     private Date updateDate;
+
 }

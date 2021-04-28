@@ -1,6 +1,7 @@
 package org.petdians.common.util;
 
 import lombok.extern.log4j.Log4j;
+import net.coobird.thumbnailator.Thumbnailator;
 import org.petdians.animal.dto.ImageDTO;
 import org.petdians.animal.dto.MissingAnimalDTO;
 import org.petdians.crawling.util.CrawlManager;
@@ -10,6 +11,8 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -58,26 +61,66 @@ public class ImageManager {
             // 경로 + 파일이름 + 확장자
             int lastindex = fileFullName.lastIndexOf(".");
             String last = "";
+            String thumbnailSaveName = "";
             // .이 없다 = 확장자가 있다.
             if (-1 == lastindex) {
-                last = uploadPath + File.separator + fileFullName + "." + dto.getImageType();
+                last = folderPath + File.separator + fileFullName + "." + dto.getType();
+                //섬네일 생성
+                thumbnailSaveName = folderPath + File.separator +"s_" + fileFullName + "." + dto.getType();
             } else {
-                last = uploadPath + File.separator + fileFullName.substring(0, lastindex) + "." + dto.getImageType();
+                last = folderPath + File.separator + fileFullName.substring(0, lastindex) + "." + dto.getType();
+                //섬네일 생성
+                thumbnailSaveName = folderPath + File.separator +"s_" + fileFullName.substring(0, lastindex) + "." + dto.getType();
             }
 
-            File checkPath = new File(last); // 경로를 설정... (부모 경로), (자식 경로) C:\\upload\\2021\\03\\17
-            if (true == checkPath.exists()) {
-                // 실제 폴더를 생성
+            //원본 파일 생성
+            File lastFile = new File(last);
+            //섬네일 생성
+            File thumbnailFile = new File(thumbnailSaveName);
+
+            URL urlObj = new URL(url);
+
+            if(lastFile.exists() && !thumbnailFile.exists()){
+                log.info("썸네일이 없습니다.");
+
+                FileOutputStream fos = null;
+                try {
+                    //썸네일 만드는 작업
+                    fos = new FileOutputStream(new File(thumbnailSaveName));
+                    log.info("FilePath: " + thumbnailSaveName);
+
+                    HttpURLConnection urlCon = (HttpURLConnection) urlObj.openConnection();
+                    urlCon.setRequestProperty("User-Agent", CrawlManager.agent);
+                    InputStream in = urlCon.getInputStream();
+
+                    //썸네일 생성
+                    Thumbnailator.createThumbnail(in, fos,100,100 );
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (null != fos) {
+                            fos.close();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }//end try-catch thumbnail
+
+                continue;
+
+            } else if(lastFile.exists() && thumbnailFile.exists()) {
+
                 log.info("중복된 파일입니다.");
                 continue;
+
             }
 
-            // CRAWL, SAVE
-            URL urlObj = new URL(url);
             HttpURLConnection urlCon = (HttpURLConnection) urlObj.openConnection();
             urlCon.setRequestProperty("User-Agent", CrawlManager.agent);
-            // 파일 저장
-            saveFile(urlCon, last);
+
+            saveFile(urlCon, last, thumbnailSaveName);
 
             // ImageDTO에 저장
             ImageDTO imageDTO = ImageDTO.builder()
@@ -131,29 +174,69 @@ public class ImageManager {
         // 경로 + 파일이름 + 확장자
         int lastindex = fileFullName.lastIndexOf(".");
         String last = "";
+        String thumbnailSaveName = "";
         // .이 없다 = 확장자가 있다.
         if (-1 == lastindex) {
             last = folderPath + File.separator + fileFullName + "." + dto.getType();
+            //섬네일 생성
+            thumbnailSaveName = folderPath + File.separator +"s_" + fileFullName + "." + dto.getType();
         } else {
             last = folderPath + File.separator + fileFullName.substring(0, lastindex) + "." + dto.getType();
+            //섬네일 생성
+            thumbnailSaveName = folderPath + File.separator +"s_" + fileFullName.substring(0, lastindex) + "." + dto.getType();
         }
 
+        //원본 파일 생성
         File lastFile = new File(last);
+        //섬네일 생성
+        File thumbnailFile = new File(thumbnailSaveName);
 
-        if(lastFile.exists()){
+        if(lastFile.exists() && !thumbnailFile.exists()){
+            log.info("썸네일이 없습니다.");
+
+            FileOutputStream fos = null;
+            try {
+                //썸네일 만드는 작업
+                fos = new FileOutputStream(new File(thumbnailSaveName));
+                log.info("FilePath: " + thumbnailSaveName);
+
+                HttpURLConnection urlCon = (HttpURLConnection) urlObj.openConnection();
+                urlCon.setRequestProperty("User-Agent", CrawlManager.agent);
+                InputStream in = urlCon.getInputStream();
+
+                //썸네일 생성
+                Thumbnailator.createThumbnail(in, fos,100,100 );
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (null != fos) {
+                        fos.close();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }//end try-catch thumbnail
+
+            return;
+
+        } else if(lastFile.exists() && thumbnailFile.exists()) {
+
             log.info("중복된 파일입니다.");
             return;
+
         }
 
         HttpURLConnection urlCon = (HttpURLConnection) urlObj.openConnection();
         urlCon.setRequestProperty("User-Agent", CrawlManager.agent);
 
-        // 파일 저장
-        saveFile(urlCon, last);
+        saveFile(urlCon, last, thumbnailSaveName);
+
+
     }
 
-
-    public static Boolean saveFile(HttpURLConnection con, String path) {
+    public static Boolean saveFile(HttpURLConnection con, String path, String thumbnail) {
         FileOutputStream fos = null;
         try {
             // 이미지 저장하기 위해 inputStream 생성
@@ -167,6 +250,7 @@ public class ImageManager {
 
             byte[] buffer = new byte[1024 * 8];
 
+            //원본 파일 생성
             while (true) {
                 int count = in.read(buffer);
 
@@ -175,7 +259,16 @@ public class ImageManager {
                 }
 
                 fos.write(buffer, 0, count);
+
             }
+
+            //썸네일 생성
+            if(null != thumbnail) {
+
+                Thumbnailator.createThumbnail(in, fos,100,100 );
+
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

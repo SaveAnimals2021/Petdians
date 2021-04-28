@@ -13,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Date;
+import java.util.List;
 
 
 @Log4j
@@ -40,7 +41,12 @@ public class AnimalInfoMapperTests {
     @Test
     public void testAllList(){
         log.info("mapper : " + mapper);
-        mapper.getAllList();
+        List<MissingAnimalVO> result = mapper.getAllList();
+
+        for(int i = 0; i < 10; ++i){
+            log.info( result.get(i) );
+        }
+
         log.info("============ mapper done ============");
     }
 
