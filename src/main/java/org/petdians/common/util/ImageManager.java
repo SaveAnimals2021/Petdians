@@ -94,7 +94,7 @@ public class ImageManager {
                     InputStream in = urlCon.getInputStream();
 
                     //썸네일 생성
-                    Thumbnailator.createThumbnail(in, fos,100,100 );
+                    Thumbnailator.createThumbnail(in, fos,328,328 );
 
                 } catch (Exception e) {
                     e.printStackTrace();
