@@ -262,7 +262,9 @@ public class ImageManager {
 
             }
             log.info(thumbnail);
+            log.info(thumbnail.substring(thumbnail.length() - 1));
             //썸네일 생성
+
             if(0 != thumbnail.length() && null != thumbnail && !thumbnail.substring(-1).equals(".")) {
 
                 //섬네일 생성
