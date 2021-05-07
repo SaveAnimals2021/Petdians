@@ -66,11 +66,11 @@ public class ImageManager {
             if (-1 == lastindex) {
                 last = folderPath + File.separator + fileFullName + "." + dto.getType();
                 //섬네일 생성
-                thumbnailSaveName = folderPath + File.separator +"s_" + fileFullName + "." + dto.getType();
+                thumbnailSaveName = folderPath + File.separator + "s_" + fileFullName + "." + dto.getType();
             } else {
                 last = folderPath + File.separator + fileFullName.substring(0, lastindex) + "." + dto.getType();
                 //섬네일 생성
-                thumbnailSaveName = folderPath + File.separator +"s_" + fileFullName.substring(0, lastindex) + "." + dto.getType();
+                thumbnailSaveName = folderPath + File.separator + "s_" + fileFullName.substring(0, lastindex) + "." + dto.getType();
             }
 
             //원본 파일 생성
@@ -80,7 +80,7 @@ public class ImageManager {
 
             URL urlObj = new URL(url);
 
-            if(lastFile.exists() && !thumbnailFile.exists()){
+            if (lastFile.exists() && !thumbnailFile.exists()) {
                 log.info("썸네일이 없습니다.");
 
                 FileOutputStream fos = null;
@@ -94,7 +94,7 @@ public class ImageManager {
                     InputStream in = urlCon.getInputStream();
 
                     //썸네일 생성
-                    Thumbnailator.createThumbnail(in, fos,328,328 );
+                    Thumbnailator.createThumbnail(in, fos, 328, 328);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -110,7 +110,7 @@ public class ImageManager {
 
                 continue;
 
-            } else if(lastFile.exists() && thumbnailFile.exists()) {
+            } else if (lastFile.exists() && thumbnailFile.exists()) {
 
                 log.info("중복된 파일입니다.");
                 continue;
@@ -138,7 +138,7 @@ public class ImageManager {
         String url = dto.getUrl();
         URL urlObj = new URL(url);
 
-        if(10715 == dto.getAnimalNumber()){
+        if (10715 == dto.getAnimalNumber()) {
             int a = 0;
         }
 
@@ -179,11 +179,11 @@ public class ImageManager {
         if (-1 == lastindex) {
             last = folderPath + File.separator + fileFullName + "." + dto.getType();
             //섬네일 생성
-            thumbnailSaveName = folderPath + File.separator +"s_" + fileFullName + "." + dto.getType();
+            thumbnailSaveName = folderPath + File.separator + "s_" + fileFullName + "." + dto.getType();
         } else {
             last = folderPath + File.separator + fileFullName.substring(0, lastindex) + "." + dto.getType();
             //섬네일 생성
-            thumbnailSaveName = folderPath + File.separator +"s_" + fileFullName.substring(0, lastindex) + "." + dto.getType();
+            thumbnailSaveName = folderPath + File.separator + "s_" + fileFullName.substring(0, lastindex) + "." + dto.getType();
         }
 
         //원본 파일 생성
@@ -191,7 +191,7 @@ public class ImageManager {
         //섬네일 생성
         File thumbnailFile = new File(thumbnailSaveName);
 
-        if(lastFile.exists() && !thumbnailFile.exists()){
+        if (lastFile.exists() && !thumbnailFile.exists()) {
             log.info("썸네일이 없습니다.");
 
             FileOutputStream fos = null;
@@ -205,7 +205,7 @@ public class ImageManager {
                 InputStream in = urlCon.getInputStream();
 
                 //썸네일 생성
-                Thumbnailator.createThumbnail(in, fos,328,328 );
+                Thumbnailator.createThumbnail(in, fos, 328, 328);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -221,7 +221,7 @@ public class ImageManager {
 
             return;
 
-        } else if(lastFile.exists() && thumbnailFile.exists()) {
+        } else if (lastFile.exists() && thumbnailFile.exists()) {
 
             log.info("중복된 파일입니다.");
             return;
@@ -235,7 +235,7 @@ public class ImageManager {
 
 
     }
-
+    //과제: Image suitable 에러 해결해야함 - 확장자 정상인데 에러 발생, 이유: - ? 썸네일 생성이 안됌!
     public static Boolean saveFile(HttpURLConnection con, String path, String thumbnail) {
         FileOutputStream fos = null;
         try {
@@ -246,31 +246,35 @@ public class ImageManager {
                 return false;
             }
 
-            fos = new FileOutputStream(path);
+            log.info(path);
+            log.info(path.substring(path.length() - 1));
+            if (0 != path.length() && null != path && !path.endsWith(".")) {
 
-            byte[] buffer = new byte[1024 * 8];
 
-            //원본 파일 생성
-            while (true) {
-                int count = in.read(buffer);
+                fos = new FileOutputStream(path);
 
-                if (-1 == count) {
-                    break;
+                byte[] buffer = new byte[1024 * 8];
+
+                //원본 파일 생성
+                while (true) {
+                    int count = in.read(buffer);
+
+                    if (-1 == count) {
+                        break;
+                    }
+
+                    fos.write(buffer, 0, count);
+
                 }
+                log.info(thumbnail);
+                log.info(thumbnail.substring(thumbnail.length() - 1));
 
-                fos.write(buffer, 0, count);
-
-            }
-            log.info(thumbnail);
-            log.info(thumbnail.substring(thumbnail.length() - 1));
-            //썸네일 생성
-
-            if(0 != thumbnail.length() && null != thumbnail && !thumbnail.substring(-1).equals(".")) {
+//            if(0 != thumbnail.length() && null != thumbnail && !thumbnail.endsWith(".")) {
 
                 //섬네일 생성
                 File thumbnailFile = new File(thumbnail);
                 fos = new FileOutputStream(thumbnailFile);
-                Thumbnailator.createThumbnail(in, fos,328,328 );
+                Thumbnailator.createThumbnail(in, fos, 328, 328);
 
             }
 
