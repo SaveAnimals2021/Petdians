@@ -9,6 +9,7 @@ import lombok.extern.log4j.Log4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.petdians.batch.config.AnimalJobConfig;
+import org.petdians.task.config.TaskConfig;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.launch.support.SimpleJobLauncher;
 import org.springframework.batch.core.repository.JobRepository;
@@ -22,6 +23,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
@@ -29,7 +31,7 @@ import javax.sql.DataSource;
 @Log4j
 @Configuration
 @EnableTransactionManagement
-@Import({AnimalJobConfig.class})
+@Import({AnimalJobConfig.class, TaskConfig.class})
 public class CommonConfig {
 
     @Bean

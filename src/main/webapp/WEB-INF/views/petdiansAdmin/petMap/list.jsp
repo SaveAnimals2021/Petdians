@@ -345,18 +345,18 @@
 
         //kakao.maps.load(function () {
         //지도 생성하기
-        var mapContainer = document.querySelector('.animalMap'), // 지도를 표시할 div
+        let mapContainer = document.querySelector('.animalMap'), // 지도를 표시할 div
             mapOption = {
                 center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
                 level: 6 // 지도의 확대 레벨
             };
 
-        var map = new kakao.maps.Map(mapContainer, mapOption);
+        let map = new kakao.maps.Map(mapContainer, mapOption);
             map.setMinLevel(3);
 
-        var animalMap = new Map();
+        let animalMap = new Map();
 
-        var dtoList = (${jsonList});
+        let dtoList = (${jsonList});
         const size = dtoList.length;
 
         //주소로 x,y 좌표 구하는 MapAPI
@@ -396,19 +396,19 @@
         //2.MAP MARKER 만들기
         function makeResult(animalDTO, count, finish) {
 
-            var maxCount = 10;
+            let maxCount = 10;
             //animalDTO.missingLocation로 x,y 좌표 구하기
-            var result = getMapByUrl(animalDTO.missingLocation);
+            let result = getMapByUrl(animalDTO.missingLocation);
 
             return result.then(res => {
 
-                var val = res.documents;
-                var missingLoc = animalDTO.missingLocation;
+                let val = res.documents;
+                let missingLoc = animalDTO.missingLocation;
 
                 //재검색
                 if (0 == val.length) {
 
-                    var index = missingLoc.lastIndexOf(" ");
+                    let index = missingLoc.lastIndexOf(" ");
                     if (-1 == index) {
                         console.log("결과 없음... 검색 완료" + missingLoc);
                     }
@@ -432,10 +432,10 @@
                 if (typeof (val[0]) != "undefined") {
 
                     console.log("Marker 생성!!")
-                    var animalNum = animalDTO.animalNumber;
-                    var coords = new kakao.maps.LatLng(val[0].y, val[0].x);
+                    let animalNum = animalDTO.animalNumber;
+                    let coords = new kakao.maps.LatLng(val[0].y, val[0].x);
 
-                    var marker = new kakao.maps.Marker({
+                    let marker = new kakao.maps.Marker({
                         map: map,
                         position: coords,
                         title: animalNum
@@ -448,15 +448,15 @@
                     // 커스텀 오버레이에 표시할 내용입니다
                     // HTML 문자열 또는 Dom Element 입니다
 
-                    var content = '<div class="col-md-4" style="max-width: 100%;"><div class="card customOpen"><img class="card-img-top" style="max-height: 25vh;"' +
+                    let content = '<div class="col-md-4" style="max-width: 100%;"><div class="card customOpen"><img class="card-img-top" style="max-height: 25vh;"' +
                         ' src="/petdiansAdmin/image/get?file=' + encodeURIComponent(animalDTO.imageUrlList[0].substring(11)) + '" alt="Card image cap">'+
                         '<div class="card-body"><h4 class="card-title mb-3" style="margin-bottom: 0rem!important;">이름: ' + animalDTO.name +
                         '</h4><p class="card-text">날짜: ' + animalDTO.missingDate +'</p></div></div></div>'
 
-                    var position = new kakao.maps.LatLng((val[0].y) , val[0].x - 0.00153);
+                    let position = new kakao.maps.LatLng((val[0].y) , val[0].x - 0.00153);
 
                     // 커스텀 오버레이를 생성합니다
-                    var customOverlay = new kakao.maps.CustomOverlay({
+                    let customOverlay = new kakao.maps.CustomOverlay({
                         position: position,
                         content: content
                     });
@@ -490,7 +490,7 @@
                     kakao.maps.event.addListener(map, 'zoom_changed', function() {
 
                         // 지도의 현재 레벨을 얻어옵니다
-                        var level = map.getLevel();
+                        let level = map.getLevel();
                         //console.log('현재 지도 레벨은 ' + level + ' 입니다');
                         if(level >= 7) {
 
@@ -545,13 +545,13 @@
             e.preventDefault();
             e.stopPropagation();
 
-            var tr = e.target.closest("tr");
-            var btn = e.target.closest("button");
+            let tr = e.target.closest("tr");
+            let btn = e.target.closest("button");
 
             if(btn) {
                 // 버튼을 누른 경우 => 모달창에 정보가 뜬다.
-                var index = tr.getAttribute("data-idx");
-                var animalInfo = JSON.parse(myList[index]);
+                let index = tr.getAttribute("data-idx");
+                let animalInfo = JSON.parse(myList[index]);
                 showModal(animalInfo);
 
             } else if(tr){
@@ -564,8 +564,8 @@
 
                 })
 
-                var animalNumber = tr.getAttribute("data-number") * 1;
-                var value = animalMap.get(animalNumber);
+                let animalNumber = tr.getAttribute("data-number") * 1;
+                let value = animalMap.get(animalNumber);
                 map.setLevel(3);
                 map.setCenter(value.getPosition());
             }
