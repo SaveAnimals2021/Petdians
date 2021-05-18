@@ -183,7 +183,7 @@
 
             </tbody>
         </table>
-        <%--                           페이지네이션 오류: Total 개수 오류                           --%>
+        
         <!--                                            Pagination                              -->
         <div style="align-content: center">
             <ul class="pagination" style="justify-content: center; padding-top:15px; padding-bottom:10px;">

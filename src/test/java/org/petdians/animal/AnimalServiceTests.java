@@ -148,7 +148,7 @@ public class AnimalServiceTests {
     @Test
     public void testMissingList(){
         PageDTO dto = new PageDTO();
-        dto.setDay("3");
+        dto.setDay("30");
         dto.setType("s");
         dto.setKeyword("0");
         dto.setPerSheet(1000);
